@@ -1,6 +1,4 @@
-﻿using CrossUI.Portable;
-
-namespace CrossUI
+﻿namespace CrossUI
 {
 	public interface IDrawingContext
 	{
@@ -26,7 +24,5 @@ namespace CrossUI
 		void roundedRect(double x, double y, double width, double height, double radius);
 
 		void text(string text, double x, double y, double width, double height);
-
-		IShapeContext beginShape();
 	}
 }

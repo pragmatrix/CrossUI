@@ -1,4 +1,4 @@
-﻿namespace CrossUI.Portable
+﻿namespace CrossUI
 {
 	public sealed class Color
 	{

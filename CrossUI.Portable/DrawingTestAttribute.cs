@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CrossUI.Portable
+namespace CrossUI
 {
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class DrawingTestAttribute : Attribute

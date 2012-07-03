@@ -8,7 +8,7 @@
     <ProjectGuid>{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CrossUI.Portable</RootNamespace>
+    <RootNamespace>CrossUI</RootNamespace>
     <AssemblyName>CrossUI.Portable</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile1</TargetFrameworkProfile>
@@ -37,7 +37,6 @@
     <Compile Include="DrawingTestAttribute.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="IDrawingContext.cs" />
-    <Compile Include="IShapeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
