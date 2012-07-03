@@ -6,5 +6,10 @@ namespace CrossUI.Runner.WPF
 	sealed class AssemblyTestConfiguration
 	{
 		public string AssemblyPath;
+
+		public static AssemblyTestConfiguration create(string assemblyPath)
+		{
+			return new AssemblyTestConfiguration {AssemblyPath = assemblyPath};
+		}
 	}
 }

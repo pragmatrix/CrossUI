@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 
 namespace CrossUI.Runner.WPF
 {
@@ -8,7 +10,7 @@ namespace CrossUI.Runner.WPF
 	{
 		readonly MainWindow _window;
 		readonly ListBox _testListBox;
-		readonly List<AssemblyTest> _tests;
+		readonly List<AssemblyTest> _tests = new List<AssemblyTest>();
 
 		public AssemblyTester(MainWindow window)
 		{
@@ -17,15 +19,41 @@ namespace CrossUI.Runner.WPF
 
 			var config = Configuration.load();
 
-			config.AssemblyTests.Select(c =>
-				{
-					var control = new AssemblyTestControl();
-					_testListBox.Items.Add(control);
-					return new AssemblyTest(c, control);
-				}).ToList();
-
 			var newControl = new AssemblyTestNewControl();
+			newControl.AddTestButton.Click += addTest;
 			_testListBox.Items.Add(newControl);
+
+			foreach (var c in config.AssemblyTests)
+			{
+				addTest(c);
+			}
+		}
+
+		void addTest(object sender, RoutedEventArgs e)
+		{
+			var dialog = new OpenFileDialog
+			{
+				Filter = "Assembly Files|*.exe;*.dll", 
+				DefaultExt = "*.exe"
+			};
+
+			bool? res = dialog.ShowDialog();
+			if (res == null || !res.Value)
+				return;
+
+			var config = AssemblyTestConfiguration.create(dialog.FileName);
+			addTest(config);
+		}
+
+		void addTest(AssemblyTestConfiguration config)
+		{
+			var control = new AssemblyTestControl();
+			var test = new AssemblyTest(config, control);
+
+			var insertPos = _testListBox.Items.Count - 1;
+
+			_testListBox.Items.Insert(insertPos, control);
+			_tests.Add(test);
 		}
 	}
 }
