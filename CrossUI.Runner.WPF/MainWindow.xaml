@@ -5,7 +5,7 @@
 		TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="Grayscale">
 	
 	<Grid>
-		<ListBox Name="Tests">
+		<ListBox Name="Tests" HorizontalContentAlignment="Stretch">
 		</ListBox>
 	</Grid>
 </Window>
