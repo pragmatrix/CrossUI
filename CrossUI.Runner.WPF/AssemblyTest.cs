@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace CrossUI.Runner.WPF
 {
@@ -11,6 +12,8 @@ namespace CrossUI.Runner.WPF
 		{
 			_config = config;
 			_control = control;
+
+			control.Title.Content = Path.GetFileName(_config.AssemblyPath);
 		}
 
 		public void Dispose()

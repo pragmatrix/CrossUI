@@ -68,9 +68,6 @@
     <Compile Include="UI\AssemblyTestControl.xaml.cs">
       <DependentUpon>AssemblyTestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AssemblyTestList.xaml.cs">
-      <DependentUpon>AssemblyTestList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\AssemblyTestNewControl.xaml.cs">
       <DependentUpon>AssemblyTestNewControl.xaml</DependentUpon>
     </Compile>
@@ -96,10 +93,6 @@
     <Compile Include="AssemblyTester.cs" />
     <Compile Include="Configuration.cs" />
     <Page Include="UI\AssemblyTestControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\AssemblyTestList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
