@@ -375,7 +375,7 @@
 	<!-- Simple ScrollViewer 
 	ScrollViewer is a Grid control which has a ContentPresenter and a Horizontal and Vertical ScrollBar 
 	It is used by ListBox, MenuItem, ComboBox, and TreeView -->
-	<Style x:Key="SimpleScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{x:Null}">
+	<Style TargetType="{x:Type ScrollViewer}" BasedOn="{x:Null}">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -698,14 +698,19 @@
 	</Style>
 	
 	<!-- Simple Label - This template is just a ContentPresenter that shows the content of the Label -->
-	<Style x:Key="SimpleLabel" TargetType="{x:Type Label}">
+	<Style TargetType="{x:Type Label}">
 		<Setter Property="HorizontalContentAlignment" Value="Left"/>
 		<Setter Property="VerticalContentAlignment" Value="Top"/>
+		<Setter Property="Padding" Value="0,2"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Label}">
 					<Grid>
-						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+						<ContentPresenter 
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+							VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+							Margin="{TemplateBinding Padding}"
+							RecognizesAccessKey="True"/>
 					</Grid>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsEnabled" Value="false"/>
