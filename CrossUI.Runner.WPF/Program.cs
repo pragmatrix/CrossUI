@@ -22,8 +22,10 @@ namespace CrossUI.Runner.WPF
 			}
 
 			var window = new MainWindow();
-			var tester = new AssemblyTester(window);
-			app.Run(window);
+			using (new AssemblyTester(window))
+			{
+				app.Run(window);
+			}
 		}
 	}
 }

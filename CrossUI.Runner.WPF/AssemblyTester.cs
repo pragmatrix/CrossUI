@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +7,7 @@ using Microsoft.Win32;
 
 namespace CrossUI.Runner.WPF
 {
-	sealed class AssemblyTester
+	sealed class AssemblyTester : IDisposable
 	{
 		readonly MainWindow _window;
 		readonly ListBox _testListBox;
@@ -27,6 +28,12 @@ namespace CrossUI.Runner.WPF
 			{
 				addTest(c);
 			}
+		}
+
+		public void Dispose()
+		{
+			foreach (var t in _tests)
+				t.Dispose();	
 		}
 
 		void addTest(object sender, RoutedEventArgs e)
