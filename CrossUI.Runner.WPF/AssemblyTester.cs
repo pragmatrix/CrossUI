@@ -10,19 +10,19 @@ namespace CrossUI.Runner.WPF
 	sealed class AssemblyTester : IDisposable
 	{
 		readonly UI.MainWindow _window;
-		readonly ListBox _testListBox;
+		readonly StackPanel _testPanel;
 		readonly List<AssemblyTest> _tests = new List<AssemblyTest>();
 
 		public AssemblyTester(UI.MainWindow window)
 		{
 			_window = window;
-			_testListBox = _window.Tests;
+			_testPanel = _window.Tests;
 
 			var config = Configuration.load();
 
 			var newControl = new UI.AssemblyTestNewControl();
 			newControl.AddTestButton.Click += addTest;
-			_testListBox.Items.Add(newControl);
+			_testPanel.Children.Add(newControl);
 
 			foreach (var c in config.AssemblyTests)
 			{
@@ -56,9 +56,9 @@ namespace CrossUI.Runner.WPF
 			var control = new UI.AssemblyTestControl();
 			var test = new AssemblyTest(config, control);
 
-			var insertPos = _testListBox.Items.Count - 1;
+			var insertPos = _testPanel.Children.Count - 1;
 
-			_testListBox.Items.Insert(insertPos, control);
+			_testPanel.Children.Insert(insertPos, control);
 			_tests.Add(test);
 		}
 	}
