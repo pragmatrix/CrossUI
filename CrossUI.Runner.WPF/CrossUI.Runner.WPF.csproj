@@ -65,6 +65,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DomainTestRunner.cs" />
+    <Compile Include="Toolbox\Events.cs" />
     <Compile Include="UI\AssemblyTestControl.xaml.cs">
       <DependentUpon>AssemblyTestControl.xaml</DependentUpon>
     </Compile>
@@ -77,6 +79,7 @@
     <Compile Include="UI\DrawingTestResult.xaml.cs">
       <DependentUpon>DrawingTestResult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileWatcher.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -139,7 +142,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">
+      <Project>{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}</Project>
+      <Name>CrossUI.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

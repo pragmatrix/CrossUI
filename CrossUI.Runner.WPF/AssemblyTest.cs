@@ -7,17 +7,29 @@ namespace CrossUI.Runner.WPF
 	{
 		readonly AssemblyTestConfiguration _config;
 		public readonly UI.AssemblyTestControl Control;
+		public readonly FileWatcher _watcher;
 
 		public AssemblyTest(AssemblyTestConfiguration config, UI.AssemblyTestControl control)
 		{
 			_config = config;
 			Control = control;
 
-			control.Title.Content = Path.GetFileName(_config.AssemblyPath);
+			var path = _config.AssemblyPath;
+
+			control.Title.Content = Path.GetFileName(path);
+
+			_watcher = new FileWatcher(path);
+			_watcher.Changed += refresh;
 		}
 
 		public void Dispose()
 		{
+			_watcher.Dispose();
+		}
+
+		void refresh()
+		{
+			var x = 10;
 		}
 
 		public AssemblyTestConfiguration Config

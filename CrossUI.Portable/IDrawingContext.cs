@@ -2,8 +2,8 @@
 {
 	public interface IDrawingContext
 	{
-		double Width { get; }
-		double Height { get; }
+		int Width { get; }
+		int Height { get; }
 
 		void font(Font font);
 	
@@ -21,7 +21,7 @@
 
 		void triangle(double x1, double y1, double x2, double y2, double x3, double y3);
 		void quad(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4);
-		void roundedRect(double x, double y, double width, double height, double radius);
+		void roundedRect(double x, double y, double width, double height, double cornerRadius);
 
 		void text(string text, double x, double y, double width, double height);
 	}

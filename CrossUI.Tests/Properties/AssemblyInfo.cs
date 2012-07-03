@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CrossUI.SharpDX")]
+[assembly: AssemblyTitle("CrossUI.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CrossUI.SharpDX")]
+[assembly: AssemblyProduct("CrossUI.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("96786f50-8816-409e-83d0-a56dea5f473b")]
+[assembly: Guid("c5682fd3-ce51-4836-88c4-1f484b236fbc")]
 
 // Version information for an assembly consists of the following four values:
 //
