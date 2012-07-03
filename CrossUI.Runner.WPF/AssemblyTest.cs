@@ -19,5 +19,13 @@ namespace CrossUI.Runner.WPF
 		public void Dispose()
 		{
 		}
+
+		public AssemblyTestConfiguration Config
+		{
+			get
+			{
+				return _config;	
+			}
+		}
 	}
 }

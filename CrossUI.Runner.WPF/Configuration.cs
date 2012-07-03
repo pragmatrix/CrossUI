@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using ServiceStack.Text;
 
 namespace CrossUI.Runner.WPF
 {
+	[Obfuscation]
 	sealed class Configuration
 	{
 		public Configuration()
@@ -12,7 +14,7 @@ namespace CrossUI.Runner.WPF
 			AssemblyTests = new List<AssemblyTestConfiguration>();
 		}
 
-		public List<AssemblyTestConfiguration> AssemblyTests;
+		public List<AssemblyTestConfiguration> AssemblyTests { get; set; }
 
 		public void store()
 		{
@@ -35,7 +37,9 @@ namespace CrossUI.Runner.WPF
 		static string makeConfigurationPath()
 		{
 			var root = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			return Path.Combine(root, "Configuration." + Version + ".json");
+			var app = Path.Combine(root, "CrossUI.Runner");
+			Directory.CreateDirectory(app);
+			return Path.Combine(app, "Configuration." + Version + ".json");
 		}
 	}
 }

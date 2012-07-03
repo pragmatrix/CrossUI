@@ -5,7 +5,7 @@ namespace CrossUI.Runner.WPF
 	[Obfuscation]
 	sealed class AssemblyTestConfiguration
 	{
-		public string AssemblyPath;
+		public string AssemblyPath { get; set; }
 
 		public static AssemblyTestConfiguration create(string assemblyPath)
 		{

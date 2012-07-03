@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using CrossUI.Runner.WPF.UI;
 using Microsoft.Win32;
@@ -10,19 +8,19 @@ namespace CrossUI.Runner.WPF
 {
 	sealed class AssemblyTester : IDisposable
 	{
-		readonly UI.MainWindow _window;
+		readonly MainWindow _window;
 		readonly StackPanel _testPanel;
 		readonly List<AssemblyTest> _tests = new List<AssemblyTest>();
 
-		public AssemblyTester(UI.MainWindow window)
+		public AssemblyTester(MainWindow window)
 		{
 			_window = window;
 			_testPanel = _window.Tests;
 
 			var config = Configuration.load();
 
-			var newControl = new UI.AssemblyTestNewControl();
-			newControl.AddTestButton.Click += addTest;
+			var newControl = new AssemblyTestNewControl();
+			newControl.AddTestButton.Click += (s, e) => addTestUser();
 			_testPanel.Children.Add(newControl);
 
 			foreach (var c in config.AssemblyTests)
@@ -33,11 +31,11 @@ namespace CrossUI.Runner.WPF
 
 		public void Dispose()
 		{
-			foreach (var t in _tests)
-				t.Dispose();	
+			while (_tests.Count != 0)
+				removeTest(_tests[_tests.Count - 1]);
 		}
 
-		void addTest(object sender, RoutedEventArgs e)
+		void addTestUser()
 		{
 			var dialog = new OpenFileDialog
 			{
@@ -50,6 +48,8 @@ namespace CrossUI.Runner.WPF
 
 			var config = AssemblyTestConfiguration.create(dialog.FileName);
 			addTest(config);
+
+			storeConfig();
 		}
 
 		void addTest(AssemblyTestConfiguration config)
@@ -61,7 +61,13 @@ namespace CrossUI.Runner.WPF
 			var insertPos = _testPanel.Children.Count - 1;
 			_testPanel.Children.Insert(insertPos, test.Control);
 
-			control.RemoveButton.Click += (sender, e) => removeTest(test);
+			control.RemoveButton.Click += (sender, e) => removeTestUser(test);
+		}
+
+		void removeTestUser(AssemblyTest test)
+		{
+			removeTest(test);
+			storeConfig();
 		}
 
 		void removeTest(AssemblyTest test)
@@ -70,6 +76,22 @@ namespace CrossUI.Runner.WPF
 			_tests.Remove(test);
 
 			test.Dispose();
+		}
+
+		void storeConfig()
+		{
+			var config = createConfig();
+			config.store();
+		}
+
+		Configuration createConfig()
+		{
+			var config = new Configuration();
+			foreach (var test in _tests)
+			{
+				config.AssemblyTests.Add(test.Config);
+			}
+			return config;
 		}
 	}
 }
