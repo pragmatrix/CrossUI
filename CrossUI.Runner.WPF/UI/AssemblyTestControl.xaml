@@ -21,7 +21,7 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			<Label Name="Title" FontSize="13">Title</Label>
-			<Button Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
+			<Button x:Name="RemoveButton" Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
 		</Grid>
 		
 		<TreeView Grid.Column="1" Grid.Row="1">

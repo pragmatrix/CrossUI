@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using CrossUI.Runner.WPF.UI;
 using Microsoft.Win32;
 
 namespace CrossUI.Runner.WPF
@@ -53,13 +54,22 @@ namespace CrossUI.Runner.WPF
 
 		void addTest(AssemblyTestConfiguration config)
 		{
-			var control = new UI.AssemblyTestControl();
+			var control = new AssemblyTestControl();
 			var test = new AssemblyTest(config, control);
 
-			var insertPos = _testPanel.Children.Count - 1;
-
-			_testPanel.Children.Insert(insertPos, control);
 			_tests.Add(test);
+			var insertPos = _testPanel.Children.Count - 1;
+			_testPanel.Children.Insert(insertPos, test.Control);
+
+			control.RemoveButton.Click += (sender, e) => removeTest(test);
+		}
+
+		void removeTest(AssemblyTest test)
+		{
+			_testPanel.Children.Remove(test.Control);
+			_tests.Remove(test);
+
+			test.Dispose();
 		}
 	}
 }
