@@ -1035,7 +1035,7 @@
 	</Style>
 	
 	<!--Simple Tree View - This lays out TreeViewItems within a ScrollViewer -->
-	<Style x:Key="SimpleTreeView" TargetType="{x:Type TreeView}">
+	<Style TargetType="{x:Type TreeView}">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type TreeView}">
@@ -1073,7 +1073,7 @@
 	</Style>
 	
 	<!--Simple TreeViewItem - The TreeViewItem template has a header which shows the Item and a Body which is an ItemsHost control which expands to show child items-->
-	<Style x:Key="SimpleTreeViewItem" d:IsControlPart="True" TargetType="{x:Type TreeViewItem}">
+	<Style d:IsControlPart="True" TargetType="{x:Type TreeViewItem}">
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
 		<Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
