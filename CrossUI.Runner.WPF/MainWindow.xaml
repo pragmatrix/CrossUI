@@ -1,0 +1,11 @@
+﻿<Window x:Class="CrossUI.Runner.WPF.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="CrossUI.Runner.WPF" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+		TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="Grayscale">
+	
+	<Grid>
+		<ListBox Name="Tests">
+		</ListBox>
+	</Grid>
+</Window>
