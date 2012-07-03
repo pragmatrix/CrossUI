@@ -1,4 +1,4 @@
-﻿<Window x:Class="CrossUI.Runner.WPF.MainWindow"
+<Window x:Class="CrossUI.Runner.WPF.UI.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		Title="CrossUI.Runner.WPF" Height="600" Width="800" WindowStartupLocation="CenterScreen"

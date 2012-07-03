@@ -5,9 +5,9 @@ namespace CrossUI.Runner.WPF
 	sealed class AssemblyTest : IDisposable
 	{
 		readonly AssemblyTestConfiguration _config;
-		readonly AssemblyTestControl _control;
+		readonly UI.AssemblyTestControl _control;
 
-		public AssemblyTest(AssemblyTestConfiguration config, AssemblyTestControl control)
+		public AssemblyTest(AssemblyTestConfiguration config, UI.AssemblyTestControl control)
 		{
 			_config = config;
 			_control = control;

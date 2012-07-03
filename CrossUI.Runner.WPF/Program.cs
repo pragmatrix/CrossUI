@@ -21,7 +21,7 @@ namespace CrossUI.Runner.WPF
 				app.Resources = (ResourceDictionary)XamlReader.Load(reader);
 			}
 
-			var window = new MainWindow();
+			var window = new UI.MainWindow();
 			using (new AssemblyTester(window))
 			{
 				app.Run(window);

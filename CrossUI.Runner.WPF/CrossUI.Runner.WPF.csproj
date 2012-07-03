@@ -65,31 +65,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AssemblyTestList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AssemblyTestNewControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AssemblyTestResultsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AssemblyTestControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="UI\AssemblyTestControl.xaml.cs">
+      <DependentUpon>AssemblyTestControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AssemblyTestList.xaml.cs">
+      <DependentUpon>AssemblyTestList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AssemblyTestNewControl.xaml.cs">
+      <DependentUpon>AssemblyTestNewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AssemblyTestResultsControl.xaml.cs">
+      <DependentUpon>AssemblyTestResultsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DrawingTestResult.xaml.cs">
+      <DependentUpon>DrawingTestResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Simple Styles Default.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DrawingTestResult.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,26 +94,31 @@
     <Compile Include="AssemblyTest.cs" />
     <Compile Include="AssemblyTestConfiguration.cs" />
     <Compile Include="AssemblyTester.cs" />
-    <Compile Include="AssemblyTestList.xaml.cs">
-      <DependentUpon>AssemblyTestList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AssemblyTestNewControl.xaml.cs">
-      <DependentUpon>AssemblyTestNewControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AssemblyTestResultsControl.xaml.cs">
-      <DependentUpon>AssemblyTestResultsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AssemblyTestControl.xaml.cs">
-      <DependentUpon>AssemblyTestControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Configuration.cs" />
-    <Compile Include="DrawingTestResult.xaml.cs">
-      <DependentUpon>DrawingTestResult.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="UI\AssemblyTestControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\AssemblyTestList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\AssemblyTestNewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\AssemblyTestResultsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\DrawingTestResult.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
