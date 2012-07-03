@@ -33,8 +33,7 @@ namespace CrossUI.Runner.WPF
 		{
 			var dialog = new OpenFileDialog
 			{
-				Filter = "Assembly Files|*.exe;*.dll", 
-				DefaultExt = "*.exe"
+				Filter = ".NET Assemblies|*.exe;*.dll|All Files|*.*", 
 			};
 
 			bool? res = dialog.ShowDialog();
