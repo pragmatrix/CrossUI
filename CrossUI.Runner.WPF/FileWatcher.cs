@@ -18,6 +18,7 @@ namespace CrossUI.Runner.WPF
 
 		public FileWatcher(string path)
 		{
+			_path = path;
 			_dispatcher = Dispatcher.CurrentDispatcher;
 			var dir = Path.GetDirectoryName(path);
 			var fn = Path.GetFileName(path);
