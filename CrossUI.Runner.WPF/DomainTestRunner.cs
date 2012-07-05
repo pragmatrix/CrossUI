@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Policy;
-using System.Text;
+using CrossUI.Testing;
 
 namespace CrossUI.Runner.WPF
 {
-	sealed class DomainTestRunner
+	[Serializable]
+	public sealed class DomainTestRunner
 	{
-		readonly string _assembly;
+		readonly string _assemblyPath;
 
-		public DomainTestRunner(string assembly)
+		public DomainTestRunner(string assemblyPath)
 		{
-			_assembly = assembly;
+			_assemblyPath = assemblyPath;
 		}
 
-		public void run()
+		public TestResult[] run()
 		{
 			var evidence = AppDomain.CurrentDomain.Evidence;
-			var dir = Path.GetDirectoryName(_assembly);
-			var fn = Path.GetFileName(_assembly);
+			var fn = Path.GetFileName(_assemblyPath);
 
 			var friendlyName = "CrossUI.DomainTestRunner.AppDomain." + fn;
+
 			var appDomain = AppDomain.CreateDomain(
-				friendlyName, evidence, dir, ".", shadowCopyFiles: true);
+				friendlyName, evidence);
+
 			try
 			{
-				var assembly = appDomain.Load(new AssemblyName(_assembly));
-				throw new NotImplementedException("");
-				//appDomain.CreateInstanceAndUnwrap();
-				//runAssembly(appDomain, assembly);
+				var testRunnerType = typeof (TestRunner);
+
+				var testRunner = (TestRunner)appDomain.CreateInstanceAndUnwrap(
+					testRunnerType.Assembly.FullName, 
+					testRunnerType.FullName);
+
+				return testRunner.run(_assemblyPath);
 			}
 			finally
 			{

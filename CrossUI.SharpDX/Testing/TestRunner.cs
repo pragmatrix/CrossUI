@@ -4,11 +4,22 @@ using System.Linq;
 using System.Reflection;
 using CrossUI.Drawing;
 using CrossUI.Toolbox;
+using System.IO;
 
 namespace CrossUI.Testing
 {
 	public sealed class TestRunner : MarshalByRefObject
 	{
+		public TestResult[] run(string assemblyPath)
+		{
+			// http://blogs.msdn.com/b/suzcook/archive/2003/05/29/choosing-a-binding-context.aspx#57147
+			// LoadFrom differs from Load in that dependent assemblies can be resolved outside from the 
+			// BasePath.
+
+			var assembly = Assembly.LoadFrom(assemblyPath);
+			return run(assembly);
+		}
+
 		public TestResult[] run(Assembly assembly)
 		{
 			var results = new List<TestResult>();
@@ -66,7 +77,7 @@ namespace CrossUI.Testing
 			var results = new List<TestResult>();
 			foreach (var method in methods)
 			{
-				var source = new TestSource(instance.GetType(), method);
+				var source = new TestSource(instance.GetType().FullName, method.Name);
 				try
 				{
 

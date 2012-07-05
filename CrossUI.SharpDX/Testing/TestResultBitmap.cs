@@ -1,5 +1,8 @@
-﻿namespace CrossUI.Testing
+﻿using System;
+
+namespace CrossUI.Testing
 {
+	[Serializable]
 	public sealed class TestResultBitmap
 	{
 		public readonly int Width;

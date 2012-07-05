@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Reflection;
 
 namespace CrossUI.Testing
 {
+	[Serializable]
 	public sealed class TestSource
 	{
-		public readonly Type Type;
-		public readonly MethodInfo Method;
+		public readonly string Type;
+		public readonly string Method;
 
-		public TestSource(Type type, MethodInfo method)
+		public TestSource(string typeFullName, string methodName)
 		{
-			Type = type;
-			Method = method;
+			Type = typeFullName;
+			Method = methodName;
 		}
 	}
 }

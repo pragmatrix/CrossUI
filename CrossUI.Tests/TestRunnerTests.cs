@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -16,11 +15,18 @@ namespace CrossUI.Tests
 			Assert.That(results.Length == 1);
 		}
 
+#if false
+
+		// this isn't testable for now, because the testrunner shadow copies the assemblies.
 		[Test]
 		public void runTestInDifferentAppDomain()
 		{
-			throw new NotImplementedException();
+			var assemblyPath = Assembly.GetExecutingAssembly().Location;
+			var testRunner = new DomainTestRunner(assemblyPath);
+			testRunner.run();
 		}
+
+#endif
 	}
 
 	public sealed class RoundedRectangleTest

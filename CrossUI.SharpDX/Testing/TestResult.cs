@@ -2,6 +2,7 @@
 
 namespace CrossUI.Testing
 {
+	[Serializable]
 	public sealed class TestResult
 	{
 		public readonly TestSource Source;

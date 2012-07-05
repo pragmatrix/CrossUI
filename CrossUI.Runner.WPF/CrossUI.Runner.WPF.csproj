@@ -21,7 +21,7 @@
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -146,6 +146,10 @@
     <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">
       <Project>{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}</Project>
       <Name>CrossUI.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrossUI.SharpDX\CrossUI.SharpDX.csproj">
+      <Project>{F46BFFCE-B059-4D62-8669-A24F6E8A543D}</Project>
+      <Name>CrossUI.SharpDX</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
