@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using CrossUI.Drawing;
 using CrossUI.Toolbox;
-using System.IO;
 
 namespace CrossUI.Testing
 {
