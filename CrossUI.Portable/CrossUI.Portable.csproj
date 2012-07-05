@@ -37,6 +37,8 @@
     <Compile Include="BitmapDrawingTestAttribute.cs" />
     <Compile Include="Font.cs" />
     <Compile Include="IDrawingContext.cs" />
+    <Compile Include="IPathCommand.cs" />
+    <Compile Include="PathCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Toolbox\DisposeAction.cs" />
     <Compile Include="Toolbox\StringExtensions.cs" />
