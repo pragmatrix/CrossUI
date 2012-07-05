@@ -98,7 +98,7 @@ namespace CrossUI.Drawing
 				OptionFlags = ResourceOptionFlags.None,
 				Width = _width,
 				Height = _height,
-				Usage = ResourceUsage.Default,
+				Usage = ResourceUsage.Staging,
 				SampleDescription = new SampleDescription(1, 0)
 			};
 
