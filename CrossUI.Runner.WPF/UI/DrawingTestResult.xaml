@@ -10,7 +10,11 @@
 			<RowDefinition/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<ContentPresenter Name="Result" />
+		<UserControl HorizontalContentAlignment="Left">
+			<Border BorderBrush="LightGray" BorderThickness="2">
+				<ContentPresenter Name="Result" />
+			</Border>
+		</UserControl>
 		<Label Grid.Row="1" Name="Title">Hello</Label>
 	</Grid>
 </UserControl>

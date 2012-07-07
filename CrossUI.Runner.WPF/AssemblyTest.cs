@@ -99,7 +99,8 @@ namespace CrossUI.Runner.WPF
 			var bitmap = result.Bitmap_;
 			Debug.Assert(bitmap != null);
 
-			var bs = BitmapSource.Create(bitmap.Width,
+			var bs = BitmapSource.Create(
+				bitmap.Width,
 				bitmap.Height,
 				96,
 				96,

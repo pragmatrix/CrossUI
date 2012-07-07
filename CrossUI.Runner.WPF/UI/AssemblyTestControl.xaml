@@ -22,7 +22,7 @@
 				<ColumnDefinition/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-			<Label Name="Title" FontSize="13">Title</Label>
+			<Label Name="Title" FontSize="16">Title</Label>
 			<Button x:Name="RemoveButton" Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
 		</Grid>
 		
