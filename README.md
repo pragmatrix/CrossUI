@@ -32,7 +32,7 @@ and Android are completely different and make porting an application's user inte
 * Some of the user interface APIs lack the most basic features, like rendering UI controls into a background bitmap or composing geometries. 
 CrossUI could provide implementations that use alternative APIs (like Direct2D for WinRT).
 * For graphical editors, regression testing and visualizing different drawing states side by side is not a primary focus. CrossUI's testrunner can already be used to visualize different states of the same drawing and will soon support visual diffs.
-* Like Test Driven Development puts your implementation code into shape. 
+* Like Test Driven Development puts your implementation code into shape, 
 Test Driven Visualizations could do the same for user interfaces. 
 All the major platform's user interface APIs feel bloated and are a pain to work with. 
 CrossUI's real-time testing feedback could be basis for user interface APIs that are simple, light and extensible.
