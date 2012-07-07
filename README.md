@@ -41,15 +41,15 @@ CrossUI's real-time testing feedback could be basis for user interface APIs that
 
 Right now, CrossUI consists of 
 
-* CrossUI.Portable: a portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org)
-* CrossUI.SharpDX: a SharpDX based Direct2D rendering implementation.
-* CrussUI.Runner.WPF: A WPF based testrunner that automatically reruns tests when DLLs are 
+* CrossUI.Portable: a portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org).
+* CrossUI.SharpDX: a [SharpDX](http://sharpdx.org/) based Direct2D rendering implementation.
+* CrussUI.Runner.WPF: A WPF based testrunner that automatically reruns tests when DLLs are changed.
 
 ## Getting Started
 
 ### Prerequisites
 
-* Visual Studio 2010 Service Pack 1 or Visual Studio 2012
+* Visual Studio 2010 Service Pack 1 or Visual Studio 2012 RC
 * [Nuget Version 2](http://www.nuget.org)
 * [Portable Library Tools 2 Beta from Microsoft](http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981/)
 * recommended: [.NET Demon](http://www.red-gate.com/products/dotnet-development/dotnet-demon/). A Visual Studio extension that continuously rebuilds your projects while you type.
@@ -61,7 +61,7 @@ Right now, CrossUI consists of
 * Build the solution
 * Start CrossUI.Runner.WPF
 * Press "Add Test.."
-* Select "CrossUI.Tests/bin/CrossUI.Tests.dll"
+* Select "CrossUI.Tests/bin/Debug/CrossUI.Tests.dll"
 
 The WPF Testrunner should now show some drawings. These drawings are test results of the tests in CrossUI.Tests.dll.
 
@@ -73,7 +73,15 @@ In here you can change the code that produce the test results. If you got .NET D
 
 * Complete the drawing API
 	* Implement paths
-* Port the Drawing Backend to more platforms, preferable iOS via MonoTouch and Android via MonoDroid.
+* Port the Drawing Backend to more platforms
+	* Android via MonoDroid
+	* iOS via MonoTouch
+	* Mac OS X via MonoMac
+	* ? GDI via System.Drawing
+	* ? [Cairo](http://cairographics.org/) via [Mono.Cairo](http://www.mono-project.com/Mono.Cairo)
+	* ? WPF, WinRT Shapes
+	* ? SVG
+	* ? [CrossGraphics](https://github.com/praeclarum/CrossGraphics)
 * Implement visual diffs
 
 ## Future
@@ -93,13 +101,13 @@ Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
 - Redistributions of source code must retain the above copyright notice, 
-      this list of conditions and the following disclaimer.
+	  this list of conditions and the following disclaimer.
 - Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
+	  notice, this list of conditions and the following disclaimer in the
+	  documentation and/or other materials provided with the distribution.
 - Neither the name of Armin Snader nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+	  names of its contributors may be used to endorse or promote products
+	  derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
