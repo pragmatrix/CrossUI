@@ -18,9 +18,9 @@ namespace CrossUI.Tests
 	public sealed class RoundedRectangleTest
 	{
 		[BitmapDrawingTest(Width=80, Height=40)]
-		public void lightRect(IDrawingContext context)
+		public void roundedRect(IDrawingContext context)
 		{
-			context.roundedRect(0, 0, context.Width, context.Height, 8);
+			context.roundedRect(0, 0, 80, 40, 8);
 		}
 
 		[BitmapDrawingTest(Width = 80, Height = 40)]
