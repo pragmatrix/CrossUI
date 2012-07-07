@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using NUnit.Framework;
 
 namespace CrossUI.Tests
@@ -14,29 +13,27 @@ namespace CrossUI.Tests
 			var results = testRunner.run(Assembly.GetExecutingAssembly());
 			Assert.That(results.Length == 1);
 		}
-
-#if false
-
-		// this isn't testable for now, because the testrunner shadow copies the assemblies.
-		[Test]
-		public void runTestInDifferentAppDomain()
-		{
-			var assemblyPath = Assembly.GetExecutingAssembly().Location;
-			var testRunner = new DomainTestRunner(assemblyPath);
-			testRunner.run();
-		}
-
-#endif
 	}
 
 	public sealed class RoundedRectangleTest
 	{
 		[BitmapDrawingTest(Width=80, Height=40)]
-		public void test(IDrawingContext context)
+		public void lightRect(IDrawingContext context)
 		{
-			Debug.Assert(context.Width == 80);
-			Debug.Assert(context.Height == 40);
+			context.roundedRect(0, 0, context.Width, context.Height, 8);
+		}
 
+		[BitmapDrawingTest(Width = 80, Height = 40)]
+		public void thickRect(IDrawingContext context)
+		{
+			context.strokeWeight(3);
+			context.roundedRect(0, 0, context.Width, context.Height, 8);
+		}
+
+		[BitmapDrawingTest(Width = 80, Height = 40)]
+		public void coloredRect(IDrawingContext context)
+		{
+			context.stroke(1, 0, 0);
 			context.roundedRect(0, 0, context.Width, context.Height, 8);
 		}
 	}
