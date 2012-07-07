@@ -106,7 +106,8 @@ namespace CrossUI.Drawing
 			{
 				_device.CopyResource(_texture, cpuTexture);
 
-				var res = new byte[4 * _width * _height];
+				var bytesPerLine = _width * 4;
+				var res = new byte[bytesPerLine * _height];
 				var data = cpuTexture.Map(0, MapMode.Read, MapFlags.None);
 				try
 				{
@@ -114,9 +115,9 @@ namespace CrossUI.Drawing
 					int targetOffset = 0;
 					for (int i = 0; i != _height; ++i)
 					{
-						Marshal.Copy(sourcePtr, res, targetOffset, _width);
+						Marshal.Copy(sourcePtr, res, targetOffset, bytesPerLine);
 						sourcePtr += data.Pitch;
-						targetOffset += _width;
+						targetOffset += bytesPerLine;
 					}
 
 					return res;
