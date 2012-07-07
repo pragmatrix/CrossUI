@@ -32,9 +32,9 @@ namespace CrossUI.Runner.WPF
 			control.Title.Content = Path.GetFileName(path);
 
 			_watcher = new FileWatcher(path);
-			_watcher.Changed += refresh;
+			_watcher.Changed += queueTestRun;
 
-			refresh();
+			queueTestRun();
 		}
 
 		public void Dispose()
@@ -50,7 +50,7 @@ namespace CrossUI.Runner.WPF
 			}
 		}
 
-		void refresh()
+		void queueTestRun()
 		{
 			ThreadPool.QueueUserWorkItem(s =>
 				{
