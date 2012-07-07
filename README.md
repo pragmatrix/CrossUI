@@ -21,7 +21,7 @@ it is possible to visualize code-generated drawings in realtime as you type.
 		}
 	}
 
-	![Rounded Rectangle](RoundedRectangle.png)
+![Rounded Rectangle](https://github.com/pragmatrix/CrossUI/raw/master/RoundedRectangle.png)
 
 ## Why
 
