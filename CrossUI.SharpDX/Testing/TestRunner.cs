@@ -29,14 +29,17 @@ namespace CrossUI.Testing
 					.Where(mi => mi.GetCustomAttributes(typeof(BitmapDrawingTestAttribute), false).Length == 1)
 					.ToArray();
 
-				var typeTests = runType(type, testMethods);
+				if (testMethods.Length == 0)
+					continue;
+
+				var typeTests = runTypeTest(type, testMethods);
 				results.AddRange(typeTests);
 			}
 
 			return results.ToArray();
 		}
 
-		TestResult[] runType(Type type, MethodInfo[] methods)
+		TestResult[] runTypeTest(Type type, MethodInfo[] methods)
 		{
 			return runInstanceTests(type, methods);
 		}
@@ -76,7 +79,8 @@ namespace CrossUI.Testing
 			var results = new List<TestResult>();
 			foreach (var method in methods)
 			{
-				var source = new TestSource(instance.GetType().FullName, method.Name);
+				var type = instance.GetType();
+				var source = new TestSource(type.Namespace, type.Name, method.Name);
 				try
 				{
 
