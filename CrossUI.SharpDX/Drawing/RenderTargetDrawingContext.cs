@@ -11,12 +11,13 @@ namespace CrossUI.Drawing
 		public RenderTargetDrawingContext(RenderTarget target, int width, int height)
 		{
 			_target = target;
+			_target.AntialiasMode = AntialiasMode.PerPrimitive;
 
 			Width = width;
 			Height = height;
 
 			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-			_strokeWidth = 1;
+			_strokeWeight = 1;
 		}
 
 		public void Dispose()
@@ -25,7 +26,7 @@ namespace CrossUI.Drawing
 		}
 
 		Brush _strokeBrush;
-		float _strokeWidth;
+		double _strokeWeight;
 
 		public int Width { get; private set; }
 		public int Height { get; private set; }
@@ -47,7 +48,12 @@ namespace CrossUI.Drawing
 
 		public void stroke(Color color)
 		{
-			throw new NotImplementedException();
+			_strokeBrush = new SolidColorBrush(_target, color.import());
+		}
+
+		public void strokeWeight(double weight)
+		{
+			_strokeWeight = weight;
 		}
 
 		public void noStroke()
@@ -92,14 +98,21 @@ namespace CrossUI.Drawing
 
 		public void roundedRect(double x, double y, double width, double height, double cornerRadius)
 		{
-			var rect = new RoundedRect
+			var hsw = _strokeWeight/2;
+			var rect = new RectangleF(
+				import(x+hsw), 
+				import(y+hsw), 
+				import(x + width - hsw), 
+				import(y + height - hsw));
+
+			var roundedRect = new RoundedRect
 			{
-				Rect = new RectangleF(f(x), f(y), f(x+width), f(y + height)),
-				RadiusX = f(cornerRadius),
-				RadiusY = f(cornerRadius)
+				Rect = rect,
+				RadiusX = import(cornerRadius),
+				RadiusY = import(cornerRadius)
 			};
 
-			_target.DrawRoundedRectangle(rect, _strokeBrush, _strokeWidth);
+			_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight.import());
 		}
 
 		public void text(string text, double x, double y, double width, double height)
@@ -107,9 +120,22 @@ namespace CrossUI.Drawing
 			throw new NotImplementedException();
 		}
 
-		static float f(double d)
+		static float import(double d)
+		{
+			return d.import();
+		}
+	}
+
+	static class Conversions
+	{
+		public static float import(this double d)
 		{
 			return (float) d;
+		}
+
+		public static Color4 import(this Color color)
+		{
+			return new Color4(color.Red.import(), color.Green.import(), color.Blue.import(), color.Alpha.import());
 		}
 	}
 }
