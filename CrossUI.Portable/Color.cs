@@ -1,8 +1,8 @@
 ﻿namespace CrossUI
 {
-	public sealed class Color
+	public struct Color
 	{
-		public Color(double red, double green, double blue, double alpha)
+		public Color(double red, double green, double blue, double alpha = 1)
 		{
 			Red = red;
 			Green = green;

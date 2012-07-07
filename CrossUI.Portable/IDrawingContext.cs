@@ -1,4 +1,5 @@
-﻿namespace CrossUI
+﻿
+namespace CrossUI
 {
 	public interface IDrawingContext
 	{
@@ -11,6 +12,7 @@
 		void noFill();
 
 		void stroke(Color color);
+		void strokeWeight(double weight);
 		void noStroke();
 
 		void point(double x, double y);
@@ -24,5 +26,13 @@
 		void roundedRect(double x, double y, double width, double height, double cornerRadius);
 
 		void text(string text, double x, double y, double width, double height);
+	}
+
+	public static class DrawingContextExtensions
+	{
+		public static void stroke(this IDrawingContext c, double r, double g, double b, double a = 1.0)
+		{
+			c.stroke(new Color(r, g, b));
+		}
 	}
 }
