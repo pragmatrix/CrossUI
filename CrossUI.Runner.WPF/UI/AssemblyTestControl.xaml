@@ -12,27 +12,15 @@
 			<RowDefinition/>
 			<RowDefinition Height="16"/>
 		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="6.18*"></ColumnDefinition>
-			<ColumnDefinition Width="3.82*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
 
-		<Grid Grid.Row="0" Grid.ColumnSpan="2">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
+		<Grid>
 			<Label Name="Title" FontSize="16">Title</Label>
-			<Button x:Name="RemoveButton" Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
+			<Button HorizontalAlignment="Right" x:Name="RemoveButton" Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
 		</Grid>
 		
 		<WrapPanel x:Name="ResultsPanel" Grid.Row="2">
 		</WrapPanel>
-		
-		<TreeView Grid.Column="1" Grid.Row="2">
-		</TreeView>
-
-		<Separator Grid.Row="3" Grid.ColumnSpan="2"></Separator>
+		<Separator Grid.Row="3"></Separator>
 		
 	</Grid>
 </UserControl>

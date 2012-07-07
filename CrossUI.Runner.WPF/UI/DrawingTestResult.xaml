@@ -11,7 +11,7 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<UserControl HorizontalContentAlignment="Left">
-			<Border BorderBrush="LightGray" BorderThickness="2">
+			<Border BorderBrush="LightGray" BorderThickness="2" Padding="2">
 				<ContentPresenter Name="Result" />
 			</Border>
 		</UserControl>
