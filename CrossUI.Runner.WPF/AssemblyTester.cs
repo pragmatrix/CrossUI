@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Controls;
 using CrossUI.Runner.Config;
 using CrossUI.Runner.WPF.UI;
@@ -47,7 +49,7 @@ namespace CrossUI.Runner.WPF
 			if (res == null || !res.Value)
 				return;
 
-			var config = AssemblyTestConfiguration.create(dialog.FileName);
+			var config = AssemblyTestConfiguration.create(dialog.FileName, Enumerable.Empty<CollapsedClass>());
 			addTest(config);
 
 			storeConfig();
@@ -57,6 +59,7 @@ namespace CrossUI.Runner.WPF
 		{
 			var control = new AssemblyTestControl();
 			var test = new AssemblyTest(config, control);
+			test.ConfigChanged += storeConfig;
 
 			_tests.Add(test);
 			var insertPos = _testPanel.Children.Count - 1;
@@ -81,6 +84,7 @@ namespace CrossUI.Runner.WPF
 
 		void storeConfig()
 		{
+			Debug.WriteLine(">>! storing config");
 			var config = createConfig();
 			config.store();
 		}

@@ -28,7 +28,11 @@ namespace CrossUI.Runner.Config
 				return new Configuration();
 
 			var contents = File.ReadAllText(ConfigurationPath);
-			return JsonSerializer.DeserializeFromString<Configuration>(contents);
+			var config = JsonSerializer.DeserializeFromString<Configuration>(contents);
+
+			config.AssemblyTests.ForEach(at => at.sanitize());
+
+			return config;
 		}
 
 		static readonly string ConfigurationPath = makeConfigurationPath();

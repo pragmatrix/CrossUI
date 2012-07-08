@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using CrossUI.Runner.Config;
 using CrossUI.Runner.WPF.UI;
 using CrossUI.Testing;
+using Toolbox;
 
 namespace CrossUI.Runner.WPF
 {
@@ -13,10 +14,13 @@ namespace CrossUI.Runner.WPF
 		readonly AssemblyTestConfiguration _config;
 		public readonly AssemblyTestControl Control;
 		readonly LenientFileWatcher _watcher;
+		readonly TestResultPresenter _presenter;
 		readonly TestScheduler _scheduler;
 		readonly Dispatcher _uiDispatcher = Dispatcher.CurrentDispatcher;
 
 		bool _disposed;
+
+		public event Action ConfigChanged;
 
 		public AssemblyTest(AssemblyTestConfiguration config, AssemblyTestControl control)
 		{
@@ -27,6 +31,10 @@ namespace CrossUI.Runner.WPF
 
 			control.Title.Content = Path.GetFileName(path);
 
+			_presenter = new TestResultPresenter(config, control);
+			_presenter.ClassCollapsed += classCollapsed;
+			_presenter.ClassExpanded += classExpanded;
+
 			_scheduler = new TestScheduler(asyncRunTest);
 
 			_watcher = new LenientFileWatcher(
@@ -35,6 +43,21 @@ namespace CrossUI.Runner.WPF
 			_watcher.Changed += _scheduler.schedule;
 
 			_scheduler.schedule();
+		}
+
+		void classExpanded(string ns, string className)
+		{
+			Debug.WriteLine(">>! class expanded");
+			_config.classExpanded(ns, className);
+			ConfigChanged.raise();
+			_scheduler.schedule();
+		}
+
+		void classCollapsed(string ns, string className)
+		{
+			Debug.WriteLine(">>! class collapsed");
+			_config.classCollapsed(ns, className);
+			ConfigChanged.raise();
 		}
 
 		public void Dispose()
@@ -58,7 +81,7 @@ namespace CrossUI.Runner.WPF
 			_uiDispatcher.BeginInvoke((Action)(() =>
 				{
 					if (!_disposed)
-						TestResultPresenter.present(Control, results);
+						_presenter.present(results);
 				}
 				));
 		}

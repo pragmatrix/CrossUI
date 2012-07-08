@@ -5,33 +5,72 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CrossUI.Runner.Config;
+using CrossUI.Runner.WPF.UI;
 using Toolbox;
 using CrossUI.Testing;
+using TestResultClass = CrossUI.Testing.TestResultClass;
 
 namespace CrossUI.Runner.WPF
 {
-	static class TestResultPresenter
+	sealed class TestResultPresenter
 	{
-		public static void present(UI.AssemblyTestControl control, TestResultAssembly result)
+		readonly AssemblyTestConfiguration _config;
+		readonly AssemblyTestControl _control;
+
+		public event Action<string, string> ClassCollapsed;
+		public event Action<string, string> ClassExpanded;
+
+		public TestResultPresenter(AssemblyTestConfiguration config, UI.AssemblyTestControl control)
+		{
+			_config = config;
+			_control = control;
+		}
+
+		void connectClassExpander(TestResultClass result, UI.TestResultClass ui)
+		{
+			var expander = ui.Expander;
+
+			expander.Expanded += (s, args) => classExpanded(result, ui);
+			expander.Collapsed += (s, args) => classCollapsed(result, ui);
+		}
+
+		void classCollapsed(TestResultClass result, UI.TestResultClass ui)
+		{
+			ui.ErrorLabel.Visibility = Visibility.Collapsed;
+			ui.Methods.Visibility = Visibility.Collapsed;
+
+			ClassCollapsed.raise(result.Namespace, result.ClassName);
+		}
+
+		void classExpanded(TestResultClass result, UI.TestResultClass ui)
+		{
+			ui.ErrorLabel.Visibility = Visibility.Visible;
+			ui.Methods.Visibility = Visibility.Visible;
+
+			ClassExpanded.raise(result.Namespace, result.ClassName);
+		}
+
+		public void present(TestResultAssembly result)
 		{
 			if (result.Error_ != null)
 			{
-				showError(control.AssemblyErrorLabel, result.Error_);
-				control.ClassResults.Children.Clear();
+				showError(_control.AssemblyErrorLabel, result.Error_);
+				_control.ClassResults.Children.Clear();
 				return;
 			}
 
-			hideError(control.AssemblyErrorLabel);
+			hideError(_control.AssemblyErrorLabel);
 
 			var controls = result.Classes_.Select(createClassResultControl);
 
-			var children = control.ClassResults.Children;
+			var children = _control.ClassResults.Children;
 			children.Clear();
 			foreach (var c in controls)
 				children.Add(c);
 		}
 
-		static Control createClassResultControl(TestResultClass result)
+		Control createClassResultControl(TestResultClass result)
 		{
 			Debug.Assert(result.Error_ != null || result.Methods_ != null);
 
@@ -40,13 +79,23 @@ namespace CrossUI.Runner.WPF
 				ClassName = { Content = result.ClassName }
 			};
 
+			hideError(control.ErrorLabel);
+
+			if (_config.isClassCollapsed(result.Namespace, result.ClassName))
+			{
+				control.Expander.IsExpanded = false;
+				connectClassExpander(result, control);
+				return control;
+			}
+			
+			control.Expander.IsExpanded = true;
+			connectClassExpander(result, control);
+
 			if (result.Error_ != null)
 			{
 				showError(control.ErrorLabel, result.Error_);
 				return control;
 			}
-
-			hideError(control.ErrorLabel);
 
 			foreach (var methodControl in result.Methods_.Select(createMethodResultControl))
 			{

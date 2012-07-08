@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config\CollapsedClass.cs" />
     <Compile Include="DomainTestRunner.cs" />
     <Compile Include="LenientFileWatcher.cs" />
     <Compile Include="TestResultPresenter.cs" />
