@@ -8,6 +8,6 @@
 	<StackPanel>
 		<Label Name="ClassName" FontSize="15">ClassName</Label>
 		<Label Name="ErrorLabel" Foreground="Red">Error</Label>
-		<StackPanel x:Name="Methods" Margin="8,0,0,0"></StackPanel>
+		<StackPanel x:Name="Methods" Margin="16,0,0,0"></StackPanel>
 	</StackPanel>
 </UserControl>
