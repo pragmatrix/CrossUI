@@ -1,19 +1,9 @@
-﻿using System.Reflection;
-using NUnit.Framework;
+﻿using CrossUI;
+
+[assembly: DrawingBackend(typeof(CrossUI.SharpDX.DrawingBackend))]
 
 namespace CrossUI.Tests
 {
-	[TestFixture]
-	public class TestRunnerTests
-	{
-		[Test]
-		public void runTestsDirectly()
-		{
-			var testRunner = new Testing.TestRunner();
-			var results = testRunner.run(Assembly.GetExecutingAssembly());
-			Assert.That(results.Length == 1);
-		}
-	}
 
 	public sealed class RoundedRectangleTest
 	{

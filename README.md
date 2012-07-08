@@ -9,6 +9,8 @@ it is possible to visualize code-generated drawings in realtime as you type.
 
 	using CrossUI;
 
+	[assembly: DrawingBackend(typeof(CrossUI.SharpDX.DrawingBackend))]
+
 	namespace MyDrawings
 	{
 		public class RoundedRectangleTest

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CrossUI.Testing;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D10;
@@ -9,9 +10,9 @@ using Factory = SharpDX.Direct2D1.Factory;
 using FeatureLevel = SharpDX.Direct3D10.FeatureLevel;
 using MapFlags = SharpDX.Direct3D10.MapFlags;
 
-namespace CrossUI.Drawing
+namespace CrossUI.SharpDX.Drawing
 {
-	sealed class BitmapDrawingContext : IDisposable
+	sealed class BitmapDrawingContext : IBitmapDrawingContext, IDisposable
 	{
 		readonly int _width;
 		readonly int _height;

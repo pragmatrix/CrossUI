@@ -156,9 +156,9 @@
       <Project>{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}</Project>
       <Name>CrossUI.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrossUI.SharpDX\CrossUI.SharpDX.csproj">
-      <Project>{F46BFFCE-B059-4D62-8669-A24F6E8A543D}</Project>
-      <Name>CrossUI.SharpDX</Name>
+    <ProjectReference Include="..\CrossUI.Testing\CrossUI.Testing.csproj">
+      <Project>{F3551D7E-62A7-4770-9897-35BB867C91A2}</Project>
+      <Name>CrossUI.Testing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

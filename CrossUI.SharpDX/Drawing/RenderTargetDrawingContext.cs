@@ -2,7 +2,7 @@
 using SharpDX;
 using SharpDX.Direct2D1;
 
-namespace CrossUI.Drawing
+namespace CrossUI.SharpDX.Drawing
 {
 	sealed class RenderTargetDrawingContext : IDrawingContext, IDisposable
 	{
@@ -99,8 +99,9 @@ namespace CrossUI.Drawing
 		public void roundedRect(double x, double y, double width, double height, double cornerRadius)
 		{
 			var hsw = _strokeWeight/2;
+
 			var rect = new RectangleF(
-				import(x+hsw), 
+				import(x+hsw),
 				import(y+hsw), 
 				import(x + width - hsw), 
 				import(y + height - hsw));

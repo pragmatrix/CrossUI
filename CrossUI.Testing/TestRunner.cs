@@ -2,24 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CrossUI.Drawing;
 using CrossUI.Toolbox;
 
 namespace CrossUI.Testing
 {
 	public sealed class TestRunner : MarshalByRefObject
 	{
-		public TestResult[] run(string assemblyPath)
+		public TestResult[] run(string testAssemblyPath)
 		{
 			// http://blogs.msdn.com/b/suzcook/archive/2003/05/29/choosing-a-binding-context.aspx#57147
 			// LoadFrom differs from Load in that dependent assemblies can be resolved outside from the 
 			// BasePath.
 
-			var assembly = Assembly.LoadFrom(assemblyPath);
-			return run(assembly);
+			var assembly = Assembly.LoadFrom(testAssemblyPath);
+			var drawingBackendType = tryLocateDrawingBackend(assembly);
+			if (drawingBackendType == null)
+				throw new TestException("Missing [DrawingBackend] attribute. Please add [assembly:DrawingBackend] to your test assembly.");
+
+			var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType);
+			return run(drawingBackend, assembly);
 		}
 
-		public TestResult[] run(Assembly assembly)
+		static Type tryLocateDrawingBackend(Assembly assembly)
+		{
+			var attribute = assembly.GetCustomAttributes(typeof (DrawingBackendAttribute), false);
+			return attribute.Length == 0 ? null : ((DrawingBackendAttribute)attribute[0]).Type;
+		}
+
+		public TestResult[] run(IDrawingBackend drawingBackend, Assembly assembly)
 		{
 			var results = new List<TestResult>();
 
@@ -32,19 +42,19 @@ namespace CrossUI.Testing
 				if (testMethods.Length == 0)
 					continue;
 
-				var typeTests = runTypeTest(type, testMethods);
+				var typeTests = runTypeTest(drawingBackend, type, testMethods);
 				results.AddRange(typeTests);
 			}
 
 			return results.ToArray();
 		}
 
-		TestResult[] runTypeTest(Type type, MethodInfo[] methods)
+		TestResult[] runTypeTest(IDrawingBackend drawingBackend, Type type, MethodInfo[] methods)
 		{
-			return runInstanceTests(type, methods);
+			return runInstanceTests(drawingBackend, type, methods);
 		}
 
-		TestResult[] runInstanceTests(Type type, MethodInfo[] methods)
+		TestResult[] runInstanceTests(IDrawingBackend drawingBackend, Type type, MethodInfo[] methods)
 		{
 			var constructor = type.GetConstructor(new Type[0]);
 			if (constructor == null)
@@ -54,7 +64,7 @@ namespace CrossUI.Testing
 
 			try
 			{
-				return runMethodTests(instance, methods);
+				return runMethodTests(drawingBackend, instance, methods);
 			}
 			finally
 			{
@@ -74,7 +84,7 @@ namespace CrossUI.Testing
 			}
 		}
 
-		TestResult[] runMethodTests(object instance, MethodInfo[] methods)
+		TestResult[] runMethodTests(IDrawingBackend drawingBackend, object instance, MethodInfo[] methods)
 		{
 			var results = new List<TestResult>();
 			foreach (var method in methods)
@@ -84,7 +94,7 @@ namespace CrossUI.Testing
 				try
 				{
 
-					var bitmap = runMethodTest(instance, method);
+					var bitmap = runMethodTest(drawingBackend, instance, method);
 					results.Add(new TestResult(source, bitmap));
 				}
 				catch (Exception e)
@@ -96,7 +106,7 @@ namespace CrossUI.Testing
 			return results.ToArray();
 		}
 
-		TestResultBitmap runMethodTest(object instance, MethodInfo method)
+		TestResultBitmap runMethodTest(IDrawingBackend drawingBackend, object instance, MethodInfo method)
 		{
 			if (method.IsGenericMethod)
 				throw new Exception("{0}: is not allowed to be generic".format(method));
@@ -111,7 +121,7 @@ namespace CrossUI.Testing
 
 			var attribute = (BitmapDrawingTestAttribute)method.GetCustomAttributes(typeof (BitmapDrawingTestAttribute), false)[0];
 
-			using (var context = new BitmapDrawingContext(attribute.Width, attribute.Height))
+			using (var context = drawingBackend.createBitmapDrawingContext(attribute.Width, attribute.Height))
 			{
 				IDrawingContext drawingContext;
 				using (context.beginDraw(out drawingContext))
