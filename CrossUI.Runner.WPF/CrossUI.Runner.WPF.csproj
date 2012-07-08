@@ -163,10 +163,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">
-      <Project>{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}</Project>
-      <Name>CrossUI.Portable</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CrossUI.Testing\CrossUI.Testing.csproj">
       <Project>{F3551D7E-62A7-4770-9897-35BB867C91A2}</Project>
       <Name>CrossUI.Testing</Name>

@@ -1,5 +1,4 @@
 ﻿using CrossUI.SharpDX.Drawing;
-using CrossUI.Testing;
 
 namespace CrossUI.SharpDX
 {
