@@ -21,7 +21,7 @@ namespace CrossUI.Tests.DrawingContext
 
 		public void ColoredRoundedRect(IDrawingContext context)
 		{
-			context.Stroke(1, 0, 0);
+			context.Stroke(new Color(1, 0, 0));
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 
@@ -57,6 +57,11 @@ namespace CrossUI.Tests.DrawingContext
 			const double pi = Math.PI;
 			context.Arc(0, 0, context.Width, context.Height, 0, pi/2);
 			context.Arc(0, 0, context.Width, context.Height, pi, pi *1.5);
+		}
+
+		public void Bezier(IDrawingContext context)
+		{
+			context.Bezier(0, 0, context.Width, 0, 0, context.Height, context.Width, context.Height);
 		}
 	}
 }

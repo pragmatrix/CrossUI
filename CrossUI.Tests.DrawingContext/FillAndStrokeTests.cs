@@ -7,8 +7,8 @@ namespace CrossUI.Tests.DrawingContext
 	{
 		void setup(IDrawingContext context)
 		{
-			context.Fill(color: new Color(0, 1, 0));
-			context.Stroke(color: new Color(1, 0, 0), weight: 2);
+			context.Fill(new Color(0, 1, 0));
+			context.Stroke(new Color(1, 0, 0), weight: 2);
 		}
 
 		public void RegularRect(IDrawingContext context)
@@ -35,6 +35,12 @@ namespace CrossUI.Tests.DrawingContext
 			const double pi = Math.PI;
 			context.Arc(0, 0, context.Width, context.Height, 0, pi / 2);
 			context.Arc(0, 0, context.Width, context.Height, pi, pi * 1.5);
+		}
+
+		public void Bezier(IDrawingContext context)
+		{
+			setup(context);
+			context.Bezier(0, 0, context.Width, 0, 0, context.Height, context.Width, context.Height);
 		}
 	}
 }

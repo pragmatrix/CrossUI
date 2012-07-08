@@ -21,7 +21,7 @@ namespace CrossUI.Tests
 
 		public void ColoredRect(IDrawingContext context)
 		{
-			context.Stroke(1, 0, 0);
+			context.Stroke(new Color(1, 0, 0));
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 

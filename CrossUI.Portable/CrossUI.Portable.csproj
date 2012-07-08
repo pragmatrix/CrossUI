@@ -40,8 +40,9 @@
     <Compile Include="IBitmapDrawingContext.cs" />
     <Compile Include="IDrawingBackend.cs" />
     <Compile Include="IDrawingContext.cs" />
+    <Compile Include="IClosedFigureContext.cs" />
+    <Compile Include="IGeometryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stroke.cs" />
     <Compile Include="Toolbox\DisposeAction.cs" />
     <Compile Include="Toolbox\StringExtensions.cs" />
   </ItemGroup>

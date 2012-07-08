@@ -151,45 +151,35 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				var r = fillRect(x, y, width, height);
 
-				using (var pg = new PathGeometry(_target.Factory))
-				{
-					using (var sink = pg.Open())
-					{
-						var centerPoint = new DrawingPointF(r.X + r.Width/2, r.Y + r.Height/2);
-						var startPoint = pointOnArc(r, start);
+				var centerPoint = new DrawingPointF(r.X + r.Width / 2, r.Y + r.Height / 2);
 
-						sink.BeginFigure(centerPoint, FigureBegin.Filled);
+				fillPath(centerPoint, sink =>
+					{
+						var startPoint = pointOnArc(r, start);
 						sink.AddLine(startPoint);
 						addArc(r, start, stop, sink);
-
-						sink.EndFigure(FigureEnd.Closed);
-						sink.Close();
-					}
-
-					_target.FillGeometry(pg, _fillBrush_);
-				}
+					});
 			}
 
 			if (Stroking)
 			{
 				var r = strokeAlignedRect(x, y, width, height);
-
-				using (var pg = new PathGeometry(_target.Factory))
-				{
-					using (var sink = pg.Open())
-					{
-						var currentPoint = pointOnArc(r, start);
-
-						sink.BeginFigure(currentPoint, FigureBegin.Hollow);
-						addArc(r, start, stop, sink);
-
-						sink.EndFigure(FigureEnd.Open);
-						sink.Close();
-					}
-
-					_target.DrawGeometry(pg, _strokeBrush, _strokeWeight);
-				}
+				var currentPoint = pointOnArc(r, start);
+				drawPath(currentPoint, sink => addArc(r, start, stop, sink));
 			}
+		}
+
+		DrawingPointF pointOnArc(RectangleF r, double angle)
+		{
+			var rx = r.Width / 2;
+			var ry = r.Height / 2;
+			var cx = r.X + rx;
+			var cy = r.Y + ry;
+
+			var dx = Math.Cos(angle) * rx;
+			var dy = Math.Sin(angle) * ry;
+
+			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
 		}
 
 		void addArc(RectangleF r, double start, double stop, GeometrySink sink)
@@ -201,7 +191,7 @@ namespace CrossUI.SharpDX.Drawing
 			// the quality of Direct2D arcs are lousy, so we render them in 16 segments per circle
 
 			const int MaxSegments = 16;
-			const double SegmentAngle = Math.PI*2/MaxSegments;
+			const double SegmentAngle = Math.PI * 2 / MaxSegments;
 
 			for (var segment = 0; angle < stop && segment != MaxSegments; ++segment)
 			{
@@ -223,17 +213,68 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		DrawingPointF pointOnArc(RectangleF r, double angle)
+		public void Bezier(double x, double y, double c1x, double c1y, double c2x, double c2y, double ex, double ey)
 		{
-			var rx = r.Width/2;
-			var ry = r.Height/2;
-			var cx = r.X + rx;
-			var cy = r.Y + ry;
+			if (Filling)
+			{
+				fillPath(importPoint(x, y), sink =>
+				{
+					var bezierSegment = new BezierSegment()
+					{
+						Point1 = importPoint(c1x, c1y),
+						Point2 = importPoint(c2x, c2y),
+						Point3 = importPoint(ex, ey)
+					};
 
-			var dx = Math.Cos(angle)*rx;
-			var dy = Math.Sin(angle)*ry;
+					sink.AddBezier(bezierSegment);
+				});
+			}
 
-			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
+			if (Stroking)
+			{
+				drawPath(importPoint(x, y), sink =>
+					{
+						var bezierSegment = new BezierSegment()
+						{
+							Point1 = importPoint(c1x, c1y),
+							Point2 = importPoint(c2x, c2y),
+							Point3 = importPoint(ex, ey)
+						};
+
+						sink.AddBezier(bezierSegment);
+					});
+			}
+		}
+
+		void drawPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		{
+			using (var geometry = createPath(false, begin, figureBuilder))
+			{
+				_target.DrawGeometry(geometry, _strokeBrush, _strokeWeight);
+			}
+		}
+
+		void fillPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		{
+			using (var geometry = createPath(true, begin, figureBuilder))
+			{
+				_target.FillGeometry(geometry, _fillBrush_);
+			}
+		}
+
+		public Geometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		{
+			var pg = new PathGeometry(_target.Factory);
+
+			using (var sink = pg.Open())
+			{
+				sink.BeginFigure(begin, filled ? FigureBegin.Filled : FigureBegin.Hollow);
+				figureBuilder(sink);
+				sink.EndFigure(filled ? FigureEnd.Closed : FigureEnd.Open);
+				sink.Close();
+			}
+
+			return pg;
 		}
 
 
