@@ -31,7 +31,9 @@ namespace CrossUI.Runner.WPF
 
 			control.Title.Content = Path.GetFileName(path);
 
-			_watcher = new FileWatcher(path);
+			_watcher = new FileWatcher(
+				Path.GetDirectoryName(path), 
+				"*.dll");
 			_watcher.Changed += queueTestRun;
 
 			queueTestRun();

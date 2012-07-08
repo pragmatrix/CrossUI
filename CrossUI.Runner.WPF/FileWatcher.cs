@@ -16,17 +16,15 @@ namespace CrossUI.Runner.WPF
 		readonly Dispatcher _dispatcher;
 		readonly FileSystemWatcher _watcher;
 
-		public FileWatcher(string path)
+		public FileWatcher(string directory, string filter)
 		{
-			_path = path;
+			_path = directory;
 			_dispatcher = Dispatcher.CurrentDispatcher;
-			var dir = Path.GetDirectoryName(path);
-			var fn = Path.GetFileName(path);
 
 			_watcher = new FileSystemWatcher();
 			_watcher.BeginInit();
-			_watcher.Path = dir;
-			_watcher.Filter = fn;
+			_watcher.Path = directory;
+			_watcher.Filter = filter;
 			_watcher.IncludeSubdirectories = false;
 			_watcher.InternalBufferSize = InitialBufferSize;
 
