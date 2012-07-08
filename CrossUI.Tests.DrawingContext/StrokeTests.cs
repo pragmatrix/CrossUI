@@ -6,7 +6,7 @@ using CrossUI;
 namespace CrossUI.Tests.DrawingContext
 {
 	[BitmapDrawingTest(Width = 80, Height = 40)]
-	public sealed class DrawingContextTest
+	public sealed class StrokeTests
 	{
 		public void RoundedRect(IDrawingContext context)
 		{

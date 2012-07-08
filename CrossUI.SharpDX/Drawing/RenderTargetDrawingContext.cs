@@ -27,6 +27,8 @@ namespace CrossUI.SharpDX.Drawing
 			_strokeBrush.Dispose();
 		}
 
+		Brush _fillBrush_;
+
 		Brush _strokeBrush;
 		float _strokeWeight;
 		StrokeAlign _strokeAlign;
@@ -39,17 +41,18 @@ namespace CrossUI.SharpDX.Drawing
 			throw new NotImplementedException();
 		}
 
-		public void Fill(Color color)
+		public void Fill(Color? color)
 		{
-			throw new NotImplementedException();
+			if (color != null)
+				_fillBrush_ = new SolidColorBrush(_target, color.Value.import());
 		}
 
 		public void NoFill()
 		{
-			throw new NotImplementedException();
+			_fillBrush_ = null;
 		}
 
-		public void Stroke(Color? color = null, double? weight = null, StrokeAlign? align = null)
+		public void Stroke(Color? color, double? weight, StrokeAlign? align)
 		{
 			if (color != null)
 				_strokeBrush = new SolidColorBrush(_target, color.Value.import());
@@ -66,70 +69,163 @@ namespace CrossUI.SharpDX.Drawing
 			_strokeWeight = 0;
 		}
 
+		bool Filling
+		{
+			get { return _fillBrush_ != null && _strokeWeight == 0; }
+		}
+
+		bool Stroking
+		{
+			get { return _strokeWeight != 0f && _fillBrush_ == null; }
+		}
+
+		bool StrokedFill
+		{
+			get { return _strokeWeight != 0f && _fillBrush_ != null; }
+		}
+
 		public void Line(double x1, double y1, double x2, double y2)
 		{
-			_target.DrawLine(importPoint(x1, y1), importPoint(x2, y2), _strokeBrush, _strokeWeight);
+			if (Stroking)
+				_target.DrawLine(importPoint(x1, y1), importPoint(x2, y2), _strokeBrush, _strokeWeight);
 		}
 
 		public void Rect(double x, double y, double width, double height)
 		{
-			var r = strokeAlignedRect(x, y, width, height);
-			_target.DrawRectangle(r, _strokeBrush, _strokeWeight);
+			if (Stroking)
+			{
+				var r = strokeAlignedRect(x, y, width, height);
+				_target.DrawRectangle(r, _strokeBrush, _strokeWeight);
+			}
+
+			if (Filling)
+			{
+				var r = fillRect(x, y, width, height);
+				_target.FillRectangle(r, _fillBrush_);
+			}
+
+		}
+
+		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
+		{
+
+			if (Stroking)
+			{
+				var roundedRect = new RoundedRect
+				{
+					Rect = strokeAlignedRect(x, y, width, height),
+					RadiusX = import(cornerRadius),
+					RadiusY = import(cornerRadius)
+				};
+
+				_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight);
+			}
+
+			if (Filling)
+			{
+				var roundedRect = new RoundedRect
+				{
+					Rect = fillRect(x, y, width, height),
+					RadiusX = import(cornerRadius),
+					RadiusY = import(cornerRadius)
+				};
+
+				_target.FillRoundedRectangle(roundedRect, _fillBrush_);
+			}
 		}
 
 		public void Ellipse(double x, double y, double width, double height)
 		{
-			var r = strokeAlignedRect(x, y, width, height);
-			var ellipse = new Ellipse(importPoint(r.Left + r.Width/2, r.Top + r.Height/2), r.Width/2, r.Height/2);
-			_target.DrawEllipse(ellipse, _strokeBrush, _strokeWeight);
+			if (Stroking)
+			{
+				var r = strokeAlignedRect(x, y, width, height);
+				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
+				_target.DrawEllipse(ellipse, _strokeBrush, _strokeWeight);
+			}
+
+			if (Filling)
+			{
+				var r = fillRect(x, y, width, height);
+				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
+				_target.FillEllipse(ellipse, _fillBrush_);
+			}
 		}
 
 		public void Arc(double x, double y, double width, double height, double start, double stop)
 		{
-			var r = strokeAlignedRect(x, y, width, height);
-
-			using (var pg = new PathGeometry(_target.Factory))
+			if (Stroking)
 			{
-				using (var sink = pg.Open())
+				var r = strokeAlignedRect(x, y, width, height);
+
+				using (var pg = new PathGeometry(_target.Factory))
 				{
-					var rx = r.Width/2;
-					var ry = r.Height/2;
-
-					var currentPoint = pointOnArc(r, start);
-
-					sink.BeginFigure(currentPoint, FigureBegin.Hollow);
-
-					var angle = start;
-
-					// the quality of Direct2D arcs are lousy, so we render them in 16 segments per circle
-
-					const int MaxSegments = 16;
-					const double SegmentAngle = Math.PI*2/MaxSegments;
-
-					for (var segment = 0; angle < stop && segment != MaxSegments; ++segment)
+					using (var sink = pg.Open())
 					{
-						var angleLeft = stop - angle;
-						var angleNow = Math.Min(SegmentAngle, angleLeft);
-						var nextAngle = angle + angleNow;
-						var nextPoint = pointOnArc(r, nextAngle);
+						var currentPoint = pointOnArc(r, start);
 
-						sink.AddArc(new ArcSegment
-						{
-							ArcSize = ArcSize.Small,
-							Size = new DrawingSizeF(rx, ry),
-							Point = nextPoint,
-							RotationAngle = (stop - start).import(),
-							SweepDirection = SweepDirection.Clockwise
-						});
+						sink.BeginFigure(currentPoint, FigureBegin.Hollow);
+						addArc(r, start, stop, sink);
 
-						angle = nextAngle;
+						sink.EndFigure(FigureEnd.Open);
+						sink.Close();
 					}
 
-					sink.EndFigure(FigureEnd.Open);
-					sink.Close();
+					_target.DrawGeometry(pg, _strokeBrush, _strokeWeight);
 				}
+			}
 
-				_target.DrawGeometry(pg, _strokeBrush, _strokeWeight);
+			if (Filling)
+			{
+				var r = fillRect(x, y, width, height);
+
+				using (var pg = new PathGeometry(_target.Factory))
+				{
+					using (var sink = pg.Open())
+					{
+						var centerPoint = new DrawingPointF(r.X + r.Width/2, r.Y + r.Height/2);
+						var startPoint = pointOnArc(r, start);
+
+						sink.BeginFigure(centerPoint, FigureBegin.Filled);
+						sink.AddLine(startPoint);
+						addArc(r, start, stop, sink);
+
+						sink.EndFigure(FigureEnd.Closed);
+						sink.Close();
+					}
+
+					_target.FillGeometry(pg, _fillBrush_);
+				}
+			}
+		}
+
+		void addArc(RectangleF r, double start, double stop, GeometrySink sink)
+		{
+			var rx = r.Width / 2;
+			var ry = r.Height / 2;
+			var angle = start;
+
+			// the quality of Direct2D arcs are lousy, so we render them in 16 segments per circle
+
+			const int MaxSegments = 16;
+			const double SegmentAngle = Math.PI*2/MaxSegments;
+
+			for (var segment = 0; angle < stop && segment != MaxSegments; ++segment)
+			{
+				var angleLeft = stop - angle;
+				var angleNow = Math.Min(SegmentAngle, angleLeft);
+				var nextAngle = angle + angleNow;
+				var nextPoint = pointOnArc(r, nextAngle);
+
+				sink.AddArc(new ArcSegment
+				{
+					ArcSize = ArcSize.Small,
+					Size = new DrawingSizeF(rx, ry),
+					Point = nextPoint,
+					RotationAngle = (stop - start).import(),
+					SweepDirection = SweepDirection.Clockwise
+				});
+
+				angle = nextAngle;
 			}
 		}
 
@@ -146,22 +242,23 @@ namespace CrossUI.SharpDX.Drawing
 			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
 		}
 
-		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
-		{
-			var roundedRect = new RoundedRect
-			{
-				Rect = strokeAlignedRect(x, y, width, height),
-				RadiusX = import(cornerRadius),
-				RadiusY = import(cornerRadius)
-			};
-
-			_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight);
-		}
 
 		public void Text(string text, double x, double y, double width, double height)
 		{
 			throw new NotImplementedException();
 		}
+
+		RectangleF fillRect(double x, double y, double width, double height)
+		{
+			var rect = new RectangleF(
+				import(x),
+				import(y),
+				import(x + width),
+				import(y + height));
+
+			return rect;
+		}
+
 
 		RectangleF strokeAlignedRect(double x, double y, double width, double height)
 		{

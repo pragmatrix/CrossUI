@@ -7,7 +7,7 @@
 
 		void Font(Font font);
 
-		void Fill(Color color);
+		void Fill(Color? color = null);
 		void NoFill();
 
 		void Stroke(Color? color = null, double? weight = null, StrokeAlign? align = null);

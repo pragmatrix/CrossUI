@@ -1,0 +1,40 @@
+﻿using System;
+
+namespace CrossUI.Tests.DrawingContext
+{
+	[BitmapDrawingTest(Width = 80, Height = 40)]
+	public class FillTests
+	{
+		void setup(IDrawingContext context)
+		{
+			context.Fill(color: new Color(0, 0, 0));
+			context.NoStroke();
+		}
+
+		public void RegularRect(IDrawingContext context)
+		{
+			setup(context);
+			context.Rect(0, 0, context.Width, context.Height);
+		}
+
+		public void RoundedRect(IDrawingContext context)
+		{
+			setup(context);
+			context.RoundedRect(0, 0, 80, 40, 8);
+		}
+
+		public void Ellipse(IDrawingContext context)
+		{
+			setup(context);
+			context.Ellipse(0, 0, context.Width, context.Height);
+		}
+
+		public void Arc(IDrawingContext context)
+		{
+			setup(context);
+			const double pi = Math.PI;
+			context.Arc(0, 0, context.Width, context.Height, 0, pi / 2);
+			context.Arc(0, 0, context.Width, context.Height, pi, pi * 1.5);
+		}
+	}
+}
