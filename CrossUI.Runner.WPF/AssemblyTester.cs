@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using CrossUI.Runner.Config;
 using CrossUI.Runner.WPF.UI;
 using Microsoft.Win32;
 

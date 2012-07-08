@@ -113,9 +113,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AssemblyTest.cs" />
-    <Compile Include="AssemblyTestConfiguration.cs" />
+    <Compile Include="Config\AssemblyTestConfiguration.cs" />
     <Compile Include="AssemblyTester.cs" />
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Config\Configuration.cs" />
     <Page Include="UI\AssemblyTestControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

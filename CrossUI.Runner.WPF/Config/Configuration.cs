@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using ServiceStack.Text;
 
-namespace CrossUI.Runner.WPF
+namespace CrossUI.Runner.Config
 {
 	[Obfuscation]
 	sealed class Configuration

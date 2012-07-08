@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Threading;
+using CrossUI.Runner.Config;
 using CrossUI.Runner.WPF.UI;
 using CrossUI.Testing;
 

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CrossUI.Runner.WPF
+namespace CrossUI.Runner.Config
 {
 	[Obfuscation]
 	sealed class AssemblyTestConfiguration

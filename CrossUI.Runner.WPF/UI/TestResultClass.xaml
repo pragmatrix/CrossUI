@@ -6,7 +6,10 @@
 			 mc:Ignorable="d" 
 			 d:DesignHeight="300" d:DesignWidth="300" Margin="0,8,0,0">
 	<StackPanel>
-		<Label Name="ClassName" FontSize="15">ClassName</Label>
+		<Grid Background="#f0f0f0">
+			<Label Name="ClassName" FontSize="15" Margin="5,0,0,0">ClassName</Label>
+			<Expander x:Name="Expander"  HorizontalAlignment="Right"></Expander>
+		</Grid>
 		<Label Name="ErrorLabel" Foreground="Red">Error</Label>
 		<StackPanel x:Name="Methods" Margin="16,0,0,0"></StackPanel>
 	</StackPanel>
