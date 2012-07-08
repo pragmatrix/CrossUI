@@ -41,7 +41,6 @@
     <Compile Include="TestResultMethod.cs" />
     <Compile Include="TestResultBitmap.cs" />
     <Compile Include="TestRunner.cs" />
-    <Compile Include="TestSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">

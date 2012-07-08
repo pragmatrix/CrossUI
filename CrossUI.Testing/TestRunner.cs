@@ -99,8 +99,6 @@ namespace CrossUI.Testing
 			var results = new List<TestResultMethod>();
 			foreach (var method in methods)
 			{
-				var type = instance.GetType();
-				var source = new TestSource(type.Namespace, type.Name, method.Name);
 				try
 				{
 
