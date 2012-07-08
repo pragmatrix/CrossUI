@@ -36,7 +36,7 @@ CrossUI could provide implementations that use alternative APIs (like Direct2D f
 * For graphical editors, regression testing and visualizing different drawing states side by side is not a primary focus. CrossUI's testrunner can already be used to visualize different states of the same drawing and will soon support visual diffs.
 * Like Test Driven Development puts your implementation code into shape, 
 Test Driven Visualizations could do the same for user interfaces. 
-All the major platform's user interface APIs feel bloated and are a pain to work with. 
+All the major platforms' user interface APIs feel bloated and are a pain to work with. 
 CrossUI's instant testing feedback could be basis for user interface APIs that are simple, light and extensible.
 
 ## What
@@ -44,7 +44,7 @@ CrossUI's instant testing feedback could be basis for user interface APIs that a
 Right now, CrossUI consists of 
 
 * CrossUI.Portable: a portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org).
-* CrossUI.Testing: the current testrunner implementation and the test result classes.
+* CrossUI.Testing: the current testrunner implementation and test result classes.
 * CrossUI.SharpDX: a [SharpDX](http://sharpdx.org/) based Direct2D rendering implementation.
 * CrussUI.Runner.WPF: A WPF based graphical user interface that automatically reruns tests and presents them when DLLs are changed.
 
