@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,9 +18,11 @@ namespace CrossUI.Runner.WPF
 	{
 		readonly AssemblyTestConfiguration _config;
 		public readonly AssemblyTestControl Control;
-		public readonly LenientFileWatcher _watcher;
-		readonly object _oneTestAtATime = new object();
+		readonly LenientFileWatcher _watcher;
+		readonly TestScheduler _scheduler;
 		readonly Dispatcher _uiDispatcher = Dispatcher.CurrentDispatcher;
+
+		bool _disposed;
 
 		public AssemblyTest(AssemblyTestConfiguration config, AssemblyTestControl control)
 		{
@@ -33,17 +33,21 @@ namespace CrossUI.Runner.WPF
 
 			control.Title.Content = Path.GetFileName(path);
 
+			_scheduler = new TestScheduler(asyncRunTest);
+
 			_watcher = new LenientFileWatcher(
 				Path.GetDirectoryName(path), 
 				"*.dll");
-			_watcher.Changed += queueTestRun;
+			_watcher.Changed += _scheduler.schedule;
 
-			queueTestRun();
+			_scheduler.schedule();
 		}
 
 		public void Dispose()
 		{
 			_watcher.Dispose();
+			_scheduler.Dispose();
+			_disposed = true;
 		}
 
 		public AssemblyTestConfiguration Config
@@ -54,20 +58,20 @@ namespace CrossUI.Runner.WPF
 			}
 		}
 
-		void queueTestRun()
+		void asyncRunTest()
 		{
-			ThreadPool.QueueUserWorkItem(s =>
+			var results = runTest();
+			_uiDispatcher.BeginInvoke((Action)(() =>
 				{
-					lock (_oneTestAtATime)
-					{
-						var results = runTest();
-						_uiDispatcher.BeginInvoke((Action)(() => presentTestResults(results)), DispatcherPriority.Normal);
-					}
-				});
+					if (!_disposed)
+						presentTestResults(results);
+				}
+				));
 		}
 
 		TestResultAssembly runTest()
 		{
+			Debug.WriteLine(">>! running test");
 			var testRunner = new DomainTestRunner(_config.AssemblyPath);
 			return testRunner.run();
 		}
@@ -91,7 +95,7 @@ namespace CrossUI.Runner.WPF
 				children.Add(c);
 		}
 
-		Control createClassResultControl(TestResultClass result)
+		static Control createClassResultControl(TestResultClass result)
 		{
 			Debug.Assert(result.Error_ != null || result.Methods_ != null);
 
@@ -115,7 +119,6 @@ namespace CrossUI.Runner.WPF
 
 			return control;
 		}
-
 
 		static Control createMethodResultControl(TestResultMethod result)
 		{
