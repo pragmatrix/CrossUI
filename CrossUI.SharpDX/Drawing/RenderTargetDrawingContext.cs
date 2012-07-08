@@ -71,17 +71,12 @@ namespace CrossUI.SharpDX.Drawing
 
 		bool Filling
 		{
-			get { return _fillBrush_ != null && _strokeWeight == 0; }
+			get { return _fillBrush_ != null; }
 		}
 
 		bool Stroking
 		{
-			get { return _strokeWeight != 0f && _fillBrush_ == null; }
-		}
-
-		bool StrokedFill
-		{
-			get { return _strokeWeight != 0f && _fillBrush_ != null; }
+			get { return _strokeWeight != 0f; }
 		}
 
 		public void Line(double x1, double y1, double x2, double y2)
@@ -108,6 +103,17 @@ namespace CrossUI.SharpDX.Drawing
 
 		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
 		{
+			if (Filling)
+			{
+				var roundedRect = new RoundedRect
+				{
+					Rect = fillRect(x, y, width, height),
+					RadiusX = import(cornerRadius),
+					RadiusY = import(cornerRadius)
+				};
+
+				_target.FillRoundedRectangle(roundedRect, _fillBrush_);
+			}
 
 			if (Stroking)
 			{
@@ -120,60 +126,27 @@ namespace CrossUI.SharpDX.Drawing
 
 				_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight);
 			}
-
-			if (Filling)
-			{
-				var roundedRect = new RoundedRect
-				{
-					Rect = fillRect(x, y, width, height),
-					RadiusX = import(cornerRadius),
-					RadiusY = import(cornerRadius)
-				};
-
-				_target.FillRoundedRectangle(roundedRect, _fillBrush_);
-			}
 		}
 
 		public void Ellipse(double x, double y, double width, double height)
 		{
-			if (Stroking)
-			{
-				var r = strokeAlignedRect(x, y, width, height);
-				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
-				_target.DrawEllipse(ellipse, _strokeBrush, _strokeWeight);
-			}
-
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
 				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
 				_target.FillEllipse(ellipse, _fillBrush_);
 			}
+
+			if (Stroking)
+			{
+				var r = strokeAlignedRect(x, y, width, height);
+				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
+				_target.DrawEllipse(ellipse, _strokeBrush, _strokeWeight);
+			}
 		}
 
 		public void Arc(double x, double y, double width, double height, double start, double stop)
 		{
-			if (Stroking)
-			{
-				var r = strokeAlignedRect(x, y, width, height);
-
-				using (var pg = new PathGeometry(_target.Factory))
-				{
-					using (var sink = pg.Open())
-					{
-						var currentPoint = pointOnArc(r, start);
-
-						sink.BeginFigure(currentPoint, FigureBegin.Hollow);
-						addArc(r, start, stop, sink);
-
-						sink.EndFigure(FigureEnd.Open);
-						sink.Close();
-					}
-
-					_target.DrawGeometry(pg, _strokeBrush, _strokeWeight);
-				}
-			}
-
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
@@ -194,6 +167,27 @@ namespace CrossUI.SharpDX.Drawing
 					}
 
 					_target.FillGeometry(pg, _fillBrush_);
+				}
+			}
+
+			if (Stroking)
+			{
+				var r = strokeAlignedRect(x, y, width, height);
+
+				using (var pg = new PathGeometry(_target.Factory))
+				{
+					using (var sink = pg.Open())
+					{
+						var currentPoint = pointOnArc(r, start);
+
+						sink.BeginFigure(currentPoint, FigureBegin.Hollow);
+						addArc(r, start, stop, sink);
+
+						sink.EndFigure(FigureEnd.Open);
+						sink.Close();
+					}
+
+					_target.DrawGeometry(pg, _strokeBrush, _strokeWeight);
 				}
 			}
 		}
@@ -250,13 +244,22 @@ namespace CrossUI.SharpDX.Drawing
 
 		RectangleF fillRect(double x, double y, double width, double height)
 		{
-			var rect = new RectangleF(
-				import(x),
-				import(y),
-				import(x + width),
-				import(y + height));
+			if (!Stroking)
+			{
+				return new RectangleF(
+					import(x),
+					import(y),
+					import(x + width),
+					import(y + height));
+			}
 
-			return rect;
+			var fs = strokeFillShift();
+
+			return new RectangleF(
+				import(x+fs),
+				import(y+fs),
+				import(x + width - fs),
+				import(y + height - fs));
 		}
 
 
@@ -285,6 +288,24 @@ namespace CrossUI.SharpDX.Drawing
 					return width/2;
 				case StrokeAlign.Outside:
 					return -width/2;
+			}
+
+			Debug.Assert(false);
+			return 0;
+		}
+
+		double strokeFillShift()
+		{
+			var width = _strokeWeight;
+
+			switch (_strokeAlign)
+			{
+				case StrokeAlign.Center:
+					return width/2;
+				case StrokeAlign.Inside:
+					return width;
+				case StrokeAlign.Outside:
+					return 0;
 			}
 
 			Debug.Assert(false);

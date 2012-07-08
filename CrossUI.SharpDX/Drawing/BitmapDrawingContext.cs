@@ -59,7 +59,7 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			var surface = _texture.AsSurface();
 
-			var rtProperties = new RenderTargetProperties()
+			var rtProperties = new RenderTargetProperties
 			{
 				DpiX = 96,
 				DpiY = 96,

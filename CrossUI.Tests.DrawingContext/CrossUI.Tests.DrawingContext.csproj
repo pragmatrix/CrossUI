@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FillAndStrokeTests.cs" />
     <Compile Include="FillTests.cs" />
     <Compile Include="StrokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
