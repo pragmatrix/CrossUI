@@ -1,7 +1,7 @@
-# CrossUI - Portable Drawing API focused on Real-Time Test Feedback
+# CrossUI - Portable Drawing API focused on Instant Test Feedback
 
 Programming languages provide the ultimate flexibility for parameterizing user interfaces 
-and graphical output in general. But they lack the real-time feedback that markup languages 
+and graphical output in general. But they lack the instant feedback that markup languages 
 and visual editors provide. This drawback is not set in stone. With some effort and tool support,
 it is possible to visualize code-generated drawings in realtime as you type.
 
@@ -37,7 +37,7 @@ CrossUI could provide implementations that use alternative APIs (like Direct2D f
 * Like Test Driven Development puts your implementation code into shape, 
 Test Driven Visualizations could do the same for user interfaces. 
 All the major platform's user interface APIs feel bloated and are a pain to work with. 
-CrossUI's real-time testing feedback could be basis for user interface APIs that are simple, light and extensible.
+CrossUI's instant testing feedback could be basis for user interface APIs that are simple, light and extensible.
 
 ## What
 
@@ -89,7 +89,7 @@ In here you can change the code that produce the test results. If you got .NET D
 
 ## Future
 
-* Create an API and test-runner for user interface components, animations and gesture recognizers which are real-time-testable. 
+* Create an API and test-runner for user interface components, animations and gesture recognizers which are instant testable. 
 
 ## Contributions
 
