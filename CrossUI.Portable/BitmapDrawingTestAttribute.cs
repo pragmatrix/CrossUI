@@ -2,7 +2,7 @@
 
 namespace CrossUI
 {
-	[AttributeUsage(AttributeTargets.Method)]
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
 	public sealed class BitmapDrawingTestAttribute : Attribute
 	{
 		const int DefaultWidth = 256;

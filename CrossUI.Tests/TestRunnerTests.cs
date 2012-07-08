@@ -5,26 +5,28 @@ using CrossUI;
 
 namespace CrossUI.Tests
 {
+	[BitmapDrawingTest(Width = 80, Height = 40)]
 	public sealed class RoundedRectangleTest
 	{
-		[BitmapDrawingTest(Width=80, Height=40)]
 		public void RoundedRect(IDrawingContext context)
 		{
 			context.RoundedRect(0, 0, 80, 40, 8);
 		}
 
-		[BitmapDrawingTest(Width = 80, Height = 40)]
 		public void ThickRect(IDrawingContext context)
 		{
 			context.StrokeWeight(3);
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 
-		[BitmapDrawingTest(Width = 80, Height = 40)]
 		public void ColoredRect(IDrawingContext context)
 		{
 			context.Stroke(1, 0, 0);
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+		}
+
+		public void ShouldBeIgnored()
+		{
 		}
 	}
 
@@ -42,14 +44,14 @@ namespace CrossUI.Tests
 		}
 	}
 
-	public sealed class PrivateConstructor
+	public sealed class PrivateConstructorTest
 	{
-		private PrivateConstructor()
+		private PrivateConstructorTest()
 		{
 		}
 
 		[BitmapDrawingTest]
-		public void NeverTested()
+		public void ShouldBeIgnored()
 		{
 		}
 	}
