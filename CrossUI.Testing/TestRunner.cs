@@ -68,7 +68,6 @@ namespace CrossUI.Testing
 			public readonly BitmapDrawingTestAttribute Attribute;
 			public readonly bool Ignorable;
 
-
 			public CandidateMethod(MethodInfo info, BitmapDrawingTestAttribute attribute, bool ignorable)
 			{
 				Info = info;
@@ -80,9 +79,7 @@ namespace CrossUI.Testing
 		static IEnumerable<CandidateMethod> getTestableMethodsForType(Type type)
 		{
 			var typeAttributes = type.GetCustomAttributes(typeof (BitmapDrawingTestAttribute), inherit: false);
-			BitmapDrawingTestAttribute typeAttribute_ = typeAttributes.Length == 1
-				? (BitmapDrawingTestAttribute) typeAttributes[0]
-				: null;
+			var typeAttribute_ = typeAttributes.Length == 1 ? (BitmapDrawingTestAttribute) typeAttributes[0] : null;
 
 			foreach (var method in type.GetMethods())
 			{
@@ -97,7 +94,11 @@ namespace CrossUI.Testing
 						break;
 
 					case 1:
-						yield return new CandidateMethod(method, (BitmapDrawingTestAttribute)attributes[0], ignorable: false);
+						var attribute = (BitmapDrawingTestAttribute) attributes[0];
+						if (typeAttribute_ != null)
+							attribute = typeAttribute_.refine(attribute);
+
+						yield return new CandidateMethod(method, attribute, ignorable: false);
 						break;
 				}
 			}
@@ -167,7 +168,10 @@ namespace CrossUI.Testing
 			var info = candidateMethod.Info;
 			var attribute = candidateMethod.Attribute;
 
-			using (var context = drawingBackend.createBitmapDrawingContext(attribute.Width, attribute.Height))
+			var width = attribute.Width;
+			var height = attribute.Height;
+
+			using (var context = drawingBackend.createBitmapDrawingContext(width, height))
 			{
 				IDrawingContext drawingContext;
 				using (context.beginDraw(out drawingContext))
@@ -175,7 +179,7 @@ namespace CrossUI.Testing
 					info.Invoke(instance, new object[] { drawingContext });
 				}
 	
-				return new TestResultBitmap(attribute.Width, attribute.Height, context.extractRawBitmap());
+				return new TestResultBitmap(width, height, context.extractRawBitmap());
 			}
 		}
 

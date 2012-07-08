@@ -25,6 +25,12 @@ namespace CrossUI.Tests
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 
+		[BitmapDrawingTest(Width = 120)]
+		public void LargerRect(IDrawingContext context)
+		{
+			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+		}
+
 		public void ShouldBeIgnored()
 		{
 		}
