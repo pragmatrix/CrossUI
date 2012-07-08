@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="DomainTestRunner.cs" />
     <Compile Include="LenientFileWatcher.cs" />
+    <Compile Include="TestResultPresenter.cs" />
     <Compile Include="TestScheduler.cs" />
     <Compile Include="Toolbox\Events.cs" />
     <Compile Include="Toolbox\ExceptionExtensions.cs" />
