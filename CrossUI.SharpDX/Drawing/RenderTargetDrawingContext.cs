@@ -31,72 +31,72 @@ namespace CrossUI.SharpDX.Drawing
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 
-		public void font(Font font)
+		public void Font(Font font)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void fill(Color color)
+		public void Fill(Color color)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void noFill()
+		public void NoFill()
 		{
 			throw new NotImplementedException();
 		}
 
-		public void stroke(Color color)
+		public void Stroke(Color color)
 		{
 			_strokeBrush = new SolidColorBrush(_target, color.import());
 		}
 
-		public void strokeWeight(double weight)
+		public void StrokeWeight(double weight)
 		{
 			_strokeWeight = weight;
 		}
 
-		public void noStroke()
+		public void NoStroke()
 		{
 			throw new NotImplementedException();
 		}
 
-		public void point(double x, double y)
+		public void Point(double x, double y)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void line(double x1, double y1, double x2, double y2)
+		public void Line(double x1, double y1, double x2, double y2)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void rect(double x, double y, double width, double height)
+		public void Rect(double x, double y, double width, double height)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void ellipse(double x, double y, double width, double height)
+		public void Ellipse(double x, double y, double width, double height)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(double x, double y, double width, double height, double start, double stop)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void triangle(double x1, double y1, double x2, double y2, double x3, double y3)
+		public void Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void quad(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
+		public void Quad(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void roundedRect(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
 		{
 			var hsw = _strokeWeight/2;
 
@@ -116,7 +116,7 @@ namespace CrossUI.SharpDX.Drawing
 			_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight.import());
 		}
 
-		public void text(string text, double x, double y, double width, double height)
+		public void Text(string text, double x, double y, double width, double height)
 		{
 			throw new NotImplementedException();
 		}

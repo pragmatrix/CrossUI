@@ -8,36 +8,36 @@ namespace CrossUI.Tests
 	public sealed class RoundedRectangleTest
 	{
 		[BitmapDrawingTest(Width=80, Height=40)]
-		public void roundedRect(IDrawingContext context)
+		public void RoundedRect(IDrawingContext context)
 		{
-			context.roundedRect(0, 0, 80, 40, 8);
+			context.RoundedRect(0, 0, 80, 40, 8);
 		}
 
 		[BitmapDrawingTest(Width = 80, Height = 40)]
-		public void thickRect(IDrawingContext context)
+		public void ThickRect(IDrawingContext context)
 		{
-			context.strokeWeight(3);
-			context.roundedRect(0, 0, context.Width, context.Height, 8);
+			context.StrokeWeight(3);
+			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 
 		[BitmapDrawingTest(Width = 80, Height = 40)]
-		public void coloredRect(IDrawingContext context)
+		public void ColoredRect(IDrawingContext context)
 		{
-			context.stroke(1, 0, 0);
-			context.roundedRect(0, 0, context.Width, context.Height, 8);
+			context.Stroke(1, 0, 0);
+			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 	}
 
 	public sealed class MethodErrorTest
 	{
 		[BitmapDrawingTest(Width=80,Height=40)]
-		public void error(IDrawingContext context)
+		public void Error(IDrawingContext context)
 		{
 			throw new Exception("Method Error");
 		}
 
 		[BitmapDrawingTest]
-		public void invalidParameters()
+		public void InvalidParameters()
 		{
 		}
 	}
@@ -49,7 +49,7 @@ namespace CrossUI.Tests
 		}
 
 		[BitmapDrawingTest]
-		public void neverTested()
+		public void NeverTested()
 		{
 		}
 	}
