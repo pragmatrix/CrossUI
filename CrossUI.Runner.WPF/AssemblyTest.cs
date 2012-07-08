@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -22,7 +21,7 @@ namespace CrossUI.Runner.WPF
 		readonly object _oneTestAtATime = new object();
 		readonly Dispatcher _uiDispatcher = Dispatcher.CurrentDispatcher;
 
-		public AssemblyTest(AssemblyTestConfiguration config, UI.AssemblyTestControl control)
+		public AssemblyTest(AssemblyTestConfiguration config, AssemblyTestControl control)
 		{
 			_config = config;
 			Control = control;
