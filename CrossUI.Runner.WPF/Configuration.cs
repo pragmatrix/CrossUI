@@ -18,7 +18,7 @@ namespace CrossUI.Runner.WPF
 
 		public void store()
 		{
-			var contents = TypeSerializer.SerializeToString(this);
+			var contents = JsonSerializer.SerializeToString(this);
 			File.WriteAllText(ConfigurationPath, contents);
 		}
 
@@ -28,15 +28,18 @@ namespace CrossUI.Runner.WPF
 				return new Configuration();
 
 			var contents = File.ReadAllText(ConfigurationPath);
-			return TypeSerializer.DeserializeFromString<Configuration>(contents);
+			return JsonSerializer.DeserializeFromString<Configuration>(contents);
 		}
 
 		static readonly string ConfigurationPath = makeConfigurationPath();
-		const int Version = 1;
+		
+		// 2: accidentally serialized jsv instead of json
+		//    roaming configuration does not make sense when we store paths.
+		const int Version = 2;
 
 		static string makeConfigurationPath()
 		{
-			var root = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+			var root = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 			var app = Path.Combine(root, "CrossUI.Runner");
 			Directory.CreateDirectory(app);
 			return Path.Combine(app, "Configuration." + Version + ".json");
