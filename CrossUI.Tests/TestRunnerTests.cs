@@ -15,7 +15,7 @@ namespace CrossUI.Tests
 
 		public void ThickRect(IDrawingContext context)
 		{
-			context.StrokeWeight(3);
+			context.Stroke(weight: 3);
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 

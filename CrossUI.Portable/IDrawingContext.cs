@@ -1,5 +1,4 @@
-﻿
-namespace CrossUI
+﻿namespace CrossUI
 {
 	public interface IDrawingContext
 	{
@@ -7,22 +6,19 @@ namespace CrossUI
 		int Height { get; }
 
 		void Font(Font font);
-	
+
 		void Fill(Color color);
 		void NoFill();
 
-		void Stroke(Color color);
-		void StrokeWeight(double weight);
+		void Stroke(Color? color = null, double? weight = null, StrokeAlign? align = null);
 		void NoStroke();
 
-		void Point(double x, double y);
 		void Line(double x1, double y1, double x2, double y2);
+
 		void Rect(double x, double y, double width, double height);
 		void Ellipse(double x, double y, double width, double height);
 		void Arc(double x, double y, double width, double height, double start, double stop);
 
-		void Triangle(double x1, double y1, double x2, double y2, double x3, double y3);
-		void Quad(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4);
 		void RoundedRect(double x, double y, double width, double height, double cornerRadius);
 
 		void Text(string text, double x, double y, double width, double height);

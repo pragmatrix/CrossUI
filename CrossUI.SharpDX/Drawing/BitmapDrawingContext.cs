@@ -11,7 +11,7 @@ using MapFlags = SharpDX.Direct3D10.MapFlags;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed class BitmapDrawingContext : IBitmapDrawingContext, IDisposable
+	sealed class BitmapDrawingContext : IBitmapDrawingContext
 	{
 		readonly int _width;
 		readonly int _height;

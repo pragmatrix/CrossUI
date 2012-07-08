@@ -89,8 +89,15 @@ namespace CrossUI.Runner.WPF
 		TestResultAssembly runTest()
 		{
 			Debug.WriteLine(">>! running test");
-			var testRunner = new DomainTestRunner(_config.AssemblyPath);
-			return testRunner.run();
+			try
+			{
+				var testRunner = new DomainTestRunner(_config.AssemblyPath);
+				return testRunner.run();
+			}
+			catch (Exception e)
+			{
+				return new TestResultAssembly(_config.AssemblyPath, e);
+			}
 		}
 	}
 }
