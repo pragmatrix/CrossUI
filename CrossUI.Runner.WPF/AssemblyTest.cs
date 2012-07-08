@@ -77,6 +77,7 @@ namespace CrossUI.Runner.WPF
 			if (result.Error_ != null)
 			{
 				showError(Control.AssemblyErrorLabel, result.Error_);
+				Control.ClassResults.Children.Clear();
 				return;
 			}
 
