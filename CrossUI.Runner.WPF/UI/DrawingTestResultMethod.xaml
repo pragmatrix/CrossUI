@@ -1,0 +1,14 @@
+<UserControl x:Class="CrossUI.Runner.WPF.UI.DrawingTestResultMethod"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 mc:Ignorable="d" 
+			 d:DesignHeight="300" d:DesignWidth="300" Margin="0,8,0,0">
+	<StackPanel Orientation="Horizontal">
+		<Border BorderBrush="LightGray" BorderThickness="2" Padding="2">
+			<ContentPresenter Name="Result" />
+		</Border>
+		<Label Margin="8,0,0,0" Name="MethodName" VerticalContentAlignment="Bottom">MethodName</Label>
+	</StackPanel>
+</UserControl>

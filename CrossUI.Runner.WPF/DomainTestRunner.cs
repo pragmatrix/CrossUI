@@ -14,7 +14,7 @@ namespace CrossUI.Runner.WPF
 			_assemblyPath = assemblyPath;
 		}
 
-		public TestResult[] run()
+		public TestResultAssembly run()
 		{
 			var evidence = AppDomain.CurrentDomain.Evidence;
 			var fn = Path.GetFileName(_assemblyPath);

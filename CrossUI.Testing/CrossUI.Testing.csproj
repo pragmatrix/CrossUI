@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestException.cs" />
-    <Compile Include="TestResult.cs" />
+    <Compile Include="TestResultAssembly.cs" />
+    <Compile Include="TestResultClass.cs" />
+    <Compile Include="TestResultMethod.cs" />
     <Compile Include="TestResultBitmap.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestSource.cs" />

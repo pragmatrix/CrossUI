@@ -1,24 +1,22 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Threading;
-using CrossUI.Toolbox;
 using Toolbox;
 
 namespace CrossUI.Runner.WPF
 {
 	sealed class FileWatcher : IDisposable
 	{
-		readonly string _path;
 		const int InitialBufferSize = 0x8000;
 
 		public Action Changed;
-			
+		public Action<Exception> Error;
+
 		readonly Dispatcher _dispatcher;
 		readonly FileSystemWatcher _watcher;
 
 		public FileWatcher(string directory, string filter)
 		{
-			_path = directory;
 			_dispatcher = Dispatcher.CurrentDispatcher;
 
 			_watcher = new FileSystemWatcher();
@@ -70,7 +68,7 @@ namespace CrossUI.Runner.WPF
 
 		void onError(object sender, ErrorEventArgs e)
 		{
-			throw new Exception("{0}: File system watcher error {1}".format(_path, e.GetException().Message));
+			dispatcherError(e.GetException());
 		}
 
 		public void dispatchChanged()
@@ -80,6 +78,15 @@ namespace CrossUI.Runner.WPF
 					if (_watcher.EnableRaisingEvents)
 						Changed.raise();
 				}));
+		}
+
+		void dispatcherError(Exception e)
+		{
+			_dispatcher.BeginInvoke((Action)(() =>
+			{
+				if (_watcher.EnableRaisingEvents)
+					Error.raise(e);
+			}));
 		}
 
 		public void Dispose()

@@ -8,19 +8,27 @@ namespace CrossUI.Testing
 {
 	public sealed class TestRunner : MarshalByRefObject
 	{
-		public TestResult[] run(string testAssemblyPath)
+		public TestResultAssembly run(string testAssemblyPath)
 		{
 			// http://blogs.msdn.com/b/suzcook/archive/2003/05/29/choosing-a-binding-context.aspx#57147
 			// LoadFrom differs from Load in that dependent assemblies can be resolved outside from the 
 			// BasePath.
 
-			var assembly = Assembly.LoadFrom(testAssemblyPath);
-			var drawingBackendType = tryLocateDrawingBackend(assembly);
-			if (drawingBackendType == null)
-				throw new TestException("Missing [DrawingBackend] attribute. Please add [assembly:DrawingBackend] to your test assembly.");
+			try
+			{
+				var assembly = Assembly.LoadFrom(testAssemblyPath);
+				var drawingBackendType = tryLocateDrawingBackend(assembly);
+				if (drawingBackendType == null)
+					throw new Exception("Missing [DrawingBackend] attribute. Please add [assembly:DrawingBackend] to your test assembly.");
 
-			var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType);
-			return run(drawingBackend, assembly);
+				var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType);
+				var classes = run(drawingBackend, assembly);
+				return new TestResultAssembly(testAssemblyPath, classes);
+			}
+			catch (Exception e)
+			{
+				return new TestResultAssembly(testAssemblyPath, e);
+			}
 		}
 
 		static Type tryLocateDrawingBackend(Assembly assembly)
@@ -29,9 +37,9 @@ namespace CrossUI.Testing
 			return attribute.Length == 0 ? null : ((DrawingBackendAttribute)attribute[0]).Type;
 		}
 
-		public TestResult[] run(IDrawingBackend drawingBackend, Assembly assembly)
+		public TestResultClass[] run(IDrawingBackend drawingBackend, Assembly assembly)
 		{
-			var results = new List<TestResult>();
+			var results = new List<TestResultClass>();
 
 			foreach (var type in assembly.GetTypes())
 			{
@@ -42,23 +50,25 @@ namespace CrossUI.Testing
 				if (testMethods.Length == 0)
 					continue;
 
-				var typeTests = runTypeTest(drawingBackend, type, testMethods);
-				results.AddRange(typeTests);
+				try
+				{
+					var methods = runClassTest(drawingBackend, type, testMethods);
+					results.Add(new TestResultClass(type.Namespace, type.Name, methods));
+				}
+				catch (Exception e)
+				{
+					results.Add(new TestResultClass(type.Namespace, type.Name, e));
+				}
 			}
 
 			return results.ToArray();
 		}
 
-		TestResult[] runTypeTest(IDrawingBackend drawingBackend, Type type, MethodInfo[] methods)
-		{
-			return runInstanceTests(drawingBackend, type, methods);
-		}
-
-		TestResult[] runInstanceTests(IDrawingBackend drawingBackend, Type type, MethodInfo[] methods)
+		TestResultMethod[] runClassTest(IDrawingBackend drawingBackend, Type type, MethodInfo[] methods)
 		{
 			var constructor = type.GetConstructor(new Type[0]);
 			if (constructor == null)
-				throw new TestException("No constructor found for {0}".format(type));
+				throw new Exception("No constructor found for {0}".format(type));
 
 			var instance = constructor.Invoke(null);
 
@@ -84,9 +94,9 @@ namespace CrossUI.Testing
 			}
 		}
 
-		TestResult[] runMethodTests(IDrawingBackend drawingBackend, object instance, MethodInfo[] methods)
+		TestResultMethod[] runMethodTests(IDrawingBackend drawingBackend, object instance, MethodInfo[] methods)
 		{
-			var results = new List<TestResult>();
+			var results = new List<TestResultMethod>();
 			foreach (var method in methods)
 			{
 				var type = instance.GetType();
@@ -95,11 +105,11 @@ namespace CrossUI.Testing
 				{
 
 					var bitmap = runMethodTest(drawingBackend, instance, method);
-					results.Add(new TestResult(source, bitmap));
+					results.Add(new TestResultMethod(method.Name, bitmap));
 				}
 				catch (Exception e)
 				{
-					results.Add(new TestResult(source, e));
+					results.Add(new TestResultMethod(method.Name, e));
 				}
 			}
 

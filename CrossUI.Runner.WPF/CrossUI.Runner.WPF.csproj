@@ -81,19 +81,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DomainTestRunner.cs" />
+    <Compile Include="LenientFileWatcher.cs" />
     <Compile Include="Toolbox\Events.cs" />
+    <Compile Include="Toolbox\ExceptionExtensions.cs" />
+    <Compile Include="Toolbox\Milliseconds.cs" />
+    <Compile Include="Toolbox\Signal.cs" />
     <Compile Include="UI\AssemblyTestControl.xaml.cs">
       <DependentUpon>AssemblyTestControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\AssemblyTestNewControl.xaml.cs">
       <DependentUpon>AssemblyTestNewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\DrawingTestResult.xaml.cs">
-      <DependentUpon>DrawingTestResult.xaml</DependentUpon>
+    <Compile Include="UI\DrawingTestResultMethod.xaml.cs">
+      <DependentUpon>DrawingTestResultMethod.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileWatcher.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\TestResultClass.xaml.cs">
+      <DependentUpon>TestResultClass.xaml</DependentUpon>
     </Compile>
     <Page Include="Simple Styles Default.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -115,13 +122,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\DrawingTestResult.xaml">
+    <Page Include="UI\DrawingTestResultMethod.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\TestResultClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

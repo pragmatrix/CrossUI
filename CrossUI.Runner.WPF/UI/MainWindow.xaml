@@ -4,7 +4,7 @@
 		Title="CrossUI.Runner.WPF" Height="600" Width="800" WindowStartupLocation="CenterScreen"
 		TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="Grayscale" >
 
-	<ScrollViewer Padding="8" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+	<ScrollViewer Padding="8" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
 		<StackPanel Name="Tests">
 		</StackPanel>
 	</ScrollViewer>
