@@ -43,10 +43,10 @@ CrossUI's instant testing feedback could be basis for user interface APIs that a
 
 Right now, CrossUI consists of 
 
+* CrussUI.Runner.WPF: A WPF based graphical test runner that automatically reruns tests and presents them when DLLs are changed. Here is a [screenshot of the test runner](http://twitpic.com/a5n3ad) in action.
 * CrossUI.Portable: a portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org).
 * CrossUI.Testing: the current testrunner implementation and test result classes.
 * CrossUI.SharpDX: a [SharpDX](http://sharpdx.org/) based Direct2D rendering implementation.
-* CrussUI.Runner.WPF: A WPF based graphical user interface that automatically reruns tests and presents them when DLLs are changed.
 
 ## Getting Started
 
