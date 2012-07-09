@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D10;
-using Toolbox;
+using CrossUI.Toolbox;
 using Device1 = SharpDX.Direct3D10.Device1;
 using Factory = SharpDX.Direct2D1.Factory;
 using FeatureLevel = SharpDX.Direct3D10.FeatureLevel;
