@@ -2,6 +2,6 @@
 {
 	public interface IDrawingBackend
 	{
-		IBitmapDrawingContext createBitmapDrawingContext(int width, int height);
+		IBitmapDrawingContext CreateBitmapDrawingContext(int width, int height);
 	}
 }

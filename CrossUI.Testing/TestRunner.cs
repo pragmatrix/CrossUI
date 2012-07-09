@@ -171,15 +171,15 @@ namespace CrossUI.Testing
 			var width = attribute.Width;
 			var height = attribute.Height;
 
-			using (var context = drawingBackend.createBitmapDrawingContext(width, height))
+			using (var context = drawingBackend.CreateBitmapDrawingContext(width, height))
 			{
 				IDrawingContext drawingContext;
-				using (context.beginDraw(out drawingContext))
+				using (context.BeginDraw(out drawingContext))
 				{
 					info.Invoke(instance, new object[] { drawingContext });
 				}
 	
-				return new TestResultBitmap(width, height, context.extractRawBitmap());
+				return new TestResultBitmap(width, height, context.ExtractRawBitmap());
 			}
 		}
 

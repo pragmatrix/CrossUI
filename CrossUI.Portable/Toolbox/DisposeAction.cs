@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Toolbox
+namespace CrossUI.Toolbox
 {
 	public struct DisposeAction : IDisposable
 	{

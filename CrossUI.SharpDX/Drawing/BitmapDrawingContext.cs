@@ -55,7 +55,7 @@ namespace CrossUI.SharpDX.Drawing
 			_device.Dispose();
 		}
 
-		public IDisposable beginDraw(out IDrawingContext context)
+		public IDisposable BeginDraw(out IDrawingContext context)
 		{
 			var surface = _texture.AsSurface();
 
@@ -84,7 +84,7 @@ namespace CrossUI.SharpDX.Drawing
 				});
 		}
 
-		public byte[] extractRawBitmap()
+		public byte[] ExtractRawBitmap()
 		{
 			// use a cpu bound resource
 
