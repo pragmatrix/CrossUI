@@ -74,7 +74,7 @@ change the code that produces the test results. If you got .NET Demon installed,
 ## Roadmap
 
 * Complete the drawing API
-	* Implement paths
+	* Implement paths and geometry combiners
 * Port the Drawing Backend to more platforms
 	* Android via MonoDroid
 	* iOS via MonoTouch
