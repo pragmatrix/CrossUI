@@ -64,7 +64,7 @@ Right now, CrossUI consists of
 * Build the solution
 * Start CrossUI.Runner.WPF
 * Press "Add Test.."
-* Select "CrossUI.Tests/bin/Debug/CrossUI.Tests.dll"
+* Select "CrossUI.Tests.DrawingContext/bin/Debug/CrossUI.Tests.DrawingContext.dll"
 
 The WPF Testrunner should now show some drawings. These drawings are test results of the tests in CrossUI.Tests.dll.
 
