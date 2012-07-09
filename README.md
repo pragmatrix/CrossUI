@@ -66,11 +66,10 @@ Right now, CrossUI consists of
 * Press "Add Test.."
 * Select "CrossUI.Tests.DrawingContext/bin/Debug/CrossUI.Tests.DrawingContext.dll"
 
-The WPF Testrunner should now show some drawings. These drawings are test results of the tests in CrossUI.Tests.dll.
+The WPF Testrunner should now show some drawings. These drawings are test results of the tests in CrossUI.Tests.DrawingContext.dll.
 
-* Open CrossUI.Tests/TestRunnerTests.cs
-
-In here you can change the code that produce the test results. If you got .NET Demon installed, changes should appear as you type.
+* For trying out the instant feedback, open a source file in the project CrossUI.Tests.DrawingContext and 
+change the code that produces the test results. If you got .NET Demon installed, changes should appear as you type.
 
 ## Roadmap
 
