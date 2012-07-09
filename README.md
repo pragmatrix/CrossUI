@@ -30,7 +30,7 @@ it is possible to visualize code-generated drawings in realtime as you type.
 There are a number of reasons for CrossUI.
 
 * Markup languages and APIs are not portable. Modern user interface APIs like .NET WPF, WinRT, iOS, Mac OS X, 
-and Android are completely different and make porting an application's user interface very time consuming. CrossUI could provide an API and testing frontend for all drawings and user interface components.
+and Android are all different and make porting an application's user interface very time consuming. CrossUI could provide an API and testing frontend for all drawings and user interface components.
 * Some of the user interface APIs lack the most basic features, like rendering UI controls into a background bitmap or composing geometries. 
 CrossUI could provide implementations that use alternative APIs (like Direct2D for WinRT).
 * For graphical editors, regression testing and visualizing different drawing states side by side is not a primary focus. CrossUI's testrunner can already be used to visualize different states of the same drawing and will soon support visual diffs.
