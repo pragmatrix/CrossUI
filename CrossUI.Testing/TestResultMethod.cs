@@ -3,7 +3,7 @@
 namespace CrossUI.Testing
 {
 	[Serializable]
-	public sealed class TestResultMethod
+	public sealed class TestResultMethod : ITestResultMethod
 	{
 		public readonly string Name;
 		public readonly Exception Error_;

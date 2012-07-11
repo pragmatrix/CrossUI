@@ -3,7 +3,7 @@
 namespace CrossUI.Testing
 {
 	[Serializable]
-	public sealed class TestResultBitmap
+	public sealed class TestResultBitmap : ITestResultBitmap
 	{
 		public readonly int Width;
 		public readonly int Height;

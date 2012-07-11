@@ -188,6 +188,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CrossUI.Testing.Portable\CrossUI.Testing.Portable.csproj">
+      <Project>{2905C72E-D3DD-47CA-AF57-7628295FC60F}</Project>
+      <Name>CrossUI.Testing.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrossUI.Testing\CrossUI.Testing.csproj">
       <Project>{F3551D7E-62A7-4770-9897-35BB867C91A2}</Project>
       <Name>CrossUI.Testing</Name>

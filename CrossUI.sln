@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Testing", "CrossUI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Tests.DrawingContext", "CrossUI.Tests.DrawingContext\CrossUI.Tests.DrawingContext.csproj", "{A8BA5CE0-9152-4D6D-8F4D-D2EAFF2B9348}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Testing.Portable", "CrossUI.Testing.Portable\CrossUI.Testing.Portable.csproj", "{2905C72E-D3DD-47CA-AF57-7628295FC60F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,16 @@ Global
 		{A8BA5CE0-9152-4D6D-8F4D-D2EAFF2B9348}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A8BA5CE0-9152-4D6D-8F4D-D2EAFF2B9348}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A8BA5CE0-9152-4D6D-8F4D-D2EAFF2B9348}.Release|x86.ActiveCfg = Release|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
