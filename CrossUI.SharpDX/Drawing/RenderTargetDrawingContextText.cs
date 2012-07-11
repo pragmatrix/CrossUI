@@ -1,5 +1,5 @@
 ﻿using SharpDX.Direct2D1;
-using SharpDX.DirectWrite;
+using DW = SharpDX.DirectWrite;
 using Factory = SharpDX.DirectWrite.Factory;
 
 namespace CrossUI.SharpDX.Drawing
@@ -12,10 +12,18 @@ namespace CrossUI.SharpDX.Drawing
 		string _font = "Arial";
 		double _fontSize = 10;
 		Brush _textBrush;
-		TextAlignment _textAlign;
-		ParagraphAlignment _paragraphAlign;
+		DW.TextAlignment _textAlign;
+		DW.ParagraphAlignment _paragraphAlign;
+		DW.WordWrapping _wrapping;
 
-		public void Text(string font, double? size, Color? color, TextAlign? align, ParagraphAlign? paragraphAlign)
+		public void Text(
+			string font, 
+			double? size, 
+			Color? color, 
+			TextAlignment? alignment, 
+			ParagraphAlignment? paragraphAlignment,
+			WordWrapping? wordWrapping
+			)
 		{
 			if (font != null)
 				_font = font;
@@ -23,8 +31,8 @@ namespace CrossUI.SharpDX.Drawing
 			if (size != null)
 				_fontSize = size.Value;
 
-			if (align != null)
-				_textAlign = align.Value.import();
+			if (alignment != null)
+				_textAlign = alignment.Value.import();
 
 			if (color != null)
 			{
@@ -32,18 +40,24 @@ namespace CrossUI.SharpDX.Drawing
 				_textBrush = new SolidColorBrush(_target, color.Value.import());
 			}
 
-			if (paragraphAlign != null)
-				_paragraphAlign = paragraphAlign.Value.import();
+			if (paragraphAlignment != null)
+				_paragraphAlign = paragraphAlignment.Value.import();
+
+			if (wordWrapping != null)
+			{
+				_wrapping = wordWrapping.Value.import();
+			}
 		}
 
 		public void Text(string text, double x, double y, double width, double height)
 		{
-			using (var format = new TextFormat(requireWriteFactory(), _font, _fontSize.import()))
+			using (var format = new DW.TextFormat(requireWriteFactory(), _font, _fontSize.import()))
 			{
-				using (var layout = new TextLayout(requireWriteFactory(), text, format, width.import(), height.import()))
+				using (var layout = new DW.TextLayout(requireWriteFactory(), text, format, width.import(), height.import()))
 				{
 					layout.TextAlignment = _textAlign;
 					layout.ParagraphAlignment = _paragraphAlign;
+					layout.WordWrapping = _wrapping;
 
 					_target.DrawTextLayout(importPoint(x, y), layout, _textBrush);
 
@@ -57,30 +71,43 @@ namespace CrossUI.SharpDX.Drawing
 		}
 	}
 
-	static partial class Converters
+	static class TextConverters
 	{
-		public static TextAlignment import(this TextAlign align)
+		public static DW.TextAlignment import(this TextAlignment alignment)
 		{
-			switch (align)
+			switch (alignment)
 			{
-				case TextAlign.Leading: return TextAlignment.Leading;
-				case TextAlign.Center: return TextAlignment.Center;
-				case TextAlign.Trailing: return TextAlignment.Trailing;
+				case TextAlignment.Leading: return DW.TextAlignment.Leading;
+				case TextAlignment.Center: return DW.TextAlignment.Center;
+				case TextAlignment.Trailing: return DW.TextAlignment.Trailing;
 			}
 
-			return default(TextAlignment);
+			return default(DW.TextAlignment);
 		}
 
-		public static ParagraphAlignment import(this ParagraphAlign align)
+		public static DW.ParagraphAlignment import(this ParagraphAlignment alignment)
 		{
-			switch (align)
+			switch (alignment)
 			{
-				case ParagraphAlign.Near: return ParagraphAlignment.Near;
-				case ParagraphAlign.Far: return ParagraphAlignment.Far;
-				case ParagraphAlign.Center: return ParagraphAlignment.Center;
+				case ParagraphAlignment.Near: return DW.ParagraphAlignment.Near;
+				case ParagraphAlignment.Far: return DW.ParagraphAlignment.Far;
+				case ParagraphAlignment.Center: return DW.ParagraphAlignment.Center;
 			}
 
-			return default(ParagraphAlignment);
+			return default(DW.ParagraphAlignment);
+		}
+
+		public static DW.WordWrapping import(this WordWrapping wrapping)
+		{
+			switch (wrapping)
+			{
+				case WordWrapping.Wrap:
+					return DW.WordWrapping.Wrap;
+				case WordWrapping.NoWrap:
+					return DW.WordWrapping.NoWrap;
+			}
+
+			return default(DW.WordWrapping);
 		}
 	}
 }

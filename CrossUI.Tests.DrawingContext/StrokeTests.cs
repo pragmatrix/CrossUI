@@ -24,7 +24,7 @@ namespace CrossUI.Tests.DrawingContext
 
 		public void OutsideAligned(IDrawingContext context)
 		{
-			context.Stroke(align: StrokeAlign.Outside);
+			context.Stroke(alignment: StrokeAlignment.Outside);
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
 		}
 

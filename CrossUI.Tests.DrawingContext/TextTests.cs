@@ -1,6 +1,6 @@
 ﻿namespace CrossUI.Tests.DrawingContext
 {
-	[BitmapDrawingTest(Width = 120, Height = 40)]
+	[BitmapDrawingTest(Width = 160, Height = 40)]
 	class TextTests
 	{
 		const string Text =
@@ -15,20 +15,21 @@
 		public void NoWordWrap(IDrawingContext ctx)
 		{
 			setup(ctx);
-			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
-		}
-
-		public void RightAligned(IDrawingContext ctx)
-		{
-			setup(ctx);
-			ctx.Text(align:TextAlign.Trailing);
+			ctx.Text(wordWrapping:WordWrapping.NoWrap);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
 		public void Centered(IDrawingContext ctx)
 		{
 			setup(ctx);
-			ctx.Text(align: TextAlign.Center);
+			ctx.Text(alignment: TextAlignment.Center);
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
+		public void RightAligned(IDrawingContext ctx)
+		{
+			setup(ctx);
+			ctx.Text(alignment:TextAlignment.Trailing);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
@@ -39,19 +40,19 @@
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		[BitmapDrawingTest(Height = 80)]
+		[BitmapDrawingTest(Height = 60)]
 		public void ParagraphCentered(IDrawingContext ctx)
 		{
 			setup(ctx);
-			ctx.Text(paragraphAlign:ParagraphAlign.Center);
+			ctx.Text(paragraphAlignment:ParagraphAlignment.Center);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		[BitmapDrawingTest(Height = 80)]
+		[BitmapDrawingTest(Height = 60)]
 		public void ParagraphBottom(IDrawingContext ctx)
 		{
 			setup(ctx);
-			ctx.Text(paragraphAlign: ParagraphAlign.Far);
+			ctx.Text(paragraphAlignment: ParagraphAlignment.Far);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 

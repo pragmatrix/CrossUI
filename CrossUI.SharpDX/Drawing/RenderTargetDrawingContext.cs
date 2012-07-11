@@ -37,7 +37,7 @@ namespace CrossUI.SharpDX.Drawing
 
 		Brush _strokeBrush;
 		float _strokeWeight;
-		StrokeAlign _strokeAlign;
+		StrokeAlignment _strokeAlignment;
 
 		Brush _fillBrush_;
 
@@ -66,7 +66,7 @@ namespace CrossUI.SharpDX.Drawing
 			_fillBrush_ = null;
 		}
 
-		public void Stroke(Color? color, double? weight, StrokeAlign? align)
+		public void Stroke(Color? color, double? weight, StrokeAlignment? alignment)
 		{
 			if (color != null)
 			{
@@ -77,8 +77,8 @@ namespace CrossUI.SharpDX.Drawing
 			if (weight != null)
 				_strokeWeight = weight.Value.import();
 
-			if (align != null)
-				_strokeAlign = align.Value;
+			if (alignment != null)
+				_strokeAlignment = alignment.Value;
 		}
 
 		public void NoStroke()
@@ -332,13 +332,13 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			var width = _strokeWeight;
 
-			switch (_strokeAlign)
+			switch (_strokeAlignment)
 			{
-				case StrokeAlign.Center:
+				case StrokeAlignment.Center:
 					return 0;
-				case StrokeAlign.Inside:
+				case StrokeAlignment.Inside:
 					return width/2;
-				case StrokeAlign.Outside:
+				case StrokeAlignment.Outside:
 					return -width/2;
 			}
 
@@ -350,13 +350,13 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			var width = _strokeWeight;
 
-			switch (_strokeAlign)
+			switch (_strokeAlignment)
 			{
-				case StrokeAlign.Center:
+				case StrokeAlignment.Center:
 					return width/2;
-				case StrokeAlign.Inside:
+				case StrokeAlignment.Inside:
 					return width;
-				case StrokeAlign.Outside:
+				case StrokeAlignment.Outside:
 					return 0;
 			}
 
@@ -380,7 +380,7 @@ namespace CrossUI.SharpDX.Drawing
 		}
 	}
 
-	static partial class Conversions
+	static class Conversions
 	{
 		public static float import(this double d)
 		{

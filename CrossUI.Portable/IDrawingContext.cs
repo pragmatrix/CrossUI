@@ -1,25 +1,23 @@
 ﻿namespace CrossUI
 {
-	public enum StrokeAlign
+	public enum StrokeAlignment
 	{
-		Inside,
-		Center,
-		Outside
+		Inside, Center, Outside
 	}
 
-	public enum TextAlign
+	public enum TextAlignment
 	{
-		Leading,
-		Trailing,
-		Center,
-		Justified
+		Leading, Center, Trailing, Justified
 	}
 
-	public enum ParagraphAlign
+	public enum ParagraphAlignment
 	{
-		Near,
-		Far,
-		Center
+		Near, Center, Far
+	}
+
+	public enum WordWrapping
+	{
+		Wrap, NoWrap
 	}
 
 	public interface IDrawingContext : IClosedFigureContext
@@ -30,15 +28,16 @@
 		void Fill(Color? color = null);
 		void NoFill();
 
-		void Stroke(Color? color = null, double? weight = null, StrokeAlign? align = null);
+		void Stroke(Color? color = null, double? weight = null, StrokeAlignment? alignment = null);
 		void NoStroke();
 
 		void Text(
 			string font = null, 
 			double? size = null, 
 			Color? color = null, 
-			TextAlign? align = null, 
-			ParagraphAlign? paragraphAlign = null);
+			TextAlignment? alignment = null, 
+			ParagraphAlignment? paragraphAlignment = null,
+			WordWrapping? wordWrapping = null);
 
 		void Text(string text, double x, double y, double width, double height);
 	}
