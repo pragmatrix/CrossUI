@@ -17,17 +17,21 @@ namespace CrossUI.SharpDX.Drawing
 			Width = width;
 			Height = height;
 			
+			// note: careful, if brushes are not being disposed they start leaking and refering back to
+			// all resources created in the render target.... We need to check SharpDX if this is 
+			// by design or a bug!
+
 			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-			_fillBrush_ = _strokeBrush;
+			_fillBrush_ = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
 		
 			_strokeWeight = 1;
 		}
 
 		public void Dispose()
 		{
+			flushFillBrush();
 			_strokeBrush.Dispose();
 		}
-
 
 		Brush _strokeBrush;
 		float _strokeWeight;
@@ -41,18 +45,32 @@ namespace CrossUI.SharpDX.Drawing
 		public void Fill(Color? color)
 		{
 			if (color != null)
+			{
+				flushFillBrush();
 				_fillBrush_ = new SolidColorBrush(_target, color.Value.import());
+			}
 		}
 
 		public void NoFill()
 		{
+			flushFillBrush();
+		}
+
+		void flushFillBrush()
+		{
+			if (_fillBrush_ == null)
+				return;
+			_fillBrush_.Dispose();
 			_fillBrush_ = null;
 		}
 
 		public void Stroke(Color? color, double? weight, StrokeAlign? align)
 		{
 			if (color != null)
+			{
+				_strokeBrush.Dispose();
 				_strokeBrush = new SolidColorBrush(_target, color.Value.import());
+			}
 
 			if (weight != null)
 				_strokeWeight = weight.Value.import();
