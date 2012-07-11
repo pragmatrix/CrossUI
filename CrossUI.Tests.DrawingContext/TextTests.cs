@@ -26,6 +26,14 @@
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
+		public void Colored(IDrawingContext ctx)
+		{
+			setup(ctx);
+			ctx.Text(color: new Color(1, 0, 0));
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
+
 		void setup(IDrawingContext ctx)
 		{
 			ctx.Text(font: "Tahoma", size: 10);

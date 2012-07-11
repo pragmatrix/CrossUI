@@ -25,7 +25,7 @@
 		void Stroke(Color? color = null, double? weight = null, StrokeAlign? align = null);
 		void NoStroke();
 
-		void Text(string font = null, double? size = null, TextAlign? align = null);
+		void Text(string font = null, double? size = null, TextAlign? align = null, Color? color = null);
 		void Text(string text, double x, double y, double width, double height);
 	}
 }

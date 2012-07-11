@@ -1,4 +1,6 @@
-﻿using SharpDX.DirectWrite;
+﻿using SharpDX.Direct2D1;
+using SharpDX.DirectWrite;
+using Factory = SharpDX.DirectWrite.Factory;
 
 namespace CrossUI.SharpDX.Drawing
 {
@@ -7,10 +9,11 @@ namespace CrossUI.SharpDX.Drawing
 		string _font = "Arial";
 		double _fontSize = 10;
 
+		Brush _textBrush;
 		TextAlign _textAlign;
 		Factory _writeFactory_;
 
-		public void Text(string font, double? size, TextAlign? align)
+		public void Text(string font, double? size, TextAlign? align, Color? color)
 		{
 			if (font != null)
 				_font = font;
@@ -20,6 +23,13 @@ namespace CrossUI.SharpDX.Drawing
 
 			if (align != null)
 				_textAlign = align.Value;
+
+			if (color != null)
+			{
+				_textBrush.Dispose();
+				_textBrush = new SolidColorBrush(_target, color.Value.import());
+			}
+
 		}
 
 		public void Text(string text, double x, double y, double width, double height)
@@ -29,7 +39,7 @@ namespace CrossUI.SharpDX.Drawing
 				using (var layout = new TextLayout(requireWriteFactory(), text, format, width.import(), height.import()))
 				{
 					layout.TextAlignment = _textAlign.import();
-					_target.DrawTextLayout(importPoint(x, y), layout, _strokeBrush);
+					_target.DrawTextLayout(importPoint(x, y), layout, _textBrush);
 				}
 			}
 		}

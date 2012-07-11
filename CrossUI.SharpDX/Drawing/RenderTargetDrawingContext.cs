@@ -22,14 +22,16 @@ namespace CrossUI.SharpDX.Drawing
 			// by design or a bug!
 
 			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-			_fillBrush_ = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-		
+			_textBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
+
 			_strokeWeight = 1;
 		}
 
 		public void Dispose()
 		{
 			flushFillBrush();
+
+			_textBrush.Dispose();
 			_strokeBrush.Dispose();
 		}
 
