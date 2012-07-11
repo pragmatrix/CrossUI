@@ -56,6 +56,30 @@
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
+		[BitmapDrawingTest(Height = 20)]
+		public void Bold(IDrawingContext ctx)
+		{
+			setup(ctx);
+			ctx.Text(weight: FontWeight.Bold);
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
+		[BitmapDrawingTest(Height = 20)]
+		public void Italic(IDrawingContext ctx)
+		{
+			setup(ctx);
+			ctx.Text(style: FontStyle.Italic);
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
+		[BitmapDrawingTest(Height = 20)]
+		public void BoldItalic(IDrawingContext ctx)
+		{
+			setup(ctx);
+			ctx.Text(weight:FontWeight.Bold, style: FontStyle.Italic);
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
 		void setup(IDrawingContext ctx)
 		{
 			ctx.Text(font: "Tahoma", size: 10);

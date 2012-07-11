@@ -6,7 +6,6 @@ namespace CrossUI.SharpDX.Drawing
 {
 	partial class RenderTargetDrawingContext
 	{
-
 		Factory _writeFactory_;
 
 		string _font = "Arial";
@@ -15,6 +14,8 @@ namespace CrossUI.SharpDX.Drawing
 		DW.TextAlignment _textAlign;
 		DW.ParagraphAlignment _paragraphAlign;
 		DW.WordWrapping _wrapping;
+		DW.FontWeight _fontWeight = DW.FontWeight.Normal;
+		DW.FontStyle _fontStyle = DW.FontStyle.Normal;
 
 		public void Text(
 			string font, 
@@ -22,7 +23,9 @@ namespace CrossUI.SharpDX.Drawing
 			Color? color, 
 			TextAlignment? alignment, 
 			ParagraphAlignment? paragraphAlignment,
-			WordWrapping? wordWrapping
+			WordWrapping? wordWrapping,
+			FontWeight? weight,
+			FontStyle? style
 			)
 		{
 			if (font != null)
@@ -47,20 +50,31 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				_wrapping = wordWrapping.Value.import();
 			}
+
+			if (weight != null)
+			{
+				_fontWeight = weight.Value.import();
+			}
+
+			if (style != null)
+			{
+				_fontStyle = style.Value.import();
+			}
 		}
 
 		public void Text(string text, double x, double y, double width, double height)
 		{
-			using (var format = new DW.TextFormat(requireWriteFactory(), _font, _fontSize.import()))
+			using (var format = new DW.TextFormat(
+				requireWriteFactory(), 
+				_font, 
+				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _fontSize.import()))
 			{
 				using (var layout = new DW.TextLayout(requireWriteFactory(), text, format, width.import(), height.import()))
 				{
 					layout.TextAlignment = _textAlign;
 					layout.ParagraphAlignment = _paragraphAlign;
 					layout.WordWrapping = _wrapping;
-
 					_target.DrawTextLayout(importPoint(x, y), layout, _textBrush);
-
 				}
 			}
 		}
@@ -101,13 +115,33 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			switch (wrapping)
 			{
-				case WordWrapping.Wrap:
-					return DW.WordWrapping.Wrap;
-				case WordWrapping.NoWrap:
-					return DW.WordWrapping.NoWrap;
+				case WordWrapping.Wrap: return DW.WordWrapping.Wrap;
+				case WordWrapping.NoWrap: return DW.WordWrapping.NoWrap;
 			}
 
 			return default(DW.WordWrapping);
+		}
+
+		public static DW.FontWeight import (this FontWeight weight)
+		{
+			switch (weight)
+			{
+				case FontWeight.Normal: return DW.FontWeight.Normal;
+				case FontWeight.Bold: return DW.FontWeight.Bold;
+			}
+
+			return DW.FontWeight.Normal;
+		}
+
+		public static DW.FontStyle import(this FontStyle style)
+		{
+			switch (style)
+			{
+				case FontStyle.Normal: return DW.FontStyle.Normal;
+				case FontStyle.Italic: return DW.FontStyle.Italic;
+			}
+
+			return DW.FontStyle.Normal;
 		}
 	}
 }

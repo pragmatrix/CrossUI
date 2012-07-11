@@ -20,6 +20,16 @@
 		Wrap, NoWrap
 	}
 
+	public enum FontWeight
+	{
+		Normal, Bold
+	}
+
+	public enum FontStyle
+	{
+		Normal, Italic
+	}
+
 	public interface IDrawingContext : IClosedFigureContext
 	{
 		int Width { get; }
@@ -37,7 +47,10 @@
 			Color? color = null, 
 			TextAlignment? alignment = null, 
 			ParagraphAlignment? paragraphAlignment = null,
-			WordWrapping? wordWrapping = null);
+			WordWrapping? wordWrapping = null,
+			FontWeight? weight = null,
+			FontStyle? style = null
+			);
 
 		void Text(string text, double x, double y, double width, double height);
 	}
