@@ -1,7 +1,4 @@
 ﻿using System;
-using CrossUI;
-
-[assembly: DrawingBackend(typeof(CrossUI.SharpDX.DrawingBackend))]
 
 namespace CrossUI.Tests.DrawingContext
 {

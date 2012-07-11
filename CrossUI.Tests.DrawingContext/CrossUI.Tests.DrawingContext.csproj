@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawingBackend.cs" />
     <Compile Include="FillAndStrokeTests.cs" />
     <Compile Include="FillTests.cs" />
     <Compile Include="StrokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">

@@ -5,7 +5,7 @@ using SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed class RenderTargetDrawingContext : IDrawingContext, IDisposable
+	sealed partial class RenderTargetDrawingContext : IDrawingContext, IDisposable
 	{
 		readonly RenderTarget _target;
 
@@ -16,9 +16,10 @@ namespace CrossUI.SharpDX.Drawing
 
 			Width = width;
 			Height = height;
-
-			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
 			
+			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
+			_fillBrush_ = _strokeBrush;
+		
 			_strokeWeight = 1;
 		}
 
@@ -27,19 +28,15 @@ namespace CrossUI.SharpDX.Drawing
 			_strokeBrush.Dispose();
 		}
 
-		Brush _fillBrush_;
 
 		Brush _strokeBrush;
 		float _strokeWeight;
 		StrokeAlign _strokeAlign;
 
+		Brush _fillBrush_;
+
 		public int Width { get; private set; }
 		public int Height { get; private set; }
-
-		public void Font(Font font)
-		{
-			throw new NotImplementedException();
-		}
 
 		public void Fill(Color? color)
 		{
@@ -277,12 +274,6 @@ namespace CrossUI.SharpDX.Drawing
 			return pg;
 		}
 
-
-		public void Text(string text, double x, double y, double width, double height)
-		{
-			throw new NotImplementedException();
-		}
-
 		RectangleF fillRect(double x, double y, double width, double height)
 		{
 			if (!Stroking)
@@ -362,9 +353,14 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			return new DrawingPointF(x.import(), y.import());
 		}
+
+		static RectangleF importRect(double x, double y, double width, double height)
+		{
+			return new RectangleF(x.import(), y.import(), (x + width).import(), (y + height).import());
+		}
 	}
 
-	static class Conversions
+	static partial class Conversions
 	{
 		public static float import(this double d)
 		{
