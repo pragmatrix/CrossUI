@@ -122,6 +122,18 @@ namespace CrossUI.Runner.WPF
 			var bitmap = result.Bitmap_;
 			Debug.Assert(bitmap != null);
 
+			var image = createImage(bitmap);
+
+			control.Result.Content = image;
+
+			return control;
+		}
+
+		static Image createImage(TestResultBitmap bitmap)
+		{
+			if (bitmap.Width <= 0 || bitmap.Height <= 0)
+				return new Image();
+
 			var bs = BitmapSource.Create(
 				bitmap.Width,
 				bitmap.Height,
@@ -130,16 +142,14 @@ namespace CrossUI.Runner.WPF
 				PixelFormats.Pbgra32,
 				null,
 				bitmap.Data,
-				bitmap.Width * 4);
+				bitmap.Width*4);
 
 			var image = new Image
 			{
 				Source = bs
 			};
 
-			control.Result.Content = image;
-
-			return control;
+			return image;
 		}
 
 		static void showError(Label label, Exception e)
