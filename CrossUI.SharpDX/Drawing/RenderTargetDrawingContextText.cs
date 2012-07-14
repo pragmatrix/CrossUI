@@ -74,7 +74,26 @@ namespace CrossUI.SharpDX.Drawing
 					layout.TextAlignment = _textAlign;
 					layout.ParagraphAlignment = _paragraphAlign;
 					layout.WordWrapping = _wrapping;
+
 					_target.DrawTextLayout(importPoint(x, y), layout, _textBrush);
+				}
+			}
+		}
+
+		public TextSize MeasureText(string text, double layoutWidth, double layoutHeight)
+		{
+			using (var format = new DW.TextFormat(
+				requireWriteFactory(),
+				_font,
+				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _fontSize.import()))
+			{
+				using (var layout = new DW.TextLayout(requireWriteFactory(), text, format, layoutWidth.import(), layoutHeight.import()))
+				{
+					layout.TextAlignment = _textAlign;
+					layout.ParagraphAlignment = _paragraphAlign;
+					layout.WordWrapping = _wrapping;
+
+					return new TextSize(layout.Metrics.Width, layout.Metrics.Height);
 				}
 			}
 		}

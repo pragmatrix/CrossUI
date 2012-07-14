@@ -1,4 +1,6 @@
-﻿namespace CrossUI
+﻿using System.Diagnostics;
+
+namespace CrossUI
 {
 	public enum StrokeAlignment
 	{
@@ -30,6 +32,18 @@
 		Normal, Italic
 	}
 
+	public struct TextSize
+	{
+		public TextSize(double width, double height)
+		{
+			Width = width;
+			Height = height;
+		}
+
+		public readonly double Width;
+		public readonly double Height;
+	}
+
 	public interface IDrawingContext : IClosedFigureContext
 	{
 		int Width { get; }
@@ -53,5 +67,8 @@
 			);
 
 		void Text(string text, double x, double y, double width, double height);
+
+		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
 	}
+
 }
