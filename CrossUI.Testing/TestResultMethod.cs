@@ -8,6 +8,7 @@ namespace CrossUI.Testing
 		public readonly string Name;
 		public readonly Exception Error_;
 		public readonly TestResultBitmap Bitmap_;
+		public readonly TestResultReport Report_;
 	
 		public TestResultMethod(string name, Exception error)
 		{
@@ -15,10 +16,11 @@ namespace CrossUI.Testing
 			Error_ = error;
 		}
 
-		public TestResultMethod(string name, TestResultBitmap bitmap)
+		public TestResultMethod(string name, TestResultBitmap bitmap, TestResultReport report)
 		{
 			Name = name;
 			Bitmap_ = bitmap;
+			Report_ = report;
 		}
 	}
 }

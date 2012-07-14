@@ -126,6 +126,15 @@ namespace CrossUI.Runner.WPF
 
 			control.Result.Content = image;
 
+			var report = result.Report_;
+			Debug.Assert(report != null);
+			var reportString = string.Join("\n", report.Report.ToArray()).Trim();
+			if (reportString != "")
+			{
+				control.Report.Content = reportString;
+				control.Report.Visibility = Visibility.Visible;
+			}
+
 			return control;
 		}
 

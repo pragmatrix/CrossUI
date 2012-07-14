@@ -61,21 +61,7 @@ namespace CrossUI.Testing
 			return results.ToArray();
 		}
 
-		struct CandidateMethod
-		{
-			public readonly MethodInfo Info;
-			public readonly BitmapDrawingTestAttribute Attribute;
-			public readonly bool Ignorable;
-
-			public CandidateMethod(MethodInfo info, BitmapDrawingTestAttribute attribute, bool ignorable)
-			{
-				Info = info;
-				Attribute = attribute;
-				Ignorable = ignorable;
-			}
-		}
-
-		static IEnumerable<CandidateMethod> getTestableMethodsForType(Type type)
+		static IEnumerable<TestMethod> getTestableMethodsForType(Type type)
 		{
 			var typeAttributes = type.GetCustomAttributes(typeof (BitmapDrawingTestAttribute), inherit: false);
 			var typeAttribute_ = typeAttributes.Length == 1 ? (BitmapDrawingTestAttribute) typeAttributes[0] : null;
@@ -89,7 +75,7 @@ namespace CrossUI.Testing
 					case 0:
 						if (typeAttribute_ == null)
 							break;
-						yield return new CandidateMethod(method, typeAttribute_, ignorable: true);
+						yield return new TestMethod(method, typeAttribute_, ignorable: true);
 						break;
 
 					case 1:
@@ -97,13 +83,13 @@ namespace CrossUI.Testing
 						if (typeAttribute_ != null)
 							attribute = typeAttribute_.refine(attribute);
 
-						yield return new CandidateMethod(method, attribute, ignorable: false);
+						yield return new TestMethod(method, attribute, ignorable: false);
 						break;
 				}
 			}
 		}
 
-		static ITestResultMethod[] runClassTest(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, Type type, IEnumerable<CandidateMethod> methods)
+		static ITestResultMethod[] runClassTest(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, Type type, IEnumerable<TestMethod> methods)
 		{
 			var constructor = type.GetConstructor(new Type[0]);
 			if (constructor == null)
@@ -133,7 +119,7 @@ namespace CrossUI.Testing
 			}
 		}
 
-		static ITestResultMethod[] runMethodTests(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, object instance, IEnumerable<CandidateMethod> methods)
+		static ITestResultMethod[] runMethodTests(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, object instance, IEnumerable<TestMethod> methods)
 		{
 			var results = new List<ITestResultMethod>();
 			foreach (var method in methods)
@@ -143,15 +129,15 @@ namespace CrossUI.Testing
 				try
 				{
 					string whyNot;
-					if (!canTestMethod(info, out whyNot))
+					if (!method.canTest(out whyNot))
 					{
 						if (!method.Ignorable)
 							throw new Exception(whyNot);
 						continue;
 					}
 
-					var bitmap = runMethodTest(resultFactory, drawingBackend, instance, method);
-					results.Add(resultFactory.Method(info.Name, bitmap));
+					var methodResult = runMethodTest(resultFactory, drawingBackend, instance, method);
+					results.Add(methodResult);
 				}
 				catch (Exception e)
 				{
@@ -162,50 +148,47 @@ namespace CrossUI.Testing
 			return results.ToArray();
 		}
 
-		static ITestResultBitmap runMethodTest(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, object instance, CandidateMethod candidateMethod)
+		static ITestResultMethod runMethodTest(
+			ITestResultFactory resultFactory, 
+			IDrawingBackend drawingBackend, 
+			object instance, 
+			TestMethod testMethod)
 		{
-			var info = candidateMethod.Info;
-			var attribute = candidateMethod.Attribute;
+			var attribute = testMethod.Attribute;
 
 			var width = attribute.Width;
 			var height = attribute.Height;
 
 			using (var context = drawingBackend.CreateBitmapDrawingContext(width, height))
 			{
+				var testReporter = new TestReporter();
 				IDrawingContext drawingContext;
 				using (context.BeginDraw(out drawingContext))
 				{
-					info.Invoke(instance, new object[] { drawingContext });
+					testMethod.invoke(instance, drawingContext, testReporter);
 				}
 	
-				return resultFactory.Bitmap(width, height, context.ExtractRawBitmap());
+				var bitmap = resultFactory.Bitmap(width, height, context.ExtractRawBitmap());
+				var testReport = resultFactory.Report(testReporter.Reports);
+
+				return resultFactory.Method(testMethod.Info.Name, bitmap, testReport);
 			}
 		}
 
-		static bool canTestMethod(MethodInfo method, out string whyNot)
+
+		sealed class TestReporter : ITestReport
 		{
-			if (method.IsStatic || method.IsGenericMethod)
+			readonly List<string> _reports = new List<string>();
+
+			public IEnumerable<string> Reports
 			{
-				whyNot = "{0}: is not allowed to be static or generic".format(method);
-				return false;
+				get { return _reports; }
 			}
 
-			var parameters = method.GetParameters();
-			if (parameters.Length != 1)
+			public void Report(string text)
 			{
-				whyNot = "{0}: expect one parameter".format(method);
-				return false;
+				_reports.Add(text);
 			}
-
-			var firstParameter = parameters[0];
-			if (firstParameter.ParameterType != typeof(IDrawingContext))
-			{
-				whyNot = "{0}: expect IDrawingContext as first and only parameter";
-				return false;
-			}
-
-			whyNot = string.Empty;
-			return true;
 		}
 	}
 }

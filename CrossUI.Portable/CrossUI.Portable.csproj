@@ -42,6 +42,7 @@
     <Compile Include="IClosedFigureContext.cs" />
     <Compile Include="IGeometryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\TestMethod.cs" />
     <Compile Include="Testing\TestRunnerPortable.cs" />
     <Compile Include="Toolbox\DisposeAction.cs" />
     <Compile Include="Toolbox\StringExtensions.cs" />

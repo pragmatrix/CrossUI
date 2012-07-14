@@ -1,5 +1,6 @@
 ﻿using System;
 using CrossUI;
+using CrossUI.Testing;
 
 [assembly: DrawingBackend(typeof(CrossUI.SharpDX.DrawingBackend))]
 
@@ -33,6 +34,13 @@ namespace CrossUI.Tests
 
 		public void ShouldBeIgnored()
 		{
+		}
+
+		public void Report(IDrawingContext context, ITestReport testReport)
+		{
+			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			testReport.Report("Report A");
+			testReport.Report("Report B");
 		}
 	}
 

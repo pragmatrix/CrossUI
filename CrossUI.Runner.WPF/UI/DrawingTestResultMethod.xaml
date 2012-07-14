@@ -5,10 +5,18 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 mc:Ignorable="d" 
 			 d:DesignHeight="300" d:DesignWidth="300" Margin="0,8,0,0">
-	<StackPanel Orientation="Horizontal">
-		<Border BorderBrush="LightGray" BorderThickness="2" Padding="2">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="2" Padding="2">
 			<ContentPresenter Name="Result" />
 		</Border>
-		<Label Margin="8,0,0,0" Name="MethodName" VerticalContentAlignment="Bottom">MethodName</Label>
-	</StackPanel>
+		<Grid Grid.Column="1" VerticalAlignment="Bottom">
+			<Label Margin="8,0,0,0" VerticalAlignment="Bottom" Name="MethodName" >MethodName</Label>
+			<Label HorizontalAlignment="Right" Margin="16,0,0,0" FontSize="11" Visibility="Collapsed" Name="Report"></Label>
+		</Grid>
+	</Grid>
 </UserControl>

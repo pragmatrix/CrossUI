@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CrossUI.Testing
 {
@@ -27,9 +26,9 @@ namespace CrossUI.Testing
 			return new TestResultClass(ns, name, e);
 		}
 
-		public ITestResultMethod Method(string name, ITestResultBitmap bitmap)
+		public ITestResultMethod Method(string name, ITestResultBitmap bitmap, ITestResultReport report)
 		{
-			return new TestResultMethod(name, (TestResultBitmap)bitmap);
+			return new TestResultMethod(name, (TestResultBitmap)bitmap, (TestResultReport)report);
 		}
 
 		public ITestResultMethod Method(string name, Exception e)
@@ -40,6 +39,11 @@ namespace CrossUI.Testing
 		public ITestResultBitmap Bitmap(int width, int height, byte[] data)
 		{
 			return new TestResultBitmap(width, height, data);
+		}
+
+		public ITestResultReport Report(IEnumerable<string> report)
+		{
+			return new TestResultReport(report);
 		}
 	}
 }

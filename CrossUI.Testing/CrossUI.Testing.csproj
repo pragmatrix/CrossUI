@@ -41,6 +41,7 @@
     <Compile Include="TestResultFactory.cs" />
     <Compile Include="TestResultMethod.cs" />
     <Compile Include="TestResultBitmap.cs" />
+    <Compile Include="TestResultReport.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -51,6 +51,10 @@
       <Project>{F46BFFCE-B059-4D62-8669-A24F6E8A543D}</Project>
       <Name>CrossUI.SharpDX</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CrossUI.Testing.Portable\CrossUI.Testing.Portable.csproj">
+      <Project>{2905C72E-D3DD-47CA-AF57-7628295FC60F}</Project>
+      <Name>CrossUI.Testing.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
