@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CrossUI
 {
@@ -42,6 +43,11 @@ namespace CrossUI
 
 		public readonly double Width;
 		public readonly double Height;
+
+		public override string ToString()
+		{
+			return Width + ", " + Height;
+		}
 	}
 
 	public interface IDrawingContext : IClosedFigureContext
@@ -69,6 +75,8 @@ namespace CrossUI
 		void Text(string text, double x, double y, double width, double height);
 
 		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
-	}
 
+		void Report(string text);
+		IEnumerable<string> Reports { get; }
+	}
 }

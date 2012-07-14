@@ -161,33 +161,17 @@ namespace CrossUI.Testing
 
 			using (var context = drawingBackend.CreateBitmapDrawingContext(width, height))
 			{
-				var testReporter = new TestReporter();
 				IDrawingContext drawingContext;
 				using (context.BeginDraw(out drawingContext))
 				{
-					testMethod.invoke(instance, drawingContext, testReporter);
+					testMethod.invoke(instance, drawingContext);
 				}
-	
+
+
 				var bitmap = resultFactory.Bitmap(width, height, context.ExtractRawBitmap());
-				var testReport = resultFactory.Report(testReporter.Reports);
+				var testReport = resultFactory.Report(drawingContext.Reports);
 
 				return resultFactory.Method(testMethod.Info.Name, bitmap, testReport);
-			}
-		}
-
-
-		sealed class TestReporter : ITestReport
-		{
-			readonly List<string> _reports = new List<string>();
-
-			public IEnumerable<string> Reports
-			{
-				get { return _reports; }
-			}
-
-			public void Report(string text)
-			{
-				_reports.Add(text);
 			}
 		}
 	}

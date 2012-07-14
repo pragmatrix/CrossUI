@@ -36,11 +36,11 @@ namespace CrossUI.Tests
 		{
 		}
 
-		public void Report(IDrawingContext context, ITestReport testReport)
+		public void Report(IDrawingContext context)
 		{
 			context.RoundedRect(0, 0, context.Width, context.Height, 8);
-			testReport.Report("Report A");
-			testReport.Report("Report B");
+			context.Report("Report A");
+			context.Report("Report B");
 		}
 	}
 

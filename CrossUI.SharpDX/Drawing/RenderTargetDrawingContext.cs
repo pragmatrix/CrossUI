@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using SharpDX;
 using SharpDX.Direct2D1;
@@ -8,6 +9,7 @@ namespace CrossUI.SharpDX.Drawing
 	sealed partial class RenderTargetDrawingContext : IDrawingContext, IDisposable
 	{
 		readonly RenderTarget _target;
+		readonly List<string> _reports = new List<string>();
 
 		public RenderTargetDrawingContext(RenderTarget target, int width, int height)
 		{
@@ -43,6 +45,16 @@ namespace CrossUI.SharpDX.Drawing
 
 		public int Width { get; private set; }
 		public int Height { get; private set; }
+
+		public void Report(string text)
+		{
+			_reports.Add(text);
+		}
+
+		public IEnumerable<string> Reports
+		{
+			get { return _reports; }
+		}
 
 		public void Fill(Color? color)
 		{

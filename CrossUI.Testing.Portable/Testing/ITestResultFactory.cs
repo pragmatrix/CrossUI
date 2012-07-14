@@ -34,9 +34,4 @@ namespace CrossUI.Testing
 	public interface ITestResultReport
 	{
 	}
-
-	public interface ITestReport
-	{
-		void Report(string text);
-	}
 }
