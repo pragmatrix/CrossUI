@@ -37,6 +37,7 @@
     <Compile Include="BitmapDrawingTestAttribute.cs" />
     <Compile Include="DrawingBackendAttribute.cs" />
     <Compile Include="IBitmapDrawingContext.cs" />
+    <Compile Include="ICoordinateSpace.cs" />
     <Compile Include="IDrawingBackend.cs" />
     <Compile Include="IDrawingContext.cs" />
     <Compile Include="IClosedFigureContext.cs" />
