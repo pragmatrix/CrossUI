@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Tests.DrawingContex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Testing.Portable", "CrossUI.Testing.Portable\CrossUI.Testing.Portable.csproj", "{2905C72E-D3DD-47CA-AF57-7628295FC60F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Runner.WPF.x86", "CrossUI.Runner.WPF.x86\CrossUI.Runner.WPF.x86.csproj", "{A151CA95-F2C6-4C8A-B694-597BE31B6619}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,16 @@ Global
 		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2905C72E-D3DD-47CA-AF57-7628295FC60F}.Release|x86.ActiveCfg = Release|Any CPU
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Debug|x86.ActiveCfg = Debug|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Debug|x86.Build.0 = Debug|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Release|Any CPU.ActiveCfg = Release|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Release|Mixed Platforms.Build.0 = Release|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Release|x86.ActiveCfg = Release|x86
+		{A151CA95-F2C6-4C8A-B694-597BE31B6619}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
