@@ -6,6 +6,7 @@
 
 		void Rect(double x, double y, double width, double height);
 		void RoundedRect(double x, double y, double width, double height, double cornerRadius);
+		void Polygon(double[] coordinatePairs);
 
 		void Ellipse(double x, double y, double width, double height);
 		void Arc(double x, double y, double width, double height, double start, double stop);

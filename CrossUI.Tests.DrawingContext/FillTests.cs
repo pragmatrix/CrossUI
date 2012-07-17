@@ -42,5 +42,11 @@ namespace CrossUI.Tests.DrawingContext
 			setup(context);
 			context.Bezier(0, 0, context.Width, 0, 0, context.Height, context.Width, context.Height);
 		}
+
+		public void Polygon(IDrawingContext context)
+		{
+			setup(context);
+			context.Polygon(new double[] { 0, 0, 80, 20, 20, 40 });
+		}
 	}
 }

@@ -157,6 +157,43 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
+		public void Polygon(double[] pairs)
+		{
+			if ((pairs.Length & 1) == 1)
+				throw new Exception("Number of polygon pairs need to be even.");
+
+			if (pairs.Length < 4)
+				return;
+
+			if (pairs.Length == 4)
+			{
+				Line(pairs[0], pairs[1], pairs[2], pairs[3]);
+				return;
+			}
+
+			var startPoint = importPoint(pairs[0], pairs[1]);
+
+			if (Filling)
+			{
+				fillPath(startPoint,
+					sink =>
+						{
+							for (int i = 2; i != pairs.Length; i += 2)
+								sink.AddLine(importPoint(pairs[i], pairs[i + 1]));
+						});
+			}
+
+			if (Stroking)
+			{
+				drawClosedPath(startPoint,
+					sink =>
+					{
+						for (int i = 2; i != pairs.Length; i += 2)
+							sink.AddLine(importPoint(pairs[i], pairs[i + 1]));
+					});
+			}
+		}
+
 		public void Ellipse(double x, double y, double width, double height)
 		{
 			if (Filling)
@@ -194,7 +231,7 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				var r = strokeAlignedRect(x, y, width, height);
 				var currentPoint = pointOnArc(r, start);
-				drawPath(currentPoint, sink => addArc(r, start, stop, sink));
+				drawOpenPath(currentPoint, sink => addArc(r, start, stop, sink));
 			}
 		}
 
@@ -261,7 +298,7 @@ namespace CrossUI.SharpDX.Drawing
 
 			if (Stroking)
 			{
-				drawPath(importPoint(x, y), sink =>
+				drawOpenPath(importPoint(x, y), sink =>
 					{
 						var bezierSegment = new BezierSegment()
 						{
@@ -275,9 +312,17 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		void drawPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		void drawOpenPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
 		{
 			using (var geometry = createPath(false, begin, figureBuilder))
+			{
+				_target.DrawGeometry(geometry, _strokeBrush, _strokeWeight);
+			}
+		}
+
+		void drawClosedPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		{
+			using (var geometry = createPath(true, begin, figureBuilder))
 			{
 				_target.DrawGeometry(geometry, _strokeBrush, _strokeWeight);
 			}
