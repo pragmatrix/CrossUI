@@ -24,6 +24,7 @@ namespace CrossUI.SharpDX.Drawing
 			// by design or a bug!
 
 			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
+			_fillBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
 			_textBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
 
 			_strokeWeight = 1;
@@ -31,17 +32,16 @@ namespace CrossUI.SharpDX.Drawing
 
 		public void Dispose()
 		{
-			flushFillBrush();
-
 			_textBrush.Dispose();
+			_fillBrush.Dispose();
 			_strokeBrush.Dispose();
 		}
 
 		Brush _strokeBrush;
 		float _strokeWeight;
 		StrokeAlignment _strokeAlignment;
-
-		Brush _fillBrush_;
+		Brush _fillBrush;
+		bool _fill;
 
 		public int Width { get; private set; }
 		public int Height { get; private set; }
@@ -60,22 +60,16 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			if (color != null)
 			{
-				flushFillBrush();
-				_fillBrush_ = new SolidColorBrush(_target, color.Value.import());
+				_fillBrush.Dispose();
+				_fillBrush = new SolidColorBrush(_target, color.Value.import());
 			}
+
+			_fill = true;
 		}
 
 		public void NoFill()
 		{
-			flushFillBrush();
-		}
-
-		void flushFillBrush()
-		{
-			if (_fillBrush_ == null)
-				return;
-			_fillBrush_.Dispose();
-			_fillBrush_ = null;
+			_fill = false;
 		}
 
 		public void Stroke(Color? color, double? weight, StrokeAlignment? alignment)
@@ -100,7 +94,7 @@ namespace CrossUI.SharpDX.Drawing
 
 		bool Filling
 		{
-			get { return _fillBrush_ != null; }
+			get { return _fill; }
 		}
 
 		bool Stroking
@@ -125,7 +119,7 @@ namespace CrossUI.SharpDX.Drawing
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
-				_target.FillRectangle(r, _fillBrush_);
+				_target.FillRectangle(r, _fillBrush);
 			}
 
 		}
@@ -141,7 +135,7 @@ namespace CrossUI.SharpDX.Drawing
 					RadiusY = import(cornerRadius)
 				};
 
-				_target.FillRoundedRectangle(roundedRect, _fillBrush_);
+				_target.FillRoundedRectangle(roundedRect, _fillBrush);
 			}
 
 			if (Stroking)
@@ -200,7 +194,7 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				var r = fillRect(x, y, width, height);
 				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
-				_target.FillEllipse(ellipse, _fillBrush_);
+				_target.FillEllipse(ellipse, _fillBrush);
 			}
 
 			if (Stroking)
@@ -332,7 +326,7 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			using (var geometry = createPath(true, begin, figureBuilder))
 			{
-				_target.FillGeometry(geometry, _fillBrush_);
+				_target.FillGeometry(geometry, _fillBrush);
 			}
 		}
 
