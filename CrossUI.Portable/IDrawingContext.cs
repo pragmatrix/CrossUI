@@ -79,4 +79,13 @@ namespace CrossUI
 		void Report(string text);
 		IEnumerable<string> Reports { get; }
 	}
+
+	public static class DrawingContextExtensions
+	{
+		[Conditional("DEBUG")]
+		public static void Debug(this IDrawingContext context, string str)
+		{
+			context.Report(str);
+		}
+	}
 }
