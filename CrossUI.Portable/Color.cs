@@ -90,4 +90,10 @@ namespace CrossUI
 			return b < low ? low : (b > high ? high : b);
 		}
 	}
+
+	public static class Colors
+	{
+		public static readonly Color Black = new Color(0, 0, 0);
+		public static readonly Color White = new Color(1, 1, 1);
+	}
 }
