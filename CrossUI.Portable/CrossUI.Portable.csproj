@@ -40,6 +40,7 @@
     <Compile Include="Drawing\BoundsTracker.cs" />
     <Compile Include="Drawing\BoundsTrackingDrawingTarget.cs" />
     <Compile Include="Drawing\DrawingState.cs" />
+    <Compile Include="Drawing\DrawingTargetSplitter.cs" />
     <Compile Include="Drawing\DrawingTransform.cs" />
     <Compile Include="Drawing\Matrix.cs" />
     <Compile Include="Drawing\Rectangle.cs" />

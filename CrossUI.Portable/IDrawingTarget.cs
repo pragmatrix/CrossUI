@@ -50,6 +50,22 @@ namespace CrossUI
 		}
 	}
 
+	public interface IDrawingTarget : 
+		IDrawingTargetBitmap,
+		IDrawingState,
+		IDrawingTransform,
+		IDrawingFigures,
+		IDrawingText,
+		ITextMeasurements,
+		IReportingTarget
+	{}
+
+	public interface IDrawingTargetBitmap
+	{
+		int Width { get; }
+		int Height { get; }
+	}
+
 	public interface IDrawingState
 	{
 		void Fill(Color? color = null);
@@ -68,16 +84,8 @@ namespace CrossUI
 			WordWrapping? wordWrapping = null);
 	}
 
-	public interface IDrawingTarget : 
-		IDrawingState,
-		IDrawingFigures, 
-		IDrawingTransform, 
-		ITextMeasurements,
-		IReportingTarget
+	public interface IDrawingText
 	{
-		int Width { get; }
-		int Height { get; }
-
 		void Text(string text, double x, double y, double width, double height);
 	}
 
@@ -86,16 +94,17 @@ namespace CrossUI
 		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
 	}
 
+	
 	public interface IReportingTarget
 	{
 		void Report(string text);
 		IEnumerable<string> Reports { get; }
 	}
 
-	public static class DrawingContextExtensions
+	public static class ReportingTargetExtensions
 	{
 		[Conditional("DEBUG")]
-		public static void Debug(this IDrawingTarget target, string str)
+		public static void Debug(this IReportingTarget target, string str)
 		{
 			target.Report(str);
 		}
