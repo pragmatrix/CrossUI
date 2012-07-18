@@ -8,8 +8,8 @@ namespace CrossUI.SharpDX.Drawing
 	{
 		Factory _writeFactory_;
 
-		string _font = "Arial";
-		double _fontSize = 10;
+		string _fontName = "Arial";
+		double _textSize = 10;
 		Brush _textBrush;
 		DW.TextAlignment _textAlign;
 		DW.ParagraphAlignment _paragraphAlign;
@@ -17,22 +17,28 @@ namespace CrossUI.SharpDX.Drawing
 		DW.FontWeight _fontWeight = DW.FontWeight.Normal;
 		DW.FontStyle _fontStyle = DW.FontStyle.Normal;
 
+		public void Font(string name, FontWeight? weight, FontStyle? style)
+		{
+			if (name != null)
+				_fontName = name;
+
+			if (weight != null)
+				_fontWeight = weight.Value.import();
+
+			if (style != null)
+				_fontStyle = style.Value.import();
+		}
+
 		public void Text(
-			string font, 
 			double? size, 
 			Color? color, 
 			TextAlignment? alignment, 
 			ParagraphAlignment? paragraphAlignment,
-			WordWrapping? wordWrapping,
-			FontWeight? weight,
-			FontStyle? style
-			)
+			WordWrapping? wordWrapping)
 		{
-			if (font != null)
-				_font = font;
 
 			if (size != null)
-				_fontSize = size.Value;
+				_textSize = size.Value;
 
 			if (alignment != null)
 				_textAlign = alignment.Value.import();
@@ -47,27 +53,15 @@ namespace CrossUI.SharpDX.Drawing
 				_paragraphAlign = paragraphAlignment.Value.import();
 
 			if (wordWrapping != null)
-			{
 				_wrapping = wordWrapping.Value.import();
-			}
-
-			if (weight != null)
-			{
-				_fontWeight = weight.Value.import();
-			}
-
-			if (style != null)
-			{
-				_fontStyle = style.Value.import();
-			}
 		}
 
 		public void Text(string text, double x, double y, double width, double height)
 		{
 			using (var format = new DW.TextFormat(
 				requireWriteFactory(), 
-				_font, 
-				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _fontSize.import()))
+				_fontName, 
+				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _textSize.import()))
 			{
 				using (var layout = new DW.TextLayout(requireWriteFactory(), text, format, width.import(), height.import()))
 				{
@@ -84,8 +78,8 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			using (var format = new DW.TextFormat(
 				requireWriteFactory(),
-				_font,
-				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _fontSize.import()))
+				_fontName,
+				null, _fontWeight, _fontStyle, DW.FontStretch.Normal, _textSize.import()))
 			{
 				using (var layout = new DW.TextLayout(requireWriteFactory(), text, format, layoutWidth.import(), layoutHeight.import()))
 				{

@@ -36,8 +36,17 @@
     <Compile Include="Color.cs" />
     <Compile Include="BitmapDrawingTestAttribute.cs" />
     <Compile Include="DrawingBackendAttribute.cs" />
+    <Compile Include="Drawing\Bounds.cs" />
+    <Compile Include="Drawing\BoundsTracker.cs" />
+    <Compile Include="Drawing\BoundsTrackingDrawingTarget.cs" />
+    <Compile Include="Drawing\DrawingState.cs" />
+    <Compile Include="Drawing\DrawingTransform.cs" />
+    <Compile Include="Drawing\Matrix.cs" />
+    <Compile Include="Drawing\Rectangle.cs" />
+    <Compile Include="Drawing\ReplayableDrawingTarget.cs" />
+    <Compile Include="Drawing\Vector.cs" />
     <Compile Include="IBitmapDrawingContext.cs" />
-    <Compile Include="ICoordinateSpace.cs" />
+    <Compile Include="IDrawingTransform.cs" />
     <Compile Include="IDrawingBackend.cs" />
     <Compile Include="IDrawingTarget.cs" />
     <Compile Include="IDrawingFigures.cs" />
@@ -57,9 +66,7 @@
       <Name>CrossUI.Testing.Portable</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drawing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -273,7 +273,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public void Bezier(double x, double y, double c1x, double c1y, double c2x, double c2y, double ex, double ey)
+		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
 		{
 			if (Filling)
 			{
@@ -281,8 +281,8 @@ namespace CrossUI.SharpDX.Drawing
 				{
 					var bezierSegment = new BezierSegment()
 					{
-						Point1 = importPoint(c1x, c1y),
-						Point2 = importPoint(c2x, c2y),
+						Point1 = importPoint(s1x, s1y),
+						Point2 = importPoint(s2x, s2y),
 						Point3 = importPoint(ex, ey)
 					};
 
@@ -296,8 +296,8 @@ namespace CrossUI.SharpDX.Drawing
 					{
 						var bezierSegment = new BezierSegment()
 						{
-							Point1 = importPoint(c1x, c1y),
-							Point2 = importPoint(c2x, c2y),
+							Point1 = importPoint(s1x, s1y),
+							Point2 = importPoint(s2x, s2y),
 							Point3 = importPoint(ex, ey)
 						};
 

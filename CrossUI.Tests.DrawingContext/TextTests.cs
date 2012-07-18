@@ -60,7 +60,7 @@
 		public void Bold(IDrawingTarget ctx)
 		{
 			setup(ctx);
-			ctx.Text(weight: FontWeight.Bold);
+			ctx.Font(weight: FontWeight.Bold);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
@@ -68,7 +68,7 @@
 		public void Italic(IDrawingTarget ctx)
 		{
 			setup(ctx);
-			ctx.Text(style: FontStyle.Italic);
+			ctx.Font(style: FontStyle.Italic);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
@@ -76,13 +76,14 @@
 		public void BoldItalic(IDrawingTarget ctx)
 		{
 			setup(ctx);
-			ctx.Text(weight:FontWeight.Bold, style: FontStyle.Italic);
+			ctx.Font(weight:FontWeight.Bold, style: FontStyle.Italic);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
 		void setup(IDrawingTarget ctx)
 		{
-			ctx.Text(font: "Tahoma", size: 10);
+			ctx.Font(name: "Tahoma");
+			ctx.Text(size: 10);
 		}
 	}
 }

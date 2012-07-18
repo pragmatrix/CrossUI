@@ -1,18 +1,21 @@
 ﻿using System;
-using CrossUI.Toolbox;
+using System.Collections.Generic;
 using SharpDX;
 
 namespace CrossUI.SharpDX.Drawing
 {
 	partial class DrawingTarget
 	{
-		public IDisposable SaveTransform()
+		readonly Stack<Matrix3x2> _transforms = new Stack<Matrix3x2>();
+
+		public void SaveTransform()
 		{
-			var transform = _target.Transform;
-			return new DisposeAction(() =>
-				{
-					_target.Transform = transform;
-				});
+			_transforms.Push(_target.Transform);
+		}
+
+		public void RestoreTransform()
+		{
+			_target.Transform = _transforms.Pop();
 		}
 
 		public void Scale(double sx, double sy, double? centerX = null, double? centerY = null)
