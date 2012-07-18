@@ -93,7 +93,6 @@ namespace CrossUI
 	{
 		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
 	}
-
 	
 	public interface IReportingTarget
 	{

@@ -4,13 +4,13 @@ namespace CrossUI.Drawing
 {
 	sealed class BoundsTracker
 	{
-		readonly DrawingState _state;
-		readonly DrawingTransform _transform;
+		public readonly DrawingState State;
+		public readonly DrawingTransform Transform;
 
 		public BoundsTracker(DrawingState state, DrawingTransform transform)
 		{
-			_state = state;
-			_transform = transform;
+			State = state;
+			Transform = transform;
 		}
 
 		public Bounds? Bounds
@@ -29,13 +29,13 @@ namespace CrossUI.Drawing
 
 		public void trackAlignedRect(double x, double y, double width, double height)
 		{
-			if (!_state.StrokeEnabled)
+			if (!State.StrokeEnabled)
 			{
 				trackRect(x, y, width, height);
 				return;
 			}
 
-			var b = _state.StrokeAlignedBounds(x, y, width, height);
+			var b = State.StrokeAlignedBounds(x, y, width, height);
 			trackPoints(b.Left, b.Top, b.Right, b.Top, b.Right, b.Bottom, b.Left, b.Bottom);
 		}
 
@@ -58,7 +58,7 @@ namespace CrossUI.Drawing
 
 		void trackPoint(double x, double y)
 		{
-			var v = _transform.transform(new Vector(x, y));
+			var v = Transform.transform(new Vector(x, y));
 
 			if (!_set)
 			{

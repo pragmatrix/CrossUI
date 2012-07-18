@@ -3,10 +3,14 @@ using System.Collections.Generic;
 
 namespace CrossUI.Drawing
 {
-	sealed class BoundsTrackingDrawingTarget : IDrawingTarget
+	sealed class BoundsTrackingDrawingTarget : 
+		IDrawingFigures, 
+		IDrawingText, 
+
+		IReportingTarget, 
+		ITextMeasurements, 
+		IDrawingTargetBitmap
 	{
-		readonly DrawingState _state = new DrawingState();
-		readonly DrawingTransform _transform = new DrawingTransform();
 		readonly BoundsTracker _tracker;
 	
 		public Bounds? Bounds 
@@ -14,9 +18,22 @@ namespace CrossUI.Drawing
 			get { return _tracker.Bounds; }
 		}
 
-		public BoundsTrackingDrawingTarget()
+		public static IDrawingTarget Create(BoundsTracker boundsTracker)
 		{
-			_tracker = new BoundsTracker(_state, _transform);
+			var target = new BoundsTrackingDrawingTarget(boundsTracker);
+			return new DrawingTargetSplitter(
+				target, 
+				boundsTracker.State, 
+				boundsTracker.Transform, 
+				target, 
+				target, 
+				target, 
+				target);
+		}
+
+		BoundsTrackingDrawingTarget(BoundsTracker tracker)
+		{
+			_tracker = tracker;
 		}
 
 		public void Line(double x1, double y1, double x2, double y2)
@@ -59,69 +76,6 @@ namespace CrossUI.Drawing
 		{
 			_tracker.trackRect(x, y, width, height);
 		}
-
-		#region State Forwarders
-
-		public void Fill(Color? color)
-		{
-			_state.Fill(color);
-		}
-
-		public void NoFill()
-		{
-			_state.NoFill();
-		}
-
-		public void Stroke(Color? color = null, double? weight = null, StrokeAlignment? alignment = null)
-		{
-			_state.Stroke(color, weight, alignment);
-		}
-
-		public void NoStroke()
-		{
-			_state.NoStroke();
-		}
-
-		public void Font(string name = null, FontWeight? weight = null, FontStyle? style = null)
-		{
-			_state.Font(name, weight, style);
-		}
-
-		public void Text(double? size = null, Color? color = null, TextAlignment? alignment = null, ParagraphAlignment? paragraphAlignment = null, WordWrapping? wordWrapping = null)
-		{
-			_state.Text(size, color, alignment, paragraphAlignment, wordWrapping);
-		}
-
-		#endregion
-
-		#region Transform Forwarders
-
-		public void SaveTransform()
-		{
-			_transform.SaveTransform();
-		}
-
-		public void RestoreTransform()
-		{
-			_transform.RestoreTransform();
-		}
-
-		public void Scale(double sx, double sy, double? centerX = null, double? centerY = null)
-		{
-			_transform.Scale(sx, sy, centerX, centerY);
-		}
-
-		public void Rotate(double radians, double? centerX = null, double? centerY = null)
-		{
-			_transform.Rotate(radians, centerX, centerY);
-		}
-
-		public void Translate(double dx, double dy)
-		{
-			_transform.Translate(dx, dy);
-		}
-
-		#endregion
 
 		public int Width
 		{
