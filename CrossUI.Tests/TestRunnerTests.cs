@@ -9,45 +9,45 @@ namespace CrossUI.Tests
 	[BitmapDrawingTest(Width = 80, Height = 40)]
 	public sealed class RoundedRectangleTest
 	{
-		public void RoundedRect(IDrawingContext context)
+		public void RoundedRect(IDrawingTarget target)
 		{
-			context.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRect(0, 0, 80, 40, 8);
 		}
 
-		public void ThickRect(IDrawingContext context)
+		public void ThickRect(IDrawingTarget target)
 		{
-			context.Stroke(weight: 3);
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.Stroke(weight: 3);
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
-		public void ColoredRect(IDrawingContext context)
+		public void ColoredRect(IDrawingTarget target)
 		{
-			context.Stroke(new Color(1, 0, 0));
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.Stroke(new Color(1, 0, 0));
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
 		[BitmapDrawingTest(Width = 120)]
-		public void LargerRect(IDrawingContext context)
+		public void LargerRect(IDrawingTarget target)
 		{
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
 		public void ShouldBeIgnored()
 		{
 		}
 
-		public void Report(IDrawingContext context)
+		public void Report(IDrawingTarget target)
 		{
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
-			context.Report("Report A");
-			context.Report("Report B");
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
+			target.Report("Report A");
+			target.Report("Report B");
 		}
 	}
 
 	public sealed class MethodErrorTest
 	{
 		[BitmapDrawingTest(Width=80,Height=40)]
-		public void Error(IDrawingContext context)
+		public void Error(IDrawingTarget target)
 		{
 			throw new Exception("Method Error");
 		}

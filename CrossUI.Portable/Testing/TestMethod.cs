@@ -46,12 +46,12 @@ namespace CrossUI.Testing
 
 		public bool isValidParameter(ParameterInfo info)
 		{
-			return info.ParameterType == typeof (IDrawingContext);
+			return info.ParameterType == typeof (IDrawingTarget);
 		}
 
-		public void invoke(object instance, IDrawingContext drawingContext)
+		public void invoke(object instance, IDrawingTarget drawingTarget)
 		{
-			invoke(instance, new object[] { drawingContext });
+			invoke(instance, new object[] { drawingTarget });
 		}
 
 		void invoke(object instance, IEnumerable<object> unmappedArguments)

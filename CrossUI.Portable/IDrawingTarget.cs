@@ -50,7 +50,7 @@ namespace CrossUI
 		}
 	}
 
-	public interface IDrawingContext : IClosedFigureContext, ICoordinateSpace
+	public interface IDrawingTarget : IClosedFigureContext, ICoordinateSpace
 	{
 		int Width { get; }
 		int Height { get; }
@@ -83,9 +83,9 @@ namespace CrossUI
 	public static class DrawingContextExtensions
 	{
 		[Conditional("DEBUG")]
-		public static void Debug(this IDrawingContext context, string str)
+		public static void Debug(this IDrawingTarget target, string str)
 		{
-			context.Report(str);
+			target.Report(str);
 		}
 	}
 }

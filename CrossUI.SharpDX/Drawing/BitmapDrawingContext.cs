@@ -55,7 +55,7 @@ namespace CrossUI.SharpDX.Drawing
 			_device.Dispose();
 		}
 
-		public IDisposable BeginDraw(out IDrawingContext context)
+		public IDisposable BeginDraw(out IDrawingTarget target)
 		{
 			var surface = _texture.AsSurface();
 
@@ -70,7 +70,7 @@ namespace CrossUI.SharpDX.Drawing
 			var renderTarget = new RenderTarget(_factory, surface, rtProperties);
 
 			var c = new RenderTargetDrawingContext(renderTarget, _width, _height);
-			context = c;
+			target = c;
 
 			renderTarget.BeginDraw();
 

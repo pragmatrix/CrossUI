@@ -5,36 +5,36 @@ namespace CrossUI.Tests.DrawingContext
 	[BitmapDrawingTest(Width = 60, Height = 60)]
 	class CoordinateSpaceTests
 	{
-		public void Translation(IDrawingContext context)
+		public void Translation(IDrawingTarget target)
 		{
-			drawOriginal(context);
-			context.Translate(5, 5);
-			drawTransformed(context);
+			drawOriginal(target);
+			target.Translate(5, 5);
+			drawTransformed(target);
 		}
 
-		public void Rotation(IDrawingContext context)
+		public void Rotation(IDrawingTarget target)
 		{
-			drawOriginal(context);
-			context.Rotate(Math.PI/8, 30, 30);
-			drawTransformed(context);
+			drawOriginal(target);
+			target.Rotate(Math.PI/8, 30, 30);
+			drawTransformed(target);
 		}
 
-		public void Scale(IDrawingContext context)
+		public void Scale(IDrawingTarget target)
 		{
-			drawOriginal(context);
-			context.Scale(0.75, 0.75, 30, 30);
-			drawTransformed(context);
+			drawOriginal(target);
+			target.Scale(0.75, 0.75, 30, 30);
+			drawTransformed(target);
 		}
 
-		void drawOriginal(IDrawingContext context)
+		void drawOriginal(IDrawingTarget target)
 		{
-			context.Rect(10, 15, 40, 30);
+			target.Rect(10, 15, 40, 30);
 		}
 
-		void drawTransformed(IDrawingContext context)
+		void drawTransformed(IDrawingTarget target)
 		{
-			context.Stroke(color: new Color(1, 0.5, 0.5));
-			context.Rect(10, 15, 40, 30);
+			target.Stroke(color: new Color(1, 0.5, 0.5));
+			target.Rect(10, 15, 40, 30);
 		}
 	}
 }

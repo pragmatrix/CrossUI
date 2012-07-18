@@ -6,7 +6,7 @@ using SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed partial class RenderTargetDrawingContext : IDrawingContext, IDisposable
+	sealed partial class RenderTargetDrawingContext : IDrawingTarget, IDisposable
 	{
 		readonly RenderTarget _target;
 		readonly List<string> _reports = new List<string>();

@@ -5,65 +5,65 @@ namespace CrossUI.Tests.DrawingContext
 	[BitmapDrawingTest(Width = 80, Height = 40)]
 	public sealed class StrokeTests
 	{
-		public void RoundedRect(IDrawingContext context)
+		public void RoundedRect(IDrawingTarget target)
 		{
-			context.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRect(0, 0, 80, 40, 8);
 		}
 
-		public void ThickRoundedRect(IDrawingContext context)
+		public void ThickRoundedRect(IDrawingTarget target)
 		{
-			context.Stroke(weight: 3);
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.Stroke(weight: 3);
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
-		public void ColoredRoundedRect(IDrawingContext context)
+		public void ColoredRoundedRect(IDrawingTarget target)
 		{
-			context.Stroke(new Color(1, 0, 0));
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.Stroke(new Color(1, 0, 0));
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
-		public void OutsideAligned(IDrawingContext context)
+		public void OutsideAligned(IDrawingTarget target)
 		{
-			context.Stroke(alignment: StrokeAlignment.Outside);
-			context.RoundedRect(0, 0, context.Width, context.Height, 8);
+			target.Stroke(alignment: StrokeAlignment.Outside);
+			target.RoundedRect(0, 0, target.Width, target.Height, 8);
 		}
 
-		public void Line(IDrawingContext context)
+		public void Line(IDrawingTarget target)
 		{
-			context.Line(1, 1, context.Width-1, context.Height-1);
+			target.Line(1, 1, target.Width-1, target.Height-1);
 		}
 
-		public void ThickLine(IDrawingContext context)
+		public void ThickLine(IDrawingTarget target)
 		{
-			context.Stroke(weight: 5);
-			context.Line(10, 10, context.Width - 10, context.Height - 10);
+			target.Stroke(weight: 5);
+			target.Line(10, 10, target.Width - 10, target.Height - 10);
 		}
 
-		public void RegularRect(IDrawingContext context)
+		public void RegularRect(IDrawingTarget target)
 		{
-			context.Rect(0, 0, context.Width, context.Height);
+			target.Rect(0, 0, target.Width, target.Height);
 		}
 
-		public void Ellipse(IDrawingContext context)
+		public void Ellipse(IDrawingTarget target)
 		{
-			context.Ellipse(0, 0, context.Width, context.Height);
+			target.Ellipse(0, 0, target.Width, target.Height);
 		}
 
-		public void Arc(IDrawingContext context)
+		public void Arc(IDrawingTarget target)
 		{
 			const double pi = Math.PI;
-			context.Arc(0, 0, context.Width, context.Height, 0, pi/2);
-			context.Arc(0, 0, context.Width, context.Height, pi, pi *1.5);
+			target.Arc(0, 0, target.Width, target.Height, 0, pi/2);
+			target.Arc(0, 0, target.Width, target.Height, pi, pi *1.5);
 		}
 
-		public void Bezier(IDrawingContext context)
+		public void Bezier(IDrawingTarget target)
 		{
-			context.Bezier(0, 0, context.Width, 0, 0, context.Height, context.Width, context.Height);
+			target.Bezier(0, 0, target.Width, 0, 0, target.Height, target.Width, target.Height);
 		}
 
-		public void Polygon(IDrawingContext context)
+		public void Polygon(IDrawingTarget target)
 		{
-			context.Polygon(new double[] { 0, 0, 80, 20, 20, 40 });
+			target.Polygon(new double[] { 0, 0, 80, 20, 20, 40 });
 		}
 	}
 }

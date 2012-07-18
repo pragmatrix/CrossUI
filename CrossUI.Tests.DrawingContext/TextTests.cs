@@ -6,34 +6,34 @@
 		const string Text =
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.";
 
-		public void Default(IDrawingContext ctx)
+		public void Default(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		public void NoWordWrap(IDrawingContext ctx)
+		public void NoWordWrap(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(wordWrapping:WordWrapping.NoWrap);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		public void Centered(IDrawingContext ctx)
+		public void Centered(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(alignment: TextAlignment.Center);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		public void RightAligned(IDrawingContext ctx)
+		public void RightAligned(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(alignment:TextAlignment.Trailing);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		public void Colored(IDrawingContext ctx)
+		public void Colored(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(color: new Color(1, 0, 0));
@@ -41,7 +41,7 @@
 		}
 
 		[BitmapDrawingTest(Height = 60)]
-		public void ParagraphCentered(IDrawingContext ctx)
+		public void ParagraphCentered(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(paragraphAlignment:ParagraphAlignment.Center);
@@ -49,7 +49,7 @@
 		}
 
 		[BitmapDrawingTest(Height = 60)]
-		public void ParagraphBottom(IDrawingContext ctx)
+		public void ParagraphBottom(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(paragraphAlignment: ParagraphAlignment.Far);
@@ -57,7 +57,7 @@
 		}
 
 		[BitmapDrawingTest(Height = 20)]
-		public void Bold(IDrawingContext ctx)
+		public void Bold(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(weight: FontWeight.Bold);
@@ -65,7 +65,7 @@
 		}
 
 		[BitmapDrawingTest(Height = 20)]
-		public void Italic(IDrawingContext ctx)
+		public void Italic(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(style: FontStyle.Italic);
@@ -73,14 +73,14 @@
 		}
 
 		[BitmapDrawingTest(Height = 20)]
-		public void BoldItalic(IDrawingContext ctx)
+		public void BoldItalic(IDrawingTarget ctx)
 		{
 			setup(ctx);
 			ctx.Text(weight:FontWeight.Bold, style: FontStyle.Italic);
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
-		void setup(IDrawingContext ctx)
+		void setup(IDrawingTarget ctx)
 		{
 			ctx.Text(font: "Tahoma", size: 10);
 		}

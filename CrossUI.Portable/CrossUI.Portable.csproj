@@ -39,7 +39,7 @@
     <Compile Include="IBitmapDrawingContext.cs" />
     <Compile Include="ICoordinateSpace.cs" />
     <Compile Include="IDrawingBackend.cs" />
-    <Compile Include="IDrawingContext.cs" />
+    <Compile Include="IDrawingTarget.cs" />
     <Compile Include="IClosedFigureContext.cs" />
     <Compile Include="IGeometryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

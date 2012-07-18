@@ -5,48 +5,48 @@ namespace CrossUI.Tests.DrawingContext
 	[BitmapDrawingTest(Width = 80, Height = 40)]
 	public class FillAndStrokeTests
 	{
-		void setup(IDrawingContext context)
+		void setup(IDrawingTarget target)
 		{
-			context.Fill(new Color(0, 1, 0));
-			context.Stroke(new Color(1, 0, 0), weight: 2);
+			target.Fill(new Color(0, 1, 0));
+			target.Stroke(new Color(1, 0, 0), weight: 2);
 		}
 
-		public void RegularRect(IDrawingContext context)
+		public void RegularRect(IDrawingTarget target)
 		{
-			setup(context);
-			context.Rect(0, 0, context.Width, context.Height);
+			setup(target);
+			target.Rect(0, 0, target.Width, target.Height);
 		}
 
-		public void RoundedRect(IDrawingContext context)
+		public void RoundedRect(IDrawingTarget target)
 		{
-			setup(context);
-			context.RoundedRect(0, 0, 80, 40, 8);
+			setup(target);
+			target.RoundedRect(0, 0, 80, 40, 8);
 		}
 
-		public void Ellipse(IDrawingContext context)
+		public void Ellipse(IDrawingTarget target)
 		{
-			setup(context);
-			context.Ellipse(0, 0, context.Width, context.Height);
+			setup(target);
+			target.Ellipse(0, 0, target.Width, target.Height);
 		}
 
-		public void Arc(IDrawingContext context)
+		public void Arc(IDrawingTarget target)
 		{
-			setup(context);
+			setup(target);
 			const double pi = Math.PI;
-			context.Arc(0, 0, context.Width, context.Height, 0, pi / 2);
-			context.Arc(0, 0, context.Width, context.Height, pi, pi * 1.5);
+			target.Arc(0, 0, target.Width, target.Height, 0, pi / 2);
+			target.Arc(0, 0, target.Width, target.Height, pi, pi * 1.5);
 		}
 
-		public void Bezier(IDrawingContext context)
+		public void Bezier(IDrawingTarget target)
 		{
-			setup(context);
-			context.Bezier(0, 0, context.Width, 0, 0, context.Height, context.Width, context.Height);
+			setup(target);
+			target.Bezier(0, 0, target.Width, 0, 0, target.Height, target.Width, target.Height);
 		}
 
-		public void Polygon(IDrawingContext context)
+		public void Polygon(IDrawingTarget target)
 		{
-			setup(context);
-			context.Polygon(new double[]{0,0, 80, 20, 20, 40});
+			setup(target);
+			target.Polygon(new double[]{0,0, 80, 20, 20, 40});
 		}
 	}
 }

@@ -161,15 +161,15 @@ namespace CrossUI.Testing
 
 			using (var context = drawingBackend.CreateBitmapDrawingContext(width, height))
 			{
-				IDrawingContext drawingContext;
-				using (context.BeginDraw(out drawingContext))
+				IDrawingTarget drawingTarget;
+				using (context.BeginDraw(out drawingTarget))
 				{
-					testMethod.invoke(instance, drawingContext);
+					testMethod.invoke(instance, drawingTarget);
 				}
 
 
 				var bitmap = resultFactory.Bitmap(width, height, context.ExtractRawBitmap());
-				var testReport = resultFactory.Report(drawingContext.Reports);
+				var testReport = resultFactory.Report(drawingTarget.Reports);
 
 				return resultFactory.Method(testMethod.Info.Name, bitmap, testReport);
 			}
