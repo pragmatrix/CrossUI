@@ -40,7 +40,7 @@
     <Compile Include="ICoordinateSpace.cs" />
     <Compile Include="IDrawingBackend.cs" />
     <Compile Include="IDrawingTarget.cs" />
-    <Compile Include="IClosedFigureContext.cs" />
+    <Compile Include="IDrawingFigures.cs" />
     <Compile Include="IGeometryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\TestMethod.cs" />

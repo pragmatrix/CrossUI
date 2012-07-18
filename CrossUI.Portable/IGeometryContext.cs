@@ -6,7 +6,7 @@
 		CounterClockwise
 	}
 
-	interface IGeometryContext : IClosedFigureContext
+	interface IGeometryContext : IDrawingFigures
 	{
 		// ends the current figure and starts a new one.
 		void MoveTo(double x, double y);

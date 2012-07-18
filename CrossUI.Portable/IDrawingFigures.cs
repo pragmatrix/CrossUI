@@ -1,6 +1,6 @@
 ﻿namespace CrossUI
 {
-	public interface IClosedFigureContext
+	public interface IDrawingFigures
 	{
 		void Line(double x1, double y1, double x2, double y2);
 

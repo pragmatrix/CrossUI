@@ -50,7 +50,7 @@ namespace CrossUI
 		}
 	}
 
-	public interface IDrawingTarget : IClosedFigureContext, ICoordinateSpace
+	public interface IDrawingTarget : IDrawingFigures, ICoordinateSpace
 	{
 		int Width { get; }
 		int Height { get; }
