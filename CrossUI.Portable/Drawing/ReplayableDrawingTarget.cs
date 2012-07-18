@@ -11,7 +11,7 @@ namespace CrossUI.Drawing
 
 		readonly ITextMeasurements _textMeasurements;
 
-		readonly List<Action<IDrawingTarget>> _actions;
+		readonly List<Action<IDrawingTarget>> _actions = new List<Action<IDrawingTarget>>();
 		readonly List<string>  _reports = new List<string>();
 
 		public ReplayableDrawingTarget(int? width, int? height, ITextMeasurements textMeasurements)
