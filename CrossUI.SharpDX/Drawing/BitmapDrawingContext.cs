@@ -69,7 +69,7 @@ namespace CrossUI.SharpDX.Drawing
 
 			var renderTarget = new RenderTarget(_factory, surface, rtProperties);
 
-			var c = new RenderTargetDrawingContext(renderTarget, _width, _height);
+			var c = new DrawingTarget(renderTarget, _width, _height);
 			target = c;
 
 			renderTarget.BeginDraw();

@@ -6,12 +6,12 @@ using SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed partial class RenderTargetDrawingContext : IDrawingTarget, IDisposable
+	sealed partial class DrawingTarget : IDrawingTarget, IDisposable
 	{
 		readonly RenderTarget _target;
 		readonly List<string> _reports = new List<string>();
 
-		public RenderTargetDrawingContext(RenderTarget target, int width, int height)
+		public DrawingTarget(RenderTarget target, int width, int height)
 		{
 			_target = target;
 			_target.AntialiasMode = AntialiasMode.PerPrimitive;

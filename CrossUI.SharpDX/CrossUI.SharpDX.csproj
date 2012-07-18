@@ -52,9 +52,9 @@
   <ItemGroup>
     <Compile Include="Drawing\BitmapDrawingContext.cs" />
     <Compile Include="Drawing\DrawingTargetTransform.cs" />
-    <Compile Include="Drawing\RenderTargetDrawingContext.cs" />
+    <Compile Include="Drawing\DrawingTarget.cs" />
     <Compile Include="DrawingBackend.cs" />
-    <Compile Include="Drawing\RenderTargetDrawingContextText.cs" />
+    <Compile Include="Drawing\DrawingTargetText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

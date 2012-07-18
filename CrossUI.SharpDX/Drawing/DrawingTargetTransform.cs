@@ -4,7 +4,7 @@ using SharpDX;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	partial class RenderTargetDrawingContext
+	partial class DrawingTarget
 	{
 		public IDisposable SaveTransform()
 		{

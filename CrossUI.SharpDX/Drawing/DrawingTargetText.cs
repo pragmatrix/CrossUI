@@ -4,7 +4,7 @@ using Factory = SharpDX.DirectWrite.Factory;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	partial class RenderTargetDrawingContext
+	partial class DrawingTarget
 	{
 		Factory _writeFactory_;
 
