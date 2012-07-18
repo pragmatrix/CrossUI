@@ -48,6 +48,44 @@ namespace CrossUI
 				return 255;
 			return (byte)m;
 		}
+
+		#region Equality members
+
+		public bool Equals(Color other)
+		{
+			return Red.Equals(other.Red) && Green.Equals(other.Green) && Blue.Equals(other.Blue) && Alpha.Equals(other.Alpha);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+				return false;
+			return obj is Color && Equals((Color)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int hashCode = Red.GetHashCode();
+				hashCode = (hashCode * 397) ^ Green.GetHashCode();
+				hashCode = (hashCode * 397) ^ Blue.GetHashCode();
+				hashCode = (hashCode * 397) ^ Alpha.GetHashCode();
+				return hashCode;
+			}
+		}
+
+		public static bool operator ==(Color left, Color right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Color left, Color right)
+		{
+			return !left.Equals(right);
+		}
+
+		#endregion
 	}
 
 	public static class ColorExtensions

@@ -1,47 +1,75 @@
-﻿using System;
+﻿using CrossUI.Drawing;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using SharpDX;
 using SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed partial class DrawingTarget : IDrawingTarget, IDisposable
+	sealed partial class DrawingTarget : IDrawingTargetBitmap,
+		IDrawingFigures,
+		IDrawingText,
+		ITextMeasurements,
+		IReportingTarget,
+		IDisposable
 	{
+		readonly DrawingState _state;
+		readonly DrawingTransform _transform;
 		readonly RenderTarget _target;
 		readonly List<string> _reports = new List<string>();
+		readonly BrushCache _strokeBrush;
+		readonly BrushCache _fillBrush;
+		readonly BrushCache _textBrush;
 
-		public DrawingTarget(RenderTarget target, int width, int height)
+		public DrawingTarget(DrawingState state, DrawingTransform transform, RenderTarget target, int width, int height)
 		{
+			_state = state;
+			_transform = transform;
+
 			_target = target;
 			_target.AntialiasMode = AntialiasMode.PerPrimitive;
 
 			Width = width;
 			Height = height;
 
-			// note: careful, if brushes are not being disposed they start leaking and refering back to
-			// all resources created in the render target.... We need to check SharpDX if this is 
-			// by design or a bug!
+			_strokeBrush = new BrushCache(createBrush, () => _state.StrokeColor);
+			_fillBrush = new BrushCache(createBrush, () => state.FillColor);
+			_textBrush = new BrushCache(createBrush, () => state.TextColor);
 
-			_strokeBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-			_fillBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-			_textBrush = new SolidColorBrush(_target, new Color4(0, 0, 0, 1));
-
-			_strokeWeight = 1;
+			_transform.Changed += transformChanged;
 		}
 
 		public void Dispose()
 		{
+			_transform.Changed -= transformChanged;
+
 			_textBrush.Dispose();
 			_fillBrush.Dispose();
 			_strokeBrush.Dispose();
 		}
 
-		Brush _strokeBrush;
-		float _strokeWeight;
-		StrokeAlignment _strokeAlignment;
-		Brush _fillBrush;
-		bool _fill;
+		SolidColorBrush createBrush(Color color)
+		{
+			return new SolidColorBrush(_target,
+				new Color4(color.Red.import(), color.Green.import(), color.Blue.import(), color.Alpha.import()));
+		}
+
+		void transformChanged()
+		{
+			var c = _transform.Current;
+
+			var m = new Matrix3x2
+			{
+				M11 = c.M11.import(),
+				M12 = c.M12.import(),
+				M21 = c.M21.import(),
+				M22 = c.M22.import(),
+				M31 = c.M31.import(),
+				M32 = c.M32.import(),
+			};
+
+			_target.Transform = m;
+		}
 
 		public int Width { get; private set; }
 		public int Height { get; private set; }
@@ -56,56 +84,25 @@ namespace CrossUI.SharpDX.Drawing
 			get { return _reports; }
 		}
 
-		public void Fill(Color? color)
-		{
-			if (color != null)
-			{
-				_fillBrush.Dispose();
-				_fillBrush = new SolidColorBrush(_target, color.Value.import());
-			}
-
-			_fill = true;
-		}
-
-		public void NoFill()
-		{
-			_fill = false;
-		}
-
-		public void Stroke(Color? color, double? weight, StrokeAlignment? alignment)
-		{
-			if (color != null)
-			{
-				_strokeBrush.Dispose();
-				_strokeBrush = new SolidColorBrush(_target, color.Value.import());
-			}
-
-			if (weight != null)
-				_strokeWeight = weight.Value.import();
-
-			if (alignment != null)
-				_strokeAlignment = alignment.Value;
-		}
-
-		public void NoStroke()
-		{
-			_strokeWeight = 0;
-		}
-
 		bool Filling
 		{
-			get { return _fill; }
+			get { return _state.FillEnabled; }
 		}
 
 		bool Stroking
 		{
-			get { return _strokeWeight != 0f; }
+			get { return _state.StrokeEnabled; }
+		}
+
+		float StrokeWeight
+		{
+			get { return _state.StrokeWeight.import(); }
 		}
 
 		public void Line(double x1, double y1, double x2, double y2)
 		{
 			if (Stroking)
-				_target.DrawLine(importPoint(x1, y1), importPoint(x2, y2), _strokeBrush, _strokeWeight);
+				_target.DrawLine(Import.Point(x1, y1), Import.Point(x2, y2), _strokeBrush.Brush, StrokeWeight);
 		}
 
 		public void Rect(double x, double y, double width, double height)
@@ -113,13 +110,13 @@ namespace CrossUI.SharpDX.Drawing
 			if (Stroking)
 			{
 				var r = strokeAlignedRect(x, y, width, height);
-				_target.DrawRectangle(r, _strokeBrush, _strokeWeight);
+				_target.DrawRectangle(r, _strokeBrush.Brush, StrokeWeight);
 			}
 
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
-				_target.FillRectangle(r, _fillBrush);
+				_target.FillRectangle(r, _fillBrush.Brush);
 			}
 
 		}
@@ -130,18 +127,18 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				// adjust corner radius if we do stroke afterwards.
 
-				var filledCornerRadius = Stroking 
-					? Math.Max(0, cornerRadius - _strokeWeight/2) 
+				var filledCornerRadius = Stroking
+					? Math.Max(0, cornerRadius - _state.StrokeWeight/2)
 					: cornerRadius;
 
 				var roundedRect = new RoundedRect
 				{
 					Rect = fillRect(x, y, width, height),
-					RadiusX = import(filledCornerRadius),
-					RadiusY = import(filledCornerRadius)
+					RadiusX = filledCornerRadius.import(),
+					RadiusY = filledCornerRadius.import()
 				};
 
-				_target.FillRoundedRectangle(roundedRect, _fillBrush);
+				_target.FillRoundedRectangle(roundedRect, _fillBrush.Brush);
 			}
 
 			if (Stroking)
@@ -149,11 +146,11 @@ namespace CrossUI.SharpDX.Drawing
 				var roundedRect = new RoundedRect
 				{
 					Rect = strokeAlignedRect(x, y, width, height),
-					RadiusX = import(cornerRadius),
-					RadiusY = import(cornerRadius)
+					RadiusX = cornerRadius.import(),
+					RadiusY = cornerRadius.import()
 				};
 
-				_target.DrawRoundedRectangle(roundedRect, _strokeBrush, _strokeWeight);
+				_target.DrawRoundedRectangle(roundedRect, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
@@ -171,7 +168,7 @@ namespace CrossUI.SharpDX.Drawing
 				return;
 			}
 
-			var startPoint = importPoint(pairs[0], pairs[1]);
+			var startPoint = Import.Point(pairs[0], pairs[1]);
 
 			if (Filling)
 			{
@@ -179,7 +176,7 @@ namespace CrossUI.SharpDX.Drawing
 					sink =>
 						{
 							for (int i = 2; i != pairs.Length; i += 2)
-								sink.AddLine(importPoint(pairs[i], pairs[i + 1]));
+								sink.AddLine(Import.Point(pairs[i], pairs[i + 1]));
 						});
 			}
 
@@ -187,10 +184,10 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				drawClosedPath(startPoint,
 					sink =>
-					{
-						for (int i = 2; i != pairs.Length; i += 2)
-							sink.AddLine(importPoint(pairs[i], pairs[i + 1]));
-					});
+						{
+							for (int i = 2; i != pairs.Length; i += 2)
+								sink.AddLine(Import.Point(pairs[i], pairs[i + 1]));
+						});
 			}
 		}
 
@@ -199,15 +196,15 @@ namespace CrossUI.SharpDX.Drawing
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
-				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
-				_target.FillEllipse(ellipse, _fillBrush);
+				var ellipse = new Ellipse(Import.Point(r.Left + r.Width/2, r.Top + r.Height/2), r.Width/2, r.Height/2);
+				_target.FillEllipse(ellipse, _fillBrush.Brush);
 			}
 
 			if (Stroking)
 			{
 				var r = strokeAlignedRect(x, y, width, height);
-				var ellipse = new Ellipse(importPoint(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
-				_target.DrawEllipse(ellipse, _strokeBrush, _strokeWeight);
+				var ellipse = new Ellipse(Import.Point(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
+				_target.DrawEllipse(ellipse, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
@@ -217,14 +214,15 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				var r = fillRect(x, y, width, height);
 
-				var centerPoint = new DrawingPointF(r.X + r.Width / 2, r.Y + r.Height / 2);
+				var centerPoint = new DrawingPointF(r.X + r.Width/2, r.Y + r.Height/2);
 
-				fillPath(centerPoint, sink =>
-					{
-						var startPoint = pointOnArc(r, start);
-						sink.AddLine(startPoint);
-						addArc(r, start, stop, sink);
-					});
+				fillPath(centerPoint,
+					sink =>
+						{
+							var startPoint = pointOnArc(r, start);
+							sink.AddLine(startPoint);
+							addArc(r, start, stop, sink);
+						});
 			}
 
 			if (Stroking)
@@ -237,27 +235,27 @@ namespace CrossUI.SharpDX.Drawing
 
 		DrawingPointF pointOnArc(RectangleF r, double angle)
 		{
-			var rx = r.Width / 2;
-			var ry = r.Height / 2;
+			var rx = r.Width/2;
+			var ry = r.Height/2;
 			var cx = r.X + rx;
 			var cy = r.Y + ry;
 
-			var dx = Math.Cos(angle) * rx;
-			var dy = Math.Sin(angle) * ry;
+			var dx = Math.Cos(angle)*rx;
+			var dy = Math.Sin(angle)*ry;
 
 			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
 		}
 
 		void addArc(RectangleF r, double start, double stop, GeometrySink sink)
 		{
-			var rx = r.Width / 2;
-			var ry = r.Height / 2;
+			var rx = r.Width/2;
+			var ry = r.Height/2;
 			var angle = start;
 
 			// the quality of Direct2D arcs are lousy, so we render them in 16 segments per circle
 
 			const int MaxSegments = 16;
-			const double SegmentAngle = Math.PI * 2 / MaxSegments;
+			const double SegmentAngle = Math.PI*2/MaxSegments;
 
 			for (var segment = 0; angle < stop && segment != MaxSegments; ++segment)
 			{
@@ -283,32 +281,34 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			if (Filling)
 			{
-				fillPath(importPoint(x, y), sink =>
-				{
-					var bezierSegment = new BezierSegment()
-					{
-						Point1 = importPoint(s1x, s1y),
-						Point2 = importPoint(s2x, s2y),
-						Point3 = importPoint(ex, ey)
-					};
+				fillPath(Import.Point(x, y),
+					sink =>
+						{
+							var bezierSegment = new BezierSegment()
+							{
+								Point1 = Import.Point(s1x, s1y),
+								Point2 = Import.Point(s2x, s2y),
+								Point3 = Import.Point(ex, ey)
+							};
 
-					sink.AddBezier(bezierSegment);
-				});
+							sink.AddBezier(bezierSegment);
+						});
 			}
 
 			if (Stroking)
 			{
-				drawOpenPath(importPoint(x, y), sink =>
-					{
-						var bezierSegment = new BezierSegment()
+				drawOpenPath(Import.Point(x, y),
+					sink =>
 						{
-							Point1 = importPoint(s1x, s1y),
-							Point2 = importPoint(s2x, s2y),
-							Point3 = importPoint(ex, ey)
-						};
+							var bezierSegment = new BezierSegment()
+							{
+								Point1 = Import.Point(s1x, s1y),
+								Point2 = Import.Point(s2x, s2y),
+								Point3 = Import.Point(ex, ey)
+							};
 
-						sink.AddBezier(bezierSegment);
-					});
+							sink.AddBezier(bezierSegment);
+						});
 			}
 		}
 
@@ -316,7 +316,7 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			using (var geometry = createPath(false, begin, figureBuilder))
 			{
-				_target.DrawGeometry(geometry, _strokeBrush, _strokeWeight);
+				_target.DrawGeometry(geometry, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
@@ -324,7 +324,7 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			using (var geometry = createPath(true, begin, figureBuilder))
 			{
-				_target.DrawGeometry(geometry, _strokeBrush, _strokeWeight);
+				_target.DrawGeometry(geometry, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
@@ -332,7 +332,7 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			using (var geometry = createPath(true, begin, figureBuilder))
 			{
-				_target.FillGeometry(geometry, _fillBrush);
+				_target.FillGeometry(geometry, _fillBrush.Brush);
 			}
 		}
 
@@ -355,98 +355,16 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			if (!Stroking)
 			{
-				return new RectangleF(
-					import(x),
-					import(y),
-					import(x + width),
-					import(y + height));
+				return new RectangleF(x.import(), y.import(), (x + width).import(), (y + height).import());
 			}
 
-			var fs = strokeFillShift();
-
-			return new RectangleF(
-				import(x+fs),
-				import(y+fs),
-				import(x + width - fs),
-				import(y + height - fs));
+			return _state.StrokeFillBounds(x, y, width, height).import();
 		}
 
 
 		RectangleF strokeAlignedRect(double x, double y, double width, double height)
 		{
-			var strokeShift = strokeAlignShift();
-
-			var rect = new RectangleF(
-				import(x + strokeShift),
-				import(y + strokeShift),
-				import(x + width - strokeShift),
-				import(y + height - strokeShift));
-
-			return rect;
-		}
-
-		double strokeAlignShift()
-		{
-			var width = _strokeWeight;
-
-			switch (_strokeAlignment)
-			{
-				case StrokeAlignment.Center:
-					return 0;
-				case StrokeAlignment.Inside:
-					return width/2;
-				case StrokeAlignment.Outside:
-					return -width/2;
-			}
-
-			Debug.Assert(false);
-			return 0;
-		}
-
-		double strokeFillShift()
-		{
-			var width = _strokeWeight;
-
-			switch (_strokeAlignment)
-			{
-				case StrokeAlignment.Center:
-					return width/2;
-				case StrokeAlignment.Inside:
-					return width;
-				case StrokeAlignment.Outside:
-					return 0;
-			}
-
-			Debug.Assert(false);
-			return 0;
-		}
-
-		static float import(double d)
-		{
-			return d.import();
-		}
-
-		static DrawingPointF importPoint(double x, double y)
-		{
-			return new DrawingPointF(x.import(), y.import());
-		}
-
-		static RectangleF importRect(double x, double y, double width, double height)
-		{
-			return new RectangleF(x.import(), y.import(), (x + width).import(), (y + height).import());
-		}
-	}
-
-	static class Conversions
-	{
-		public static float import(this double d)
-		{
-			return (float) d;
-		}
-
-		public static Color4 import(this Color color)
-		{
-			return new Color4(color.Red.import(), color.Green.import(), color.Blue.import(), color.Alpha.import());
+			return _state.StrokeAlignedBounds(x, y, width, height).import();
 		}
 	}
 }

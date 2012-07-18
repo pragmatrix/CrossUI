@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace CrossUI.Drawing
 {
-	sealed class DrawingTargetSplitter : IDrawingTarget
+	public sealed class DrawingTargetSplitter : IDrawingTarget
 	{
-		readonly IDrawingTargetBitmap _bitmap;
 		readonly IDrawingState _state;
 		readonly IDrawingTransform _transform;
 		readonly IDrawingFigures _figures;
 		readonly IDrawingText _text;
 		readonly ITextMeasurements _measurements;
+		readonly IDrawingTargetBitmap _bitmap;
 		readonly IReportingTarget _reporting;
 
 		public DrawingTargetSplitter(
-			IDrawingTargetBitmap bitmap,
 			IDrawingState state,
 			IDrawingTransform transform,
 			IDrawingFigures figures,
 			IDrawingText text,
 			ITextMeasurements measurements,
+			IDrawingTargetBitmap bitmap,
 			IReportingTarget reporting)
 		{
 			_bitmap = bitmap;

@@ -4,6 +4,7 @@ using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D10;
 using CrossUI.Toolbox;
+using CrossUI.Drawing;
 using Device1 = SharpDX.Direct3D10.Device1;
 using Factory = SharpDX.Direct2D1.Factory;
 using FeatureLevel = SharpDX.Direct3D10.FeatureLevel;
@@ -69,16 +70,19 @@ namespace CrossUI.SharpDX.Drawing
 
 			var renderTarget = new RenderTarget(_factory, surface, rtProperties);
 
-			var c = new DrawingTarget(renderTarget, _width, _height);
-			target = c;
+			var state = new DrawingState();
+			var transform = new DrawingTransform();
 
+			var drawingTargetImplementation = new DrawingTarget(state, transform, renderTarget, _width, _height);
+
+			target = new DrawingTargetSplitter(state, transform, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation);
 			renderTarget.BeginDraw();
 
 			return new DisposeAction(() =>
 				{
 					renderTarget.EndDraw();
 
-					c.Dispose();
+					drawingTargetImplementation.Dispose();
 					renderTarget.Dispose();
 					surface.Dispose();
 				});

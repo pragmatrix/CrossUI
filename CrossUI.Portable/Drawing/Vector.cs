@@ -1,6 +1,6 @@
 ﻿namespace CrossUI.Drawing
 {
-	struct Vector
+	public struct Vector
 	{
 		public readonly double X;
 		public readonly double Y;

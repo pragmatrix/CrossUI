@@ -2,7 +2,7 @@
 
 namespace CrossUI.Drawing
 {
-	struct Matrix
+	public struct Matrix
 	{
 		public readonly double M11;
 		public readonly double M12;

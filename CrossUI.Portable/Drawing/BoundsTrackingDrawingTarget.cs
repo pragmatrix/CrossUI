@@ -22,11 +22,11 @@ namespace CrossUI.Drawing
 		{
 			var target = new BoundsTrackingDrawingTarget(boundsTracker);
 			return new DrawingTargetSplitter(
-				target, 
 				boundsTracker.State, 
 				boundsTracker.Transform, 
 				target, 
 				target, 
+				target,
 				target, 
 				target);
 		}

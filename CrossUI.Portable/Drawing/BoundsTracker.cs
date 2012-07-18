@@ -58,7 +58,7 @@ namespace CrossUI.Drawing
 
 		void trackPoint(double x, double y)
 		{
-			var v = Transform.transform(new Vector(x, y));
+			var v = Transform.Transform(new Vector(x, y));
 
 			if (!_set)
 			{

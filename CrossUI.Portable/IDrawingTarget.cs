@@ -51,12 +51,12 @@ namespace CrossUI
 	}
 
 	public interface IDrawingTarget : 
-		IDrawingTargetBitmap,
 		IDrawingState,
 		IDrawingTransform,
 		IDrawingFigures,
 		IDrawingText,
 		ITextMeasurements,
+		IDrawingTargetBitmap,
 		IReportingTarget
 	{}
 

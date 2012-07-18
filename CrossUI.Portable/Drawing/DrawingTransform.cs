@@ -1,13 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using CrossUI.Toolbox;
 
 namespace CrossUI.Drawing
 {
-	sealed class DrawingTransform : IDrawingTransform
+	public sealed class DrawingTransform : IDrawingTransform
 	{
 		Matrix _current = Matrix.Identity;
 		readonly Stack<Matrix> _stack = new Stack<Matrix>();
 
-		public Vector transform(Vector vector)
+		public Matrix Current
+		{
+			get { return _current; }
+		}
+
+		public event Action Changed;
+
+		public Vector Transform(Vector vector)
 		{
 			return _current.Transform(vector);
 		}
@@ -19,7 +28,7 @@ namespace CrossUI.Drawing
 
 		public void RestoreTransform()
 		{
-			_current = _stack.Pop();
+			change(_stack.Pop());
 		}
 
 		public void Scale(double sx, double sy, double? centerX = null, double? centerY = null)
@@ -28,7 +37,7 @@ namespace CrossUI.Drawing
 				? Matrix.Scaling(sx, sy, centerX ?? 0, centerY ?? 0)
 				: Matrix.Scaling(sx, sy);
 
-			_current *= m;
+			change(_current * m);
 		}
 
 		public void Rotate(double radians, double? centerX = null, double? centerY = null)
@@ -37,12 +46,18 @@ namespace CrossUI.Drawing
 				? Matrix.Rotation(radians, centerX ?? 0, centerY ?? 0)
 				: Matrix.Rotation(radians);
 
-			_current *= m;
+			change(_current * m);
 		}
 
 		public void Translate(double dx, double dy)
 		{
-			_current = _current.Translated(dx, dy);
+			change(_current.Translated(dx, dy));
+		}
+
+		void change(Matrix m)
+		{
+			_current = m;
+			Changed.raise();
 		}
 	}
 }

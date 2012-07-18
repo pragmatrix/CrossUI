@@ -1,6 +1,6 @@
 namespace CrossUI.Drawing
 {
-	struct Bounds
+	public struct Bounds
 	{
 		public readonly double Left;
 		public readonly double Top;

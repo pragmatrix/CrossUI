@@ -51,10 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\BitmapDrawingContext.cs" />
-    <Compile Include="Drawing\DrawingTargetTransform.cs" />
+    <Compile Include="Drawing\BrushCache.cs" />
     <Compile Include="Drawing\DrawingTarget.cs" />
     <Compile Include="DrawingBackend.cs" />
     <Compile Include="Drawing\DrawingTargetText.cs" />
+    <Compile Include="Drawing\Import.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

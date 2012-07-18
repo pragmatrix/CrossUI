@@ -2,7 +2,7 @@
 
 namespace CrossUI.Drawing
 {
-	sealed class DrawingState : IDrawingState
+	public sealed class DrawingState : IDrawingState
 	{
 		public bool FillEnabled { get; private set; }
 		public Color FillColor { get; private set; }
@@ -106,7 +106,7 @@ namespace CrossUI.Drawing
 		}
 	}
 
-	static class DrawingStateExtensions
+	public static class DrawingStateExtensions
 	{
 		public static Bounds StrokeAlignedBounds(this DrawingState state, double x, double y, double width, double height)
 		{
