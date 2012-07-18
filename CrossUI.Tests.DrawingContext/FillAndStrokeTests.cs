@@ -7,8 +7,11 @@ namespace CrossUI.Tests.DrawingContext
 	{
 		void setup(IDrawingTarget target)
 		{
-			target.Fill(new Color(0, 1, 0));
-			target.Stroke(new Color(1, 0, 0), weight: 2);
+			var fillColor = new Color(0, 0.5, 1);
+			var strokeColor = fillColor.Darkened(0.25);
+
+			target.Fill(fillColor);
+			target.Stroke(strokeColor, weight: 2);
 		}
 
 		public void RegularRect(IDrawingTarget target)

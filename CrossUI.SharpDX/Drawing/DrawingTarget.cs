@@ -18,7 +18,7 @@ namespace CrossUI.SharpDX.Drawing
 
 			Width = width;
 			Height = height;
-			
+
 			// note: careful, if brushes are not being disposed they start leaking and refering back to
 			// all resources created in the render target.... We need to check SharpDX if this is 
 			// by design or a bug!
@@ -128,11 +128,17 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			if (Filling)
 			{
+				// adjust corner radius if we do stroke afterwards.
+
+				var filledCornerRadius = Stroking 
+					? Math.Max(0, cornerRadius - _strokeWeight/2) 
+					: cornerRadius;
+
 				var roundedRect = new RoundedRect
 				{
 					Rect = fillRect(x, y, width, height),
-					RadiusX = import(cornerRadius),
-					RadiusY = import(cornerRadius)
+					RadiusX = import(filledCornerRadius),
+					RadiusY = import(filledCornerRadius)
 				};
 
 				_target.FillRoundedRectangle(roundedRect, _fillBrush);
