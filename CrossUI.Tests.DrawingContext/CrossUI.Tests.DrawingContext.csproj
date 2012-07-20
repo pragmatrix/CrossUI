@@ -45,6 +45,7 @@
     <Compile Include="FillAndStrokeTests.cs" />
     <Compile Include="FillTests.cs" />
     <Compile Include="FillAndStrokeRoundedRectTests.cs" />
+    <Compile Include="GeometryTests.cs" />
     <Compile Include="StrokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextTests.cs" />

@@ -50,12 +50,15 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\BitmapDrawingContext.cs" />
+    <Compile Include="Drawing\BitmapDrawingTarget.cs" />
     <Compile Include="Drawing\BrushCache.cs" />
     <Compile Include="Drawing\DrawingTarget.cs" />
     <Compile Include="DrawingBackend.cs" />
     <Compile Include="Drawing\DrawingTargetText.cs" />
-    <Compile Include="Drawing\Import.cs" />
+    <Compile Include="Geometry\ArcGeometry.cs" />
+    <Compile Include="Geometry\GeometryImplementation.cs" />
+    <Compile Include="Geometry\GeometryTarget.cs" />
+    <Compile Include="Import.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +70,7 @@
       <Name>CrossUI.Portable</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -44,17 +44,17 @@ namespace CrossUI.Testing
 			return true;
 		}
 
-		public bool isValidParameter(ParameterInfo info)
+		bool isValidParameter(ParameterInfo info)
 		{
-			return info.ParameterType == typeof (IDrawingTarget);
+			return info.ParameterType == typeof(IDrawingTarget) || info.ParameterType == typeof(IGeometryTarget);
 		}
 
-		public void invoke(object instance, IDrawingTarget drawingTarget)
+		public Type FirstParamterType
 		{
-			invoke(instance, new object[] { drawingTarget });
+			get { return Info.GetParameters()[0].ParameterType; }
 		}
 
-		void invoke(object instance, IEnumerable<object> unmappedArguments)
+		public void invoke(object instance, params object[] unmappedArguments)
 		{
 			var methodParameters = Info.GetParameters();
 			var parameterCount = methodParameters.Length;

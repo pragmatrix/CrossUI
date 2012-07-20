@@ -1,14 +1,15 @@
 ﻿using CrossUI.Drawing;
 using System;
 using System.Collections.Generic;
+using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX.Drawing
 {
 	sealed partial class DrawingTarget : IDrawingTargetBitmap,
-		IDrawingFigures,
-		IDrawingText,
+		IGeometryFigures,
+		IDrawingElements,
 		ITextMeasurements,
 		IReportingTarget,
 		IDisposable
@@ -99,6 +100,21 @@ namespace CrossUI.SharpDX.Drawing
 			get { return _state.StrokeWeight.import(); }
 		}
 
+		public void Geometry(IGeometry geometry)
+		{
+			var native = geometry.import();
+
+			if (Filling)
+			{
+				_target.FillGeometry(native, _fillBrush.Brush);
+			}
+
+			if (Stroking)
+			{
+				_target.DrawGeometry(native, _strokeBrush.Brush, _state.StrokeWeight.import());
+			}
+		}
+
 		public void Line(double x1, double y1, double x2, double y2)
 		{
 			if (Stroking)
@@ -107,18 +123,17 @@ namespace CrossUI.SharpDX.Drawing
 
 		public void Rect(double x, double y, double width, double height)
 		{
-			if (Stroking)
-			{
-				var r = strokeAlignedRect(x, y, width, height);
-				_target.DrawRectangle(r, _strokeBrush.Brush, StrokeWeight);
-			}
-
 			if (Filling)
 			{
 				var r = fillRect(x, y, width, height);
 				_target.FillRectangle(r, _fillBrush.Brush);
 			}
 
+			if (Stroking)
+			{
+				var r = strokeAlignedRect(x, y, width, height);
+				_target.DrawRectangle(r, _strokeBrush.Brush, StrokeWeight);
+			}
 		}
 
 		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
@@ -219,61 +234,17 @@ namespace CrossUI.SharpDX.Drawing
 				fillPath(centerPoint,
 					sink =>
 						{
-							var startPoint = pointOnArc(r, start);
+							var startPoint = ArcGeometry.pointOn(r, start);
 							sink.AddLine(startPoint);
-							addArc(r, start, stop, sink);
+							ArcGeometry.add(r, start, stop, sink);
 						});
 			}
 
 			if (Stroking)
 			{
 				var r = strokeAlignedRect(x, y, width, height);
-				var currentPoint = pointOnArc(r, start);
-				drawOpenPath(currentPoint, sink => addArc(r, start, stop, sink));
-			}
-		}
-
-		DrawingPointF pointOnArc(RectangleF r, double angle)
-		{
-			var rx = r.Width/2;
-			var ry = r.Height/2;
-			var cx = r.X + rx;
-			var cy = r.Y + ry;
-
-			var dx = Math.Cos(angle)*rx;
-			var dy = Math.Sin(angle)*ry;
-
-			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
-		}
-
-		void addArc(RectangleF r, double start, double stop, GeometrySink sink)
-		{
-			var rx = r.Width/2;
-			var ry = r.Height/2;
-			var angle = start;
-
-			// the quality of Direct2D arcs are lousy, so we render them in 16 segments per circle
-
-			const int MaxSegments = 16;
-			const double SegmentAngle = Math.PI*2/MaxSegments;
-
-			for (var segment = 0; angle < stop && segment != MaxSegments; ++segment)
-			{
-				var angleLeft = stop - angle;
-				var angleNow = Math.Min(SegmentAngle, angleLeft);
-				var nextAngle = angle + angleNow;
-				var nextPoint = pointOnArc(r, nextAngle);
-
-				sink.AddArc(new ArcSegment
-				{
-					ArcSize = ArcSize.Small,
-					Size = new DrawingSizeF(rx, ry),
-					Point = nextPoint,
-					RotationAngle = (stop - start).import(),
-					SweepDirection = SweepDirection.Clockwise
-				});
-
-				angle = nextAngle;
+				var currentPoint = ArcGeometry.pointOn(r, start);
+				drawOpenPath(currentPoint, sink => ArcGeometry.add(r, start, stop, sink));
 			}
 		}
 
@@ -336,7 +307,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public Geometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		public PathGeometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
 		{
 			var pg = new PathGeometry(_target.Factory);
 

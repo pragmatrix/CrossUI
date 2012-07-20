@@ -3,6 +3,35 @@ using System.Diagnostics;
 
 namespace CrossUI
 {
+	public interface IDrawingTarget : 
+		IDrawingState,
+		IDrawingTransform,
+		IGeometryFigures,
+		IDrawingElements, 
+		ITextMeasurements,
+		IDrawingTargetBitmap,
+		IReportingTarget
+	{
+	}
+
+	public interface IDrawingState
+	{
+		void Fill(Color? color = null);
+		void NoFill();
+
+		void Stroke(Color? color = null, double? weight = null, StrokeAlignment? alignment = null);
+		void NoStroke();
+
+		void Font(string name = null, FontWeight? weight = null, FontStyle? style = null);
+
+		void Text(
+			double? size = null,
+			Color? color = null,
+			TextAlignment? alignment = null,
+			ParagraphAlignment? paragraphAlignment = null,
+			WordWrapping? wordWrapping = null);
+	}
+
 	public enum StrokeAlignment
 	{
 		Inside, Center, Outside
@@ -33,6 +62,17 @@ namespace CrossUI
 		Normal, Italic
 	}
 
+	public interface IDrawingElements
+	{
+		void Text(string text, double x, double y, double width, double height);
+		void Geometry(IGeometry geometry);
+	}
+
+	public interface ITextMeasurements
+	{
+		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
+	}
+
 	public struct TextSize
 	{
 		public TextSize(double width, double height)
@@ -50,50 +90,12 @@ namespace CrossUI
 		}
 	}
 
-	public interface IDrawingTarget : 
-		IDrawingState,
-		IDrawingTransform,
-		IDrawingFigures,
-		IDrawingText,
-		ITextMeasurements,
-		IDrawingTargetBitmap,
-		IReportingTarget
-	{}
-
 	public interface IDrawingTargetBitmap
 	{
 		int Width { get; }
 		int Height { get; }
 	}
 
-	public interface IDrawingState
-	{
-		void Fill(Color? color = null);
-		void NoFill();
-
-		void Stroke(Color? color = null, double? weight = null, StrokeAlignment? alignment = null);
-		void NoStroke();
-
-		void Font(string name = null, FontWeight? weight = null, FontStyle? style = null);
-
-		void Text(
-			double? size = null,
-			Color? color = null,
-			TextAlignment? alignment = null,
-			ParagraphAlignment? paragraphAlignment = null,
-			WordWrapping? wordWrapping = null);
-	}
-
-	public interface IDrawingText
-	{
-		void Text(string text, double x, double y, double width, double height);
-	}
-
-	public interface ITextMeasurements
-	{
-		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);
-	}
-	
 	public interface IReportingTarget
 	{
 		void Report(string text);

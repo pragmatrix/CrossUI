@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace CrossUI.Drawing
 {
 	sealed class BoundsTrackingDrawingTarget : 
-		IDrawingFigures, 
-		IDrawingText, 
+		IGeometryFigures, 
+		IDrawingElements, 
 
 		IReportingTarget, 
 		ITextMeasurements, 
@@ -75,6 +75,11 @@ namespace CrossUI.Drawing
 		public void Text(string text, double x, double y, double width, double height)
 		{
 			_tracker.trackRect(x, y, width, height);
+		}
+
+		public void Geometry(IGeometry geometry)
+		{
+			throw new NotImplementedException();
 		}
 
 		public int Width

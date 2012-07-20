@@ -12,7 +12,7 @@ using MapFlags = SharpDX.Direct3D10.MapFlags;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed class BitmapDrawingContext : IBitmapDrawingContext
+	sealed class BitmapDrawingTarget : IBitmapDrawingTarget
 	{
 		readonly int _width;
 		readonly int _height;
@@ -21,11 +21,12 @@ namespace CrossUI.SharpDX.Drawing
 		readonly Texture2D _texture;
 		readonly Factory _factory;
 
-		public BitmapDrawingContext(int width, int height)
+		public BitmapDrawingTarget(Factory factory, int width, int height)
 		{
 			if (width < 0 || height < 0)
-				throw new Exception("Negative BitmapDrawingContext's area");
+				throw new Exception("Area of BitmapDrawingTarget's is neagative");
 
+			_factory = factory;
 			_width = width;
 			_height = height;
 
@@ -46,12 +47,10 @@ namespace CrossUI.SharpDX.Drawing
 			};
 
 			_texture = new Texture2D(_device, textureDesc);
-			_factory = new Factory(FactoryType.SingleThreaded, DebugLevel.None);
 		}
 
 		public void Dispose()
 		{
-			_factory.Dispose();
 			_texture.Dispose();
 			_device.Dispose();
 		}

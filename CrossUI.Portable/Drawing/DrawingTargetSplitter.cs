@@ -7,8 +7,8 @@ namespace CrossUI.Drawing
 	{
 		readonly IDrawingState _state;
 		readonly IDrawingTransform _transform;
-		readonly IDrawingFigures _figures;
-		readonly IDrawingText _text;
+		readonly IGeometryFigures _figures;
+		readonly IDrawingElements _elements;
 		readonly ITextMeasurements _measurements;
 		readonly IDrawingTargetBitmap _bitmap;
 		readonly IReportingTarget _reporting;
@@ -16,8 +16,8 @@ namespace CrossUI.Drawing
 		public DrawingTargetSplitter(
 			IDrawingState state,
 			IDrawingTransform transform,
-			IDrawingFigures figures,
-			IDrawingText text,
+			IGeometryFigures figures,
+			IDrawingElements elements,
 			ITextMeasurements measurements,
 			IDrawingTargetBitmap bitmap,
 			IReportingTarget reporting)
@@ -26,7 +26,7 @@ namespace CrossUI.Drawing
 			_state = state;
 			_transform = transform;
 			_figures = figures;
-			_text = text;
+			_elements = elements;
 			_measurements = measurements;
 			_reporting = reporting;
 		}
@@ -125,7 +125,12 @@ namespace CrossUI.Drawing
 
 		public void Text(string text, double x, double y, double width, double height)
 		{
-			_text.Text(text, x, y, width, height);
+			_elements.Text(text, x, y, width, height);
+		}
+
+		public void Geometry(IGeometry geometry)
+		{
+			_elements.Geometry(geometry);
 		}
 
 		public TextSize MeasureText(string text, double maxWidth = Double.PositiveInfinity, double maxHeight = Double.PositiveInfinity)

@@ -20,9 +20,11 @@ namespace CrossUI.Testing
 				if (drawingBackendType == null)
 					throw new Exception("Missing [DrawingBackend] attribute. Please add [assembly:DrawingBackend] to your test assembly.");
 
-				var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType);
-				var classes = run(resultFactory, drawingBackend, testAssembly);
-				return resultFactory.Assembly(testAssemblyPath, classes);
+				using (var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType))
+				{
+					var classes = run(resultFactory, drawingBackend, testAssembly);
+					return resultFactory.Assembly(testAssemblyPath, classes);
+				}
 			}
 			catch (Exception e)
 			{
@@ -119,7 +121,11 @@ namespace CrossUI.Testing
 			}
 		}
 
-		static ITestResultMethod[] runMethodTests(ITestResultFactory resultFactory, IDrawingBackend drawingBackend, object instance, IEnumerable<TestMethod> methods)
+		static ITestResultMethod[] runMethodTests(
+			ITestResultFactory resultFactory, 
+			IDrawingBackend drawingBackend, 
+			object instance, 
+			IEnumerable<TestMethod> methods)
 		{
 			var results = new List<ITestResultMethod>();
 			foreach (var method in methods)
@@ -154,25 +160,66 @@ namespace CrossUI.Testing
 			object instance, 
 			TestMethod testMethod)
 		{
+			var firstParameterType = testMethod.FirstParamterType;
+			if (firstParameterType.IsAssignableFrom(typeof(IDrawingTarget)))
+			{
+				return runDrawingTargetTest(resultFactory, drawingBackend, instance, testMethod);
+			}
+
+			if (firstParameterType.IsAssignableFrom(typeof(IGeometryTarget)))
+			{
+				return runGeometryTargetTest(resultFactory, drawingBackend, instance, testMethod);
+			}
+
+			throw new Exception("Unable to decide what test to run based on first parameter type {0}\nShould be either IDrawingTarget or IGeometryTarget".format(firstParameterType));
+		}
+
+		static ITestResultMethod runDrawingTargetTest(
+			ITestResultFactory resultFactory, 
+			IDrawingBackend drawingBackend, 
+			object instance, 
+			TestMethod testMethod)
+		{
+			return runMethodTest(resultFactory, drawingBackend, testMethod, dt => testMethod.invoke(instance, dt));
+		}
+
+		static ITestResultMethod runGeometryTargetTest(
+				ITestResultFactory resultFactory,
+				IDrawingBackend drawingBackend,
+				object instance,
+				TestMethod testMethod)
+		{
+			using (var geometry = drawingBackend.CreateGeometry(target => testMethod.invoke(instance, target)))
+			{
+				return runMethodTest(resultFactory, drawingBackend, testMethod, dt => dt.Geometry(geometry));
+			}
+		}
+
+		static ITestResultMethod runMethodTest(
+			ITestResultFactory resultFactory,
+			IDrawingBackend drawingBackend,
+			TestMethod testMethod,
+			Action<IDrawingTarget> action)
+		{
 			var attribute = testMethod.Attribute;
 
 			var width = attribute.Width;
 			var height = attribute.Height;
 
-			using (var context = drawingBackend.CreateBitmapDrawingContext(width, height))
+			using (var target = drawingBackend.CreateBitmapDrawingTarget(width, height))
 			{
 				IDrawingTarget drawingTarget;
-				using (context.BeginDraw(out drawingTarget))
+				using (target.BeginDraw(out drawingTarget))
 				{
-					testMethod.invoke(instance, drawingTarget);
+					action(drawingTarget);
 				}
 
-
-				var bitmap = resultFactory.Bitmap(width, height, context.ExtractRawBitmap());
+				var bitmap = resultFactory.Bitmap(width, height, target.ExtractRawBitmap());
 				var testReport = resultFactory.Report(drawingTarget.Reports);
 
 				return resultFactory.Method(testMethod.Info.Name, bitmap, testReport);
 			}
 		}
+
 	}
 }

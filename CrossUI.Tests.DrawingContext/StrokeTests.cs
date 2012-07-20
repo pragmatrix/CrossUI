@@ -39,7 +39,7 @@ namespace CrossUI.Tests.DrawingContext
 			target.Line(10, 10, target.Width - 10, target.Height - 10);
 		}
 
-		public void RegularRect(IDrawingTarget target)
+		public void Rect(IDrawingTarget target)
 		{
 			target.Rect(0, 0, target.Width, target.Height);
 		}

@@ -2,7 +2,7 @@
 
 namespace CrossUI
 {
-	public interface IBitmapDrawingContext : IDisposable
+	public interface IBitmapDrawingTarget : IDisposable
 	{
 		IDisposable BeginDraw(out IDrawingTarget drawingTarget);
 		byte[] ExtractRawBitmap();
