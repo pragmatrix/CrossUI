@@ -23,11 +23,10 @@
 			test(CombineMode.Exclude, target, backend);
 		}
 
-		void test(CombineMode mode, IDrawingTarget target, IDrawingBackend backend)
+		static void test(CombineMode mode, IDrawingTarget target, IDrawingBackend backend)
 		{
-			var c1 = backend.Geometry(t => t.Ellipse(15, 5, 30, 30));
-
-			var c2 = backend.Geometry(t => t.Ellipse(35, 5, 30, 30));
+			var c1 = backend.Ellipse(15, 5, 30, 30);
+			var c2 = backend.Ellipse(35, 5, 30, 30);
 
 			var r = c1.Combine(mode, c2);
 
