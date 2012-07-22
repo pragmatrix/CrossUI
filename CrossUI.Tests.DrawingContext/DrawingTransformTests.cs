@@ -19,7 +19,6 @@ namespace CrossUI.Tests.DrawingContext
 			drawTransformed(target);
 		}
 
-
 		public void RotateTranslate(IDrawingTarget target)
 		{
 			drawOriginal(target);

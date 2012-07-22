@@ -1,4 +1,5 @@
 ﻿using System;
+using CrossUI.Drawing;
 
 namespace CrossUI
 {
@@ -28,9 +29,11 @@ namespace CrossUI
 
 		IGeometry Widen(double strokeWeight);
 		IGeometry Outline();
+		IGeometry Transform(Matrix matrix);
 		
 		GeometryRelation Compare(IGeometry geometry);
 		bool Contains(double x, double y);
+
 	}
 
 	public static class GeometryExtensions

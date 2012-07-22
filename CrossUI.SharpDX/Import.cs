@@ -3,6 +3,7 @@ using SharpDX;
 using SharpDX.Direct2D1;
 using DW = SharpDX.DirectWrite;
 using D2 = SharpDX.Direct2D1;
+using Matrix = CrossUI.Drawing.Matrix;
 
 namespace CrossUI.SharpDX
 {
@@ -147,6 +148,19 @@ namespace CrossUI.SharpDX
 			}
 
 			return GeometryRelation.Disjoint;
+		}
+
+		public static Matrix3x2 import(this Matrix m)
+		{
+			return new Matrix3x2
+			{
+				M11 = m.M11.import(),
+				M12 = m.M12.import(),
+				M21 = m.M21.import(),
+				M22 = m.M22.import(),
+				M31 = m.M31.import(),
+				M32 = m.M32.import()
+			};
 		}
 	}
 }

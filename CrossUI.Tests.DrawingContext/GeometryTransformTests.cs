@@ -1,4 +1,7 @@
-﻿namespace CrossUI.Tests.DrawingContext
+﻿using System;
+using CrossUI.Drawing;
+
+namespace CrossUI.Tests.DrawingContext
 {
 	[BitmapDrawingTest(Width=80, Height=40)]
 	class GeometryTransformTests
@@ -8,6 +11,14 @@
 			var geometry = makeGeometry(backend);
 			target.Fill(color: new Color(0.7, 0.7, 1));
 			target.Geometry(geometry);
+		}
+
+		public void Rotated(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var geometry = makeGeometry(backend);
+			var rotated = geometry.Transform(Matrix.Rotation(-Math.PI/4, 40, 20));
+			target.Fill(color: new Color(0.7, 0.7, 1));
+			target.Geometry(rotated);
 		}
 
 		public void Outlined(IDrawingTarget target, IDrawingBackend backend)

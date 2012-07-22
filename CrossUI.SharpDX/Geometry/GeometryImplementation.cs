@@ -2,6 +2,7 @@
 using CrossUI.Toolbox;
 using SharpDX;
 using SharpDX.Direct2D1;
+using Matrix = CrossUI.Drawing.Matrix;
 
 namespace CrossUI.SharpDX.Geometry
 {
@@ -70,6 +71,20 @@ namespace CrossUI.SharpDX.Geometry
 				sink => checkResult(Geometry.Outline(sink)));
 
 			return new GeometryImplementation(widened);
+		}
+
+		public IGeometry Transform(Matrix matrix)
+		{
+			var transformed = Path.Geometry(
+				Geometry.Factory,
+				sink => checkResult(Geometry.Simplify(
+					GeometrySimplificationOption.CubicsAndLines,
+					matrix.import(),
+					// default flattening tolerance:
+					0.25f, 
+					sink)));
+
+			return new GeometryImplementation(transformed);
 		}
 
 		public GeometryRelation Compare(IGeometry geometry)
