@@ -107,7 +107,7 @@ namespace CrossUI.Tests.DrawingContext
 		public void OverlappingClosedFigures(IGeometryTarget target)
 		{
 			Polygon(target);
-			RoundedRect(target);
+			Ellipse(target);
 		}
 	}
 }

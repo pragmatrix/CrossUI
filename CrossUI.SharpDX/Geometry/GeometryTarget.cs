@@ -22,7 +22,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Line(double x1, double y1, double x2, double y2)
 		{
-			end();
+			endOpenFigure();
 
 			_sink.BeginFigure(Import.Point(x1, y1), FigureBegin.Hollow);
 			_sink.AddLine(Import.Point(x2, y2));
@@ -31,7 +31,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Rectangle(double x, double y, double width, double height)
 		{
-			end();
+			endOpenFigure();
 
 			using (var geometry = new RectangleGeometry(_factory, Import.Rectangle(x, y, width, height)))
 			{
@@ -41,7 +41,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
 		{
-			end();
+			endOpenFigure();
 
 			using (var geometry = new RoundedRectangleGeometry(_factory,
 				new RoundedRect
@@ -57,7 +57,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Polygon(double[] pairs)
 		{
-			end();
+			endOpenFigure();
 
 			if ((pairs.Length & 1) == 1)
 				throw new Exception("Number of polygon pairs need to be even.");
@@ -81,7 +81,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Ellipse(double x, double y, double width, double height)
 		{
-			end();
+			endOpenFigure();
 
 			var rx = width/2;
 			var ry = height/2;
@@ -101,7 +101,7 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Arc(double x, double y, double width, double height, double start, double stop)
 		{
-			end();
+			endOpenFigure();
 
 			var r = Import.Rectangle(x, y, width, height);
 			_sink.BeginFigure(ArcGeometry.pointOn(r, start), FigureBegin.Filled);
@@ -111,7 +111,8 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
 		{
-			end();
+			endOpenFigure();
+
 			_sink.BeginFigure(Import.Point(x, y), FigureBegin.Filled);
 
 			_sink.AddBezier(new BezierSegment
@@ -126,7 +127,8 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void MoveTo(double x, double y)
 		{
-			end();
+			endOpenFigure();
+
 			_startX = x;
 			_startY = y;
 			_figure_ = new FigureTargetRecorder();
@@ -164,10 +166,10 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Close()
 		{
-			end(FigureEnd.Closed);
+			endOpenFigure(FigureEnd.Closed);
 		}
 
-		public void end(FigureEnd end = FigureEnd.Open)
+		public void endOpenFigure(FigureEnd end = FigureEnd.Open)
 		{
 			if (_figure_ == null)
 				return;

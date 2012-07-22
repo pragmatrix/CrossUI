@@ -32,7 +32,7 @@ namespace CrossUI.SharpDX
 				{
 					var target = new GeometryTarget(_factory, sink);
 					records.Replay(target);
-					target.end();
+					target.endOpenFigure();
 					sink.Close();
 				}
 
