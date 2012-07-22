@@ -225,21 +225,6 @@ namespace CrossUI.SharpDX.Drawing
 
 		public void Arc(double x, double y, double width, double height, double start, double stop)
 		{
-			if (Filling)
-			{
-				var r = fillRect(x, y, width, height);
-
-				var centerPoint = new DrawingPointF(r.X + r.Width/2, r.Y + r.Height/2);
-
-				fillPath(centerPoint,
-					sink =>
-						{
-							var startPoint = ArcGeometry.pointOn(r, start);
-							sink.AddLine(startPoint);
-							ArcGeometry.add(r, start, stop, sink);
-						});
-			}
-
 			if (Stroking)
 			{
 				var r = strokeAlignedRect(x, y, width, height);
@@ -250,22 +235,6 @@ namespace CrossUI.SharpDX.Drawing
 
 		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
 		{
-			if (Filling)
-			{
-				fillPath(Import.Point(x, y),
-					sink =>
-						{
-							var bezierSegment = new BezierSegment()
-							{
-								Point1 = Import.Point(s1x, s1y),
-								Point2 = Import.Point(s2x, s2y),
-								Point3 = Import.Point(ex, ey)
-							};
-
-							sink.AddBezier(bezierSegment);
-						});
-			}
-
 			if (Stroking)
 			{
 				drawOpenPath(Import.Point(x, y),

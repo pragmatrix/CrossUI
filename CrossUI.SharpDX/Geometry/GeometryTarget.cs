@@ -104,16 +104,16 @@ namespace CrossUI.SharpDX.Geometry
 			endOpenFigure();
 
 			var r = Import.Rectangle(x, y, width, height);
-			_sink.BeginFigure(ArcGeometry.pointOn(r, start), FigureBegin.Filled);
+			_sink.BeginFigure(ArcGeometry.pointOn(r, start), FigureBegin.Hollow);
 			ArcGeometry.add(Import.Rectangle(x, y, width, height), start, stop, _sink);
-			_sink.EndFigure(FigureEnd.Closed);
+			_sink.EndFigure(FigureEnd.Open);
 		}
 
 		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
 		{
 			endOpenFigure();
 
-			_sink.BeginFigure(Import.Point(x, y), FigureBegin.Filled);
+			_sink.BeginFigure(Import.Point(x, y), FigureBegin.Hollow);
 
 			_sink.AddBezier(new BezierSegment
 			{
@@ -122,7 +122,7 @@ namespace CrossUI.SharpDX.Geometry
 				Point3 = Import.Point(ex, ey)
 			});
 
-			_sink.EndFigure(FigureEnd.Closed);
+			_sink.EndFigure(FigureEnd.Open);
 		}
 
 		public void MoveTo(double x, double y)
