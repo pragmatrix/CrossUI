@@ -46,7 +46,10 @@ namespace CrossUI.Testing
 
 		bool isValidParameter(ParameterInfo info)
 		{
-			return info.ParameterType == typeof(IDrawingTarget) || info.ParameterType == typeof(IGeometryTarget);
+			return 
+				info.ParameterType == typeof(IDrawingTarget) || 
+				info.ParameterType == typeof(IGeometryTarget) || 
+				info.ParameterType == typeof(IDrawingBackend);
 		}
 
 		public Type FirstParamterType

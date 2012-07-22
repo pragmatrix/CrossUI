@@ -93,14 +93,14 @@ namespace CrossUI.Drawing
 			_figures.Line(x1, y1, x2, y2);
 		}
 
-		public void Rect(double x, double y, double width, double height)
+		public void Rectangle(double x, double y, double width, double height)
 		{
-			_figures.Rect(x, y, width, height);
+			_figures.Rectangle(x, y, width, height);
 		}
 
-		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
 		{
-			_figures.RoundedRect(x, y, width, height, cornerRadius);
+			_figures.RoundedRectangle(x, y, width, height, cornerRadius);
 		}
 
 		public void Polygon(double[] coordinatePairs)

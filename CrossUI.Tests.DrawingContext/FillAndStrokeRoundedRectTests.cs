@@ -20,20 +20,20 @@ namespace CrossUI.Tests.DrawingContext
 		public void RoundedRect(IDrawingTarget target)
 		{
 			setup(target);
-			target.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRectangle(0, 0, 80, 40, 8);
 		}
 
 		public void RoundedRect8_4(IDrawingTarget target)
 		{
 			setup(target);
 			target.Stroke(weight: 4);
-			target.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRectangle(0, 0, 80, 40, 8);
 		}
 
 		public void RoundedRect16_2(IDrawingTarget target)
 		{
 			setup(target);
-			target.RoundedRect(0, 0, 80, 40, 16);
+			target.RoundedRectangle(0, 0, 80, 40, 16);
 		}
 	}
 }

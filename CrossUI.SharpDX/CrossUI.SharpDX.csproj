@@ -58,6 +58,7 @@
     <Compile Include="Geometry\ArcGeometry.cs" />
     <Compile Include="Geometry\GeometryImplementation.cs" />
     <Compile Include="Geometry\GeometryTarget.cs" />
+    <Compile Include="Geometry\Path.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

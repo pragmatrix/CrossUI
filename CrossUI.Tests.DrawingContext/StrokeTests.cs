@@ -7,25 +7,25 @@ namespace CrossUI.Tests.DrawingContext
 	{
 		public void RoundedRect(IDrawingTarget target)
 		{
-			target.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRectangle(0, 0, 80, 40, 8);
 		}
 
 		public void ThickRoundedRect(IDrawingTarget target)
 		{
 			target.Stroke(weight: 3);
-			target.RoundedRect(0, 0, target.Width, target.Height, 8);
+			target.RoundedRectangle(0, 0, target.Width, target.Height, 8);
 		}
 
 		public void ColoredRoundedRect(IDrawingTarget target)
 		{
 			target.Stroke(new Color(1, 0, 0));
-			target.RoundedRect(0, 0, target.Width, target.Height, 8);
+			target.RoundedRectangle(0, 0, target.Width, target.Height, 8);
 		}
 
 		public void OutsideAligned(IDrawingTarget target)
 		{
 			target.Stroke(alignment: StrokeAlignment.Outside);
-			target.RoundedRect(0, 0, target.Width, target.Height, 8);
+			target.RoundedRectangle(0, 0, target.Width, target.Height, 8);
 		}
 
 		public void Line(IDrawingTarget target)
@@ -41,7 +41,7 @@ namespace CrossUI.Tests.DrawingContext
 
 		public void Rect(IDrawingTarget target)
 		{
-			target.Rect(0, 0, target.Width, target.Height);
+			target.Rectangle(0, 0, target.Width, target.Height);
 		}
 
 		public void Ellipse(IDrawingTarget target)

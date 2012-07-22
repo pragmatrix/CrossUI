@@ -32,14 +32,14 @@ namespace CrossUI.Drawing
 			record(t => t.Line(x1, y1, x2, y2));
 		}
 
-		public void Rect(double x, double y, double width, double height)
+		public void Rectangle(double x, double y, double width, double height)
 		{
-			record(t => t.Rect(x, y, width, height));
+			record(t => t.Rectangle(x, y, width, height));
 		}
 
-		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
 		{
-			record(t => t.RoundedRect(x, y, width, height, cornerRadius));
+			record(t => t.RoundedRectangle(x, y, width, height, cornerRadius));
 		}
 
 		// client should be forced to pass an immutable array here, but how?

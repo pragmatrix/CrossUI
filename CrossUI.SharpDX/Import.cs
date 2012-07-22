@@ -2,6 +2,7 @@ using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;
 using DW = SharpDX.DirectWrite;
+using D2 = SharpDX.Direct2D1;
 
 namespace CrossUI.SharpDX
 {
@@ -52,10 +53,10 @@ namespace CrossUI.SharpDX
 				case TextAlignment.Trailing: return DW.TextAlignment.Trailing;
 			}
 
-			return default(global::SharpDX.DirectWrite.TextAlignment);
+			return default(DW.TextAlignment);
 		}
 
-		public static global::SharpDX.DirectWrite.ParagraphAlignment import(this ParagraphAlignment alignment)
+		public static DW.ParagraphAlignment import(this ParagraphAlignment alignment)
 		{
 			switch (alignment)
 			{
@@ -64,7 +65,7 @@ namespace CrossUI.SharpDX
 				case ParagraphAlignment.Center: return DW.ParagraphAlignment.Center;
 			}
 
-			return default(global::SharpDX.DirectWrite.ParagraphAlignment);
+			return default(DW.ParagraphAlignment);
 		}
 
 		public static DW.WordWrapping import(this WordWrapping wrapping)
@@ -75,10 +76,10 @@ namespace CrossUI.SharpDX
 				case WordWrapping.NoWrap: return DW.WordWrapping.NoWrap;
 			}
 
-			return default(global::SharpDX.DirectWrite.WordWrapping);
+			return default(DW.WordWrapping);
 		}
 
-		public static global::SharpDX.DirectWrite.FontWeight import(this FontWeight weight)
+		public static DW.FontWeight import(this FontWeight weight)
 		{
 			switch (weight)
 			{
@@ -97,7 +98,7 @@ namespace CrossUI.SharpDX
 				case FontStyle.Italic: return DW.FontStyle.Italic;
 			}
 
-			return global::SharpDX.DirectWrite.FontStyle.Normal;
+			return DW.FontStyle.Normal;
 		}
 
 		public static SweepDirection import(this ArcDirection arcDirection)
@@ -112,6 +113,23 @@ namespace CrossUI.SharpDX
 			}
 
 			return SweepDirection.Clockwise;
+		}
+
+		public static D2.CombineMode import(this CombineMode mode)
+		{
+			switch (mode)
+			{
+				case CombineMode.Union:
+					return D2.CombineMode.Union;
+				case CombineMode.Intersect:
+					return D2.CombineMode.Intersect;
+				case CombineMode.XOR:
+					return D2.CombineMode.Xor;
+				case CombineMode.Exclude:
+					return D2.CombineMode.Exclude;
+			}
+
+			return D2.CombineMode.Union;
 		}
 	}
 }

@@ -28,13 +28,13 @@ namespace CrossUI.Tests.DrawingContext
 
 		void drawOriginal(IDrawingTarget target)
 		{
-			target.Rect(10, 15, 40, 30);
+			target.Rectangle(10, 15, 40, 30);
 		}
 
 		void drawTransformed(IDrawingTarget target)
 		{
 			target.Stroke(color: new Color(1, 0.5, 0.5));
-			target.Rect(10, 15, 40, 30);
+			target.Rectangle(10, 15, 40, 30);
 		}
 	}
 }

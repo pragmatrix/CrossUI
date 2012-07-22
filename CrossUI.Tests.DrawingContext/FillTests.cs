@@ -14,13 +14,13 @@ namespace CrossUI.Tests.DrawingContext
 		public void RegularRect(IDrawingTarget target)
 		{
 			setup(target);
-			target.Rect(0, 0, target.Width, target.Height);
+			target.Rectangle(0, 0, target.Width, target.Height);
 		}
 
 		public void RoundedRect(IDrawingTarget target)
 		{
 			setup(target);
-			target.RoundedRect(0, 0, 80, 40, 8);
+			target.RoundedRectangle(0, 0, 80, 40, 8);
 		}
 
 		public void Ellipse(IDrawingTarget target)

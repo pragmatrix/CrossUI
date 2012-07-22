@@ -4,9 +4,9 @@
 	{
 		void Line(double x1, double y1, double x2, double y2);
 
-		void Rect(double x, double y, double width, double height);
-		void RoundedRect(double x, double y, double width, double height, double cornerRadius);
-		void Polygon(double[] coordinatePairs);
+		void Rectangle(double x, double y, double width, double height);
+		void RoundedRectangle(double x, double y, double width, double height, double cornerRadius);
+		void Polygon(params double[] coordinatePairs);
 
 		void Ellipse(double x, double y, double width, double height);
 		void Arc(double x, double y, double width, double height, double start, double stop);

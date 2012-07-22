@@ -180,7 +180,7 @@ namespace CrossUI.Testing
 			object instance, 
 			TestMethod testMethod)
 		{
-			return runMethodTest(resultFactory, drawingBackend, testMethod, dt => testMethod.invoke(instance, dt));
+			return runMethodTest(resultFactory, drawingBackend, testMethod, drawingTarget => testMethod.invoke(instance, drawingTarget, drawingBackend));
 		}
 
 		static ITestResultMethod runGeometryTargetTest(
@@ -189,7 +189,7 @@ namespace CrossUI.Testing
 				object instance,
 				TestMethod testMethod)
 		{
-			using (var geometry = drawingBackend.CreateGeometry(target => testMethod.invoke(instance, target)))
+			using (var geometry = drawingBackend.Geometry(target => testMethod.invoke(instance, target, drawingBackend)))
 			{
 				return runMethodTest(resultFactory, drawingBackend, testMethod, dt => dt.Geometry(geometry));
 			}

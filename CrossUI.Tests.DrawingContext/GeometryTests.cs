@@ -24,12 +24,12 @@ namespace CrossUI.Tests.DrawingContext
 
 		public void Rect(IGeometryTarget geometry)
 		{
-			geometry.Rect(Left, Top, Width, Height);
+			geometry.Rectangle(Left, Top, Width, Height);
 		}
 
 		public void RoundedRect(IGeometryTarget geometry)
 		{
-			geometry.RoundedRect(Left, Top, Width, Height, 8);
+			geometry.RoundedRectangle(Left, Top, Width, Height, 8);
 		}
 
 		public void Ellipse(IGeometryTarget target)

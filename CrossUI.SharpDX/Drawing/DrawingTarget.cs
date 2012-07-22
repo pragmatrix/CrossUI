@@ -121,7 +121,7 @@ namespace CrossUI.SharpDX.Drawing
 				_target.DrawLine(Import.Point(x1, y1), Import.Point(x2, y2), _strokeBrush.Brush, StrokeWeight);
 		}
 
-		public void Rect(double x, double y, double width, double height)
+		public void Rectangle(double x, double y, double width, double height)
 		{
 			if (Filling)
 			{
@@ -136,7 +136,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public void RoundedRect(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
 		{
 			if (Filling)
 			{
@@ -307,19 +307,9 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public PathGeometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		PathGeometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
 		{
-			var pg = new PathGeometry(_target.Factory);
-
-			using (var sink = pg.Open())
-			{
-				sink.BeginFigure(begin, filled ? FigureBegin.Filled : FigureBegin.Hollow);
-				figureBuilder(sink);
-				sink.EndFigure(filled ? FigureEnd.Closed : FigureEnd.Open);
-				sink.Close();
-			}
-
-			return pg;
+			return Path.Figure(_target.Factory, filled, begin, figureBuilder);
 		}
 
 		RectangleF fillRect(double x, double y, double width, double height)

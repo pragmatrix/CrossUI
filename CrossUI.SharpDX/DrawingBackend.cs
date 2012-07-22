@@ -23,7 +23,7 @@ namespace CrossUI.SharpDX
 			return new BitmapDrawingTarget(_factory, width, height);
 		}
 
-		public IGeometry CreateGeometry(IRecorder<IGeometryTarget> records)
+		public IGeometry Geometry(IRecorder<IGeometryTarget> records)
 		{
 			var path = new PathGeometry(_factory);
 			try
