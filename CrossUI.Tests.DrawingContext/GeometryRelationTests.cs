@@ -38,6 +38,46 @@ namespace CrossUI.Tests.DrawingContext
 			expectRelation(c1, c2, GeometryRelation.Contains);
 		}
 
+		public void StrokeFillDisjoint(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var c1 = backend.Line(25, 10, 25, 30);
+			var c2 = backend.Ellipse(30, 10, 20, 20);
+			draw(target, c1, c2);
+			expectRelation(c1, c2, GeometryRelation.Disjoint);
+		}
+
+		public void StrokeFillOverlap(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var c1 = backend.Line(30, 10, 50, 30);
+			var c2 = backend.Ellipse(30, 10, 20, 20);
+			draw(target, c1, c2);
+			expectRelation(c1, c2, GeometryRelation.Overlap);
+		}
+
+
+		public void StrokeFillIsContained(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var c1 = backend.Line(35, 15, 45, 25);
+			var c2 = backend.Ellipse(30, 10, 20, 20);
+			draw(target, c1, c2);
+			expectRelation(c1, c2, GeometryRelation.IsContained);
+		}
+
+		public void StrokeStrokeDisjoint(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var c1 = backend.Line(35, 15, 45, 25);
+			var c2 = backend.Line(30, 10, 20, 20);
+			draw(target, c1, c2);
+			expectRelation(c1, c2, GeometryRelation.Disjoint);
+		}
+
+		public void StrokeStrokeOverlaps(IDrawingTarget target, IDrawingBackend backend)
+		{
+			var c1 = backend.Line(35, 15, 45, 25);
+			var c2 = backend.Line(50, 10, 35, 20);
+			draw(target, c1, c2);
+			expectRelation(c1, c2, GeometryRelation.Overlap);
+		}
 
 		public void ContainsPoint(IDrawingTarget target, IDrawingBackend backend)
 		{
