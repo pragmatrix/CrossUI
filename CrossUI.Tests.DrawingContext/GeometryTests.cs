@@ -76,6 +76,13 @@ namespace CrossUI.Tests.DrawingContext
 			target.ArcTo(Left, Top, Width, Height, 0, pi/2);
 		}
 
+		public void ArcToCounterClockwise(IGeometryTarget target)
+		{
+			const double pi = Math.PI;
+			target.MoveTo(Left, Top);
+			target.ArcTo(Left, Top, Width, Height, pi/2, 0, ArcDirection.CounterClockwise);
+		}
+
 		public void ArcToClosed(IGeometryTarget target)
 		{
 			const double pi = Math.PI;

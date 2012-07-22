@@ -144,7 +144,7 @@ namespace CrossUI.SharpDX.Geometry
 			var r = Import.Rectangle(x, y, width, height);
 			var startPoint = ArcGeometry.pointOn(r, start);
 			_sink.AddLine(startPoint);
-			ArcGeometry.add(r, start, stop, _sink);
+			ArcGeometry.add(r, start, stop, _sink, direction.import());
 		}
 
 		public void BezierTo(double s1x, double s1y, double s2x, double s2y, double ex, double ey)

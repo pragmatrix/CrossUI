@@ -1,6 +1,7 @@
 using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;
+using DW = SharpDX.DirectWrite;
 
 namespace CrossUI.SharpDX
 {
@@ -42,13 +43,13 @@ namespace CrossUI.SharpDX
 			return new Color4(color.Red.import(), color.Green.import(), color.Blue.import(), color.Alpha.import());
 		}
 
-		public static global::SharpDX.DirectWrite.TextAlignment import(this TextAlignment alignment)
+		public static DW.TextAlignment import(this TextAlignment alignment)
 		{
 			switch (alignment)
 			{
-				case TextAlignment.Leading: return global::SharpDX.DirectWrite.TextAlignment.Leading;
-				case TextAlignment.Center: return global::SharpDX.DirectWrite.TextAlignment.Center;
-				case TextAlignment.Trailing: return global::SharpDX.DirectWrite.TextAlignment.Trailing;
+				case TextAlignment.Leading: return DW.TextAlignment.Leading;
+				case TextAlignment.Center: return DW.TextAlignment.Center;
+				case TextAlignment.Trailing: return DW.TextAlignment.Trailing;
 			}
 
 			return default(global::SharpDX.DirectWrite.TextAlignment);
@@ -58,20 +59,20 @@ namespace CrossUI.SharpDX
 		{
 			switch (alignment)
 			{
-				case ParagraphAlignment.Near: return global::SharpDX.DirectWrite.ParagraphAlignment.Near;
-				case ParagraphAlignment.Far: return global::SharpDX.DirectWrite.ParagraphAlignment.Far;
-				case ParagraphAlignment.Center: return global::SharpDX.DirectWrite.ParagraphAlignment.Center;
+				case ParagraphAlignment.Near: return DW.ParagraphAlignment.Near;
+				case ParagraphAlignment.Far: return DW.ParagraphAlignment.Far;
+				case ParagraphAlignment.Center: return DW.ParagraphAlignment.Center;
 			}
 
 			return default(global::SharpDX.DirectWrite.ParagraphAlignment);
 		}
 
-		public static global::SharpDX.DirectWrite.WordWrapping import(this WordWrapping wrapping)
+		public static DW.WordWrapping import(this WordWrapping wrapping)
 		{
 			switch (wrapping)
 			{
-				case WordWrapping.Wrap: return global::SharpDX.DirectWrite.WordWrapping.Wrap;
-				case WordWrapping.NoWrap: return global::SharpDX.DirectWrite.WordWrapping.NoWrap;
+				case WordWrapping.Wrap: return DW.WordWrapping.Wrap;
+				case WordWrapping.NoWrap: return DW.WordWrapping.NoWrap;
 			}
 
 			return default(global::SharpDX.DirectWrite.WordWrapping);
@@ -81,22 +82,36 @@ namespace CrossUI.SharpDX
 		{
 			switch (weight)
 			{
-				case FontWeight.Normal: return global::SharpDX.DirectWrite.FontWeight.Normal;
-				case FontWeight.Bold: return global::SharpDX.DirectWrite.FontWeight.Bold;
+				case FontWeight.Normal: return DW.FontWeight.Normal;
+				case FontWeight.Bold: return DW.FontWeight.Bold;
 			}
 
-			return global::SharpDX.DirectWrite.FontWeight.Normal;
+			return DW.FontWeight.Normal;
 		}
 
-		public static global::SharpDX.DirectWrite.FontStyle import(this FontStyle style)
+		public static DW.FontStyle import(this FontStyle style)
 		{
 			switch (style)
 			{
-				case FontStyle.Normal: return global::SharpDX.DirectWrite.FontStyle.Normal;
-				case FontStyle.Italic: return global::SharpDX.DirectWrite.FontStyle.Italic;
+				case FontStyle.Normal: return DW.FontStyle.Normal;
+				case FontStyle.Italic: return DW.FontStyle.Italic;
 			}
 
 			return global::SharpDX.DirectWrite.FontStyle.Normal;
+		}
+
+		public static SweepDirection import(this ArcDirection arcDirection)
+		{
+			switch (arcDirection)
+			{
+				case ArcDirection.Clockwise: 
+					return SweepDirection.Clockwise;
+
+				case ArcDirection.CounterClockwise:
+					return SweepDirection.CounterClockwise;
+			}
+
+			return SweepDirection.Clockwise;
 		}
 	}
 }
