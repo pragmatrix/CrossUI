@@ -42,7 +42,7 @@ namespace CrossUI.SharpDX.Geometry
 					ArcSize = ArcSize.Small,
 					Size = new DrawingSizeF(rx, ry),
 					Point = nextPoint,
-					RotationAngle = (stop - start).import(),
+					RotationAngle = angleNow.import(),
 					SweepDirection = SweepDirection.Clockwise
 				});
 

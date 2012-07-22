@@ -26,7 +26,7 @@
 		void LineTo(double x, double y);
 
 		// note: connects a line to the starting point of the arc
-		void ArcTo(double centerX, double centerY, double width, double height, double start, double stop, ArcDirection direction = ArcDirection.Clockwise);
+		void ArcTo(double x, double y, double width, double height, double start, double stop, ArcDirection direction = ArcDirection.Clockwise);
 
 		// starting point is the current point.
 		void BezierTo(double s1x, double s1y, double s2x, double s2y, double ex, double ey);

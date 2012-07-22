@@ -53,5 +53,56 @@ namespace CrossUI.Tests.DrawingContext
 		{
 			target.Polygon(new double[] { Left, Top, Width, Height/2, Height/2, Height });
 		}
+
+		public void LineTo(IGeometryTarget target)
+		{
+			target.MoveTo(Left, Top);
+			target.LineTo(Width, Height / 2);
+			target.LineTo(Height / 2, Height);
+		}
+
+		public void LineToClosed(IGeometryTarget target)
+		{
+			target.MoveTo(Left, Top);
+			target.LineTo(Width, Height/2);
+			target.LineTo(Height/2, Height);
+			target.Close();
+		}
+
+		public void ArcTo(IGeometryTarget target)
+		{
+			const double pi = Math.PI;
+			target.MoveTo(Left, Top);
+			target.ArcTo(Left, Top, Width, Height, 0, pi/2);
+		}
+
+		public void ArcToClosed(IGeometryTarget target)
+		{
+			const double pi = Math.PI;
+			target.MoveTo(Left, Top);
+			target.ArcTo(Left, Top, Width, Height, 0, pi / 2);
+			target.Close();
+		}
+
+		public void BezierTo(IGeometryTarget target)
+		{
+			target.MoveTo(Left, Top);
+			target.BezierTo(Left + Width, Top, Left, Top+Height, Left+Width, Top+Height);
+		}
+
+		public void BezierToClosed(IGeometryTarget target)
+		{
+			target.MoveTo(Left, Top);
+			target.BezierTo(Left + Width, Top, Left, Top + Height, Left + Width, Top + Height);
+			target.Close();
+		}
+
+		public void FigureMix(IGeometryTarget target)
+		{
+			Polygon(target);
+			BezierTo(target);
+			Arc(target);
+			RoundedRect(target);
+		}
 	}
 }

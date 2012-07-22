@@ -65,9 +65,9 @@ namespace CrossUI.Geometry
 			record(t => t.LineTo(x, y));
 		}
 
-		public void ArcTo(double centerX, double centerY, double width, double height, double start, double stop, ArcDirection direction = ArcDirection.Clockwise)
+		public void ArcTo(double x, double y, double width, double height, double start, double stop, ArcDirection direction = ArcDirection.Clockwise)
 		{
-			record(t => t.ArcTo(centerX, centerY, width, height, start, stop, direction));
+			record(t => t.ArcTo(x, y, width, height, start, stop, direction));
 		}
 
 		public void BezierTo(double s1x, double s1y, double s2x, double s2y, double ex, double ey)

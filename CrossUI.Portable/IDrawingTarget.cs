@@ -32,6 +32,8 @@ namespace CrossUI
 			WordWrapping? wordWrapping = null);
 	}
 
+	/// Stroke alignment applies to rectangular shapes only.
+
 	public enum StrokeAlignment
 	{
 		Inside, Center, Outside
