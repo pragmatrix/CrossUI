@@ -13,7 +13,7 @@
 		which are left open at their ending position.
 	*/
 
-	public interface IGeometryTarget : IGeometryFigures
+	public interface IGeometryTarget : IGeometryFigures, IFigureTarget
 	{
 		// ends the current figure (if there is one leaves it open) and
 		// starts a new one at x,y.
@@ -22,6 +22,10 @@
 		// closes the current figure by connecting a line with the starting point.
 		void Close();
 
+	}
+
+	public interface IFigureTarget
+	{
 		// Relative movement, requires a current, open figure
 		void LineTo(double x, double y);
 

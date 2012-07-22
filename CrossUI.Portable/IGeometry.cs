@@ -14,6 +14,9 @@ namespace CrossUI
 	{
 		Bounds Bounds { get; }
 		IGeometry Combine(CombineMode mode, IGeometry other);
+
+		IGeometry Widen(double strokeWeight);
+		IGeometry Outline();
 	}
 
 	public static class GeometryExtensions
@@ -36,6 +39,13 @@ namespace CrossUI
 		public static IGeometry Exclude(this IGeometry _, IGeometry other)
 		{
 			return _.Combine(CombineMode.Exclude, other);
+		}
+
+		public static IGeometry Inflate(this IGeometry source, double inflate)
+		{
+			var widened = source.Widen(inflate * 2);
+			var combined = widened.Combine(CombineMode.Union, source);
+			return combined;
 		}
 	}
 }

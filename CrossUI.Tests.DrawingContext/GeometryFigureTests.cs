@@ -4,7 +4,7 @@ namespace CrossUI.Tests.DrawingContext
 {
 
 	[BitmapDrawingTest(Width = 80, Height = 40)]
-	class GeometryTests
+	class GeometryFigureTests
 	{
 		const int Left = 1;
 		const int Top = 1;
@@ -104,11 +104,9 @@ namespace CrossUI.Tests.DrawingContext
 			target.Close();
 		}
 
-		public void FigureMix(IGeometryTarget target)
+		public void OverlappingClosedFigures(IGeometryTarget target)
 		{
 			Polygon(target);
-			BezierTo(target);
-			Arc(target);
 			RoundedRect(target);
 		}
 	}

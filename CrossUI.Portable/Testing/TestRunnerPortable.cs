@@ -191,7 +191,11 @@ namespace CrossUI.Testing
 		{
 			using (var geometry = drawingBackend.Geometry(target => testMethod.invoke(instance, target, drawingBackend)))
 			{
-				return runMethodTest(resultFactory, drawingBackend, testMethod, dt => dt.Geometry(geometry));
+				return runMethodTest(resultFactory, drawingBackend, testMethod, dt =>
+					{
+						dt.Fill(color: new Color(0.7, 0.7, 1.0));
+						dt.Geometry(geometry);
+					});
 			}
 		}
 
