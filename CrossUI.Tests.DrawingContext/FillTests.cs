@@ -35,12 +35,16 @@ namespace CrossUI.Tests.DrawingContext
 			const double pi = Math.PI;
 			target.Arc(0, 0, target.Width, target.Height, 0, pi / 2);
 			target.Arc(0, 0, target.Width, target.Height, pi, pi * 1.5);
+
+			target.Report("no fill representation");
 		}
 
 		public void Bezier(IDrawingTarget target)
 		{
 			setup(target);
 			target.Bezier(0, 0, target.Width, 0, 0, target.Height, target.Width, target.Height);
+
+			target.Report("no fill representation");
 		}
 
 		public void Polygon(IDrawingTarget target)
