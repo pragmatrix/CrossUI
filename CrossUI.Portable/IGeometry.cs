@@ -10,13 +10,27 @@ namespace CrossUI
 		Exclude
 	}
 
+	public enum GeometryRelation
+	{
+		Disjoint,
+		IsContained,
+		Contains,
+		Overlap
+	}
+
 	public interface IGeometry : IDisposable
 	{
 		Bounds Bounds { get; }
+		double Area { get; }
+		double Length { get; }
+		
 		IGeometry Combine(CombineMode mode, IGeometry other);
 
 		IGeometry Widen(double strokeWeight);
 		IGeometry Outline();
+		
+		GeometryRelation Compare(IGeometry geometry);
+		bool Contains(double x, double y);
 	}
 
 	public static class GeometryExtensions

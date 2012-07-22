@@ -27,6 +27,22 @@ namespace CrossUI.SharpDX.Geometry
 			} 
 		}
 
+		public double Area
+		{
+			get
+			{
+				return Geometry.ComputeArea();
+			}
+		}
+
+		public double Length
+		{
+			get
+			{
+				return Geometry.ComputeLength();
+			}
+		}
+
 		public IGeometry Combine(CombineMode mode, IGeometry other)
 		{
 			var otherImplementation = other.import();
@@ -54,6 +70,16 @@ namespace CrossUI.SharpDX.Geometry
 				sink => checkResult(Geometry.Outline(sink)));
 
 			return new GeometryImplementation(widened);
+		}
+
+		public GeometryRelation Compare(IGeometry geometry)
+		{
+			return Geometry.Compare(geometry.import()).export();
+		}
+
+		public bool Contains(double x, double y)
+		{
+			return Geometry.FillContainsPoint(Import.Point(x, y));
 		}
 
 		static void checkResult(Result rc)

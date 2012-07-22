@@ -47,6 +47,8 @@
     <Compile Include="FillAndStrokeRoundedRectTests.cs" />
     <Compile Include="GeometryCombineTests.cs" />
     <Compile Include="GeometryFigureTests.cs" />
+    <Compile Include="GeometryQueryTests.cs" />
+    <Compile Include="GeometryRelationTests.cs" />
     <Compile Include="GeometryTransformTests.cs" />
     <Compile Include="StrokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

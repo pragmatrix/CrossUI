@@ -131,5 +131,22 @@ namespace CrossUI.SharpDX
 
 			return D2.CombineMode.Union;
 		}
+
+		public static GeometryRelation export(this D2.GeometryRelation relation)
+		{
+			switch (relation)
+			{
+				case D2.GeometryRelation.Disjoint:
+					return GeometryRelation.Disjoint;
+				case D2.GeometryRelation.IsContained:
+					return GeometryRelation.IsContained;
+				case D2.GeometryRelation.Contains:
+					return GeometryRelation.Contains;
+				case D2.GeometryRelation.Overlap:
+					return GeometryRelation.Overlap;
+			}
+
+			return GeometryRelation.Disjoint;
+		}
 	}
 }
