@@ -37,7 +37,7 @@ namespace CrossUI.Drawing
 				? Matrix.Scaling(sx, sy, centerX ?? 0, centerY ?? 0)
 				: Matrix.Scaling(sx, sy);
 
-			change(_current * m);
+			change(m * _current);
 		}
 
 		public void Rotate(double radians, double? centerX = null, double? centerY = null)
@@ -46,12 +46,13 @@ namespace CrossUI.Drawing
 				? Matrix.Rotation(radians, centerX ?? 0, centerY ?? 0)
 				: Matrix.Rotation(radians);
 
-			change(_current * m);
+			change(m * _current);
 		}
 
 		public void Translate(double dx, double dy)
 		{
-			change(_current.Translated(dx, dy));
+			Matrix m = Matrix.Translation(dx, dy);
+			change(m * _current);
 		}
 
 		void change(Matrix m)

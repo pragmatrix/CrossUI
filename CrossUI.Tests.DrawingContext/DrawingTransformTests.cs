@@ -3,7 +3,7 @@
 namespace CrossUI.Tests.DrawingContext
 {
 	[BitmapDrawingTest(Width = 60, Height = 60)]
-	class CoordinateSpaceTests
+	class DrawingTransformTests
 	{
 		public void Translation(IDrawingTarget target)
 		{
@@ -19,6 +19,15 @@ namespace CrossUI.Tests.DrawingContext
 			drawTransformed(target);
 		}
 
+
+		public void RotateTranslate(IDrawingTarget target)
+		{
+			drawOriginal(target);
+			target.Translate(20, 0);
+			target.Rotate(Math.PI / 8, 30, 30);
+			drawTransformed(target);
+		}
+		
 		public void Scale(IDrawingTarget target)
 		{
 			drawOriginal(target);

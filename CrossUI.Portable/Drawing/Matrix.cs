@@ -31,11 +31,6 @@ namespace CrossUI.Drawing
 				v.Y * M12 + v.Y * M22 + M32);
 		}
 
-		public Matrix Translated(double dx, double dy)
-		{
-			return new Matrix(M11, M12, M21, M22, M31 + dx, M32 + dy);
-		}
-
 		public static Matrix operator *(Matrix l, Matrix r)
 		{
 			return new Matrix(
@@ -105,5 +100,33 @@ namespace CrossUI.Drawing
 			1, 0,
 			0, 1,
 			0, 0);
+	}
+
+	public static class MatrixExtensions
+	{
+		public static Matrix Translate(this Matrix m, double dx, double dy)
+		{
+			return new Matrix(m.M11, m.M12, m.M21, m.M22, m.M31 + dx, m.M32 + dy);
+		}
+
+		public static Matrix Rotate(this Matrix m, double radians)
+		{
+			return m*Matrix.Rotation(radians);
+		}
+
+		public static Matrix Rotate(this Matrix m, double radians, double cx, double cy)
+		{
+			return m * Matrix.Rotation(radians, cx, cy);
+		}
+
+		public static Matrix Scale(this Matrix m, double sx, double sy)
+		{
+			return m*Matrix.Scaling(sx, sy);
+		}
+
+		public static Matrix Scale(this Matrix m, double sx, double sy, double cx, double cy)
+		{
+			return m * Matrix.Scaling(sx, sy, cx, cy);
+		}
 	}
 }
