@@ -8,6 +8,7 @@ namespace CrossUI.Testing
 		public readonly string Name;
 		public readonly Exception Error_;
 		public readonly TestResultClass[] Classes_;
+		public readonly TimeSpan RunningTime;
 
 		public TestResultAssembly(string name, Exception error)
 		{
@@ -15,10 +16,11 @@ namespace CrossUI.Testing
 			Error_ = error;
 		}
 
-		public TestResultAssembly(string name, TestResultClass[] classes)
+		public TestResultAssembly(string name, TestResultClass[] classes, TimeSpan runningTime)
 		{
 			Name = name;
 			Classes_ = classes;
+			RunningTime = runningTime;
 		}
 	}
 }

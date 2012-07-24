@@ -5,7 +5,7 @@ namespace CrossUI.Testing
 {
 	public interface ITestResultFactory
 	{
-		ITestResultAssembly Assembly(string path, ITestResultClass[] classes);
+		ITestResultAssembly Assembly(string path, ITestResultClass[] classes, TimeSpan runningTime);
 		ITestResultAssembly Assembly(string path, Exception e);
 		ITestResultClass Class(string ns, string name, ITestResultMethod[] methods);
 		ITestResultClass Class(string ns, string name, Exception e);

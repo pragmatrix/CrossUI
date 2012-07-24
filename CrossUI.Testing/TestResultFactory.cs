@@ -6,9 +6,9 @@ namespace CrossUI.Testing
 {
 	sealed class TestResultFactory : ITestResultFactory
 	{
-		public ITestResultAssembly Assembly(string path, ITestResultClass[] classes)
+		public ITestResultAssembly Assembly(string path, ITestResultClass[] classes, TimeSpan runningTime)
 		{
-			return new TestResultAssembly(path, classes.Cast<TestResultClass>().ToArray());
+			return new TestResultAssembly(path, classes.Cast<TestResultClass>().ToArray(), runningTime);
 		}
 
 		public ITestResultAssembly Assembly(string path, Exception e)

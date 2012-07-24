@@ -56,6 +56,7 @@
     <Compile Include="IGeometryTarget.cs" />
     <Compile Include="IRecorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\Measure.cs" />
     <Compile Include="Testing\TestMethod.cs" />
     <Compile Include="Testing\TestRunnerPortable.cs" />
     <Compile Include="Toolbox\DisposeAction.cs" />

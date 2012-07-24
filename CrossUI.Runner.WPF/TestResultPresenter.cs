@@ -56,11 +56,13 @@ namespace CrossUI.Runner.WPF
 			if (result.Error_ != null)
 			{
 				showError(_control.AssemblyErrorLabel, result.Error_);
+				_control.Time.Content = "";
 				_control.ClassResults.Children.Clear();
 				return;
 			}
 
 			hideError(_control.AssemblyErrorLabel);
+			_control.Time.Content = formatTime(result.RunningTime);
 
 			var controls = result.Classes_.Select(createClassResultControl);
 
@@ -70,6 +72,11 @@ namespace CrossUI.Runner.WPF
 				children.Add(c);
 		}
 
+		string formatTime(TimeSpan span)
+		{
+			return span.TotalMilliseconds.ToString("F3") + "ms";
+		}
+		
 		Control createClassResultControl(TestResultClass result)
 		{
 			Debug.Assert(result.Error_ != null || result.Methods_ != null);

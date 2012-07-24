@@ -22,8 +22,10 @@ namespace CrossUI.Testing
 
 				using (var drawingBackend = (IDrawingBackend)Activator.CreateInstance(drawingBackendType))
 				{
-					var classes = run(resultFactory, drawingBackend, testAssembly);
-					return resultFactory.Assembly(testAssemblyPath, classes);
+					TimeSpan time;
+					var classes = Measure.RunningTime(out time, 
+						() => run(resultFactory, drawingBackend, testAssembly));
+					return resultFactory.Assembly(testAssemblyPath, classes, time);
 				}
 			}
 			catch (Exception e)

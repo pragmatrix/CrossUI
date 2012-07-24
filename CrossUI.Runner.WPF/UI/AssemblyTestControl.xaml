@@ -9,7 +9,10 @@
 
 		<Grid>
 			<Label Name="Title" FontSize="16">Title</Label>
-			<Button HorizontalAlignment="Right" x:Name="RemoveButton" Grid.Column="1" Padding="5,1" FontWeight="Bold">X</Button>
+			<StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
+				<Label x:Name="Time" VerticalAlignment="Bottom" Padding="0,0,4,0" ></Label>			
+				<Button HorizontalAlignment="Right" x:Name="RemoveButton"  Padding="5,1" FontWeight="Bold">X</Button>
+			</StackPanel>
 		</Grid>
 		
 		<Label x:Name="AssemblyErrorLabel" Foreground="Red" Visibility="Collapsed">
