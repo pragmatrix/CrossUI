@@ -3,22 +3,6 @@ using CrossUI.Drawing;
 
 namespace CrossUI
 {
-	public enum CombineMode
-	{
-		Union,
-		Intersect,
-		XOR,
-		Exclude
-	}
-
-	public enum GeometryRelation
-	{
-		Disjoint,
-		IsContained,
-		Contains,
-		Overlap
-	}
-
 	public interface IGeometry : IDisposable
 	{
 		Bounds Bounds { get; }
@@ -33,7 +17,22 @@ namespace CrossUI
 		
 		GeometryRelation Compare(IGeometry geometry);
 		bool Contains(double x, double y);
+	}
 
+	public enum CombineMode
+	{
+		Union,
+		Intersect,
+		XOR,
+		Exclude
+	}
+
+	public enum GeometryRelation
+	{
+		Disjoint,
+		IsContained,
+		Contains,
+		Overlap
 	}
 
 	public static class GeometryExtensions
