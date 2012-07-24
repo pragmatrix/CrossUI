@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using CrossUI.Runner.WPF.Config;
 using ServiceStack.Text;
 
 namespace CrossUI.Runner.Config
@@ -14,6 +15,7 @@ namespace CrossUI.Runner.Config
 			AssemblyTests = new List<AssemblyTestConfiguration>();
 		}
 
+		public WindowRect WindowRect_ { get; set; }
 		public List<AssemblyTestConfiguration> AssemblyTests { get; set; }
 
 		public void store()

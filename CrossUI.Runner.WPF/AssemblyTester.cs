@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using CrossUI.Runner.Config;
+using CrossUI.Runner.WPF.Config;
 using CrossUI.Runner.WPF.UI;
 using Microsoft.Win32;
 
@@ -22,6 +24,16 @@ namespace CrossUI.Runner.WPF
 
 			var config = Configuration.load();
 
+			if (config.WindowRect_ != null)
+			{
+				var wr = config.WindowRect_;
+				_window.Left = wr.Left;
+				_window.Top = wr.Top;
+				_window.Width = wr.Width;
+				_window.Height = wr.Height;
+				_window.WindowStartupLocation = WindowStartupLocation.Manual;
+			}
+
 			var newControl = new AssemblyTestNewControl();
 			newControl.AddTestButton.Click += (s, e) => addTestUser();
 			_testPanel.Children.Add(newControl);
@@ -32,8 +44,11 @@ namespace CrossUI.Runner.WPF
 			}
 		}
 
+
 		public void Dispose()
 		{
+			storeConfig();
+
 			while (_tests.Count != 0)
 				removeTest(_tests[_tests.Count - 1]);
 		}
@@ -92,6 +107,16 @@ namespace CrossUI.Runner.WPF
 		Configuration createConfig()
 		{
 			var config = new Configuration();
+			var rect = new WindowRect
+				{
+					Left = (int) _window.Left,
+					Top = (int) _window.Top,
+					Width = (int) _window.ActualWidth,
+					Height = (int) _window.ActualHeight
+				};
+
+			config.WindowRect_ = rect;
+			
 			foreach (var test in _tests)
 			{
 				config.AssemblyTests.Add(test.Config);
