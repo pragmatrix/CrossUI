@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D10;
@@ -68,7 +69,6 @@ namespace CrossUI.SharpDX.Drawing
 			};
 
 			var renderTarget = new RenderTarget(_factory, surface, rtProperties);
-
 			var state = new DrawingState();
 			var transform = new DrawingTransform();
 
@@ -76,6 +76,8 @@ namespace CrossUI.SharpDX.Drawing
 
 			target = new DrawingTargetSplitter(state, transform, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation);
 			renderTarget.BeginDraw();
+			// required for some graphic cards
+			renderTarget.Clear(null);
 
 			return new DisposeAction(() =>
 				{
