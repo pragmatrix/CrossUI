@@ -15,24 +15,25 @@ namespace CrossUI.SharpDX.Drawing
 {
 	sealed class BitmapDrawingTarget : IBitmapDrawingTarget
 	{
+		readonly Factory _factory;
+		readonly Device1 _device;
+
 		readonly int _width;
 		readonly int _height;
 
-		readonly Device1 _device;
 		readonly Texture2D _texture;
-		readonly Factory _factory;
 
-		public BitmapDrawingTarget(Factory factory, int width, int height)
+		public BitmapDrawingTarget(Factory factory, Device1 device, int width, int height)
 		{
 			if (width < 0 || height < 0)
 				throw new Exception("Area of BitmapDrawingTarget's is neagative");
 
 			_factory = factory;
+			_device = device;
+
 			_width = width;
 			_height = height;
 
-
-			_device = new Device1(DriverType.Hardware, DeviceCreationFlags.BgraSupport, FeatureLevel.Level_10_0);
 			var textureDesc = new Texture2DDescription
 			{
 				MipLevels = 1,
@@ -53,7 +54,6 @@ namespace CrossUI.SharpDX.Drawing
 		public void Dispose()
 		{
 			_texture.Dispose();
-			_device.Dispose();
 		}
 
 		public IDisposable BeginDraw(out IDrawingTarget target)
