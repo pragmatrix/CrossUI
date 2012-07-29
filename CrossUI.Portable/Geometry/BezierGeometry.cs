@@ -477,7 +477,7 @@ namespace CrossUI.Geometry
 
 		static Point V2Sub(Point a, Point b, ref Point c)
 		{
-			c = (a.Vector - b.Vector).AsPoint();
+			c = (a.Vector - b.Vector).ToPoint();
 			return c;
 		}
 

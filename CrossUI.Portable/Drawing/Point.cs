@@ -73,7 +73,7 @@
 
 	public static class PointExtensions
 	{
-		public static Point AsPoint(this Vector v)
+		public static Point ToPoint(this Vector v)
 		{
 			return new Point(v);
 		}
