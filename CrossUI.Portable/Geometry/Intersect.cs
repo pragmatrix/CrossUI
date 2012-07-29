@@ -16,18 +16,15 @@ namespace CrossUI.Geometry
 			Assumes that the given bezier end is inside the geometry.
 		*/
 
-		public static Point? TryIntersectWithBezier(this IGeometry geometry, CubicBezier bezier, BezierEnd insideEnd)
+		public static double? TryIntersectWithBezier(this IGeometry geometry, CubicBezier bezier, BezierEnd insideEnd)
 		{
-			var t = bezierEnd(bezier, insideEnd, v => geometry.Contains(v.X, v.Y));
-			if (t != null)
-				return bezier.AtT(t.Value);
-			return null;
+			return tryIntersectWithBezier(bezier, insideEnd, v => geometry.Contains(v.X, v.Y));
 		}
 
 		const int DefaultIntersectionIterations = 64;
 		const double DefaultIntersectionTolerance = 0.25;
 
-		public static double? bezierEnd(CubicBezier bezier, BezierEnd end, Func<Point, bool> isPointInside)
+		public static double? tryIntersectWithBezier(CubicBezier bezier, BezierEnd end, Func<Point, bool> isPointInside)
 		{
 			double start = end == BezierEnd.Start ? 0.0 : 1.0;
 			double fin = end == BezierEnd.Start ? 1 : 0;

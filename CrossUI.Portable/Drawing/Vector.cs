@@ -65,6 +65,30 @@ namespace CrossUI.Drawing
 		}
 
 		#endregion
+
+		#region Multiplication / Division
+
+		public static Vector operator * (Vector left, Vector right)
+		{
+			return new Vector(left.X * right.X, left.Y * right.Y);
+		}
+
+		public static Vector operator /(Vector left, Vector right)
+		{
+			return new Vector(left.X / right.X, left.Y / right.Y);
+		}
+
+		public static Vector operator * (Vector left, double right)
+		{
+			return left*new Vector(right, right);
+		}
+
+		public static Vector operator / (Vector left, double right)
+		{
+			return left/new Vector(right, right);
+		}
+
+		#endregion
 	}
 
 	public static class VectorExtensions
@@ -78,6 +102,30 @@ namespace CrossUI.Drawing
 		{
 			return v.X * v.X + v.Y * v.Y;
 		}
+
+		#region Math
+
+		public static Vector Abs(this Vector _)
+		{
+			return _.transform(Math.Abs);
+		}
+
+		public static Vector Floor(this Vector _)
+		{
+			return _.transform(Math.Floor);
+		}
+
+		public static Vector Ceiling(this Vector _)
+		{
+			return _.transform(Math.Ceiling);
+		}
+
+		static Vector transform(this Vector _, Func<double, double> transform)
+		{
+			return new Vector(transform(_.X), transform(_.Y));
+		}
+
+		#endregion
 	}
 
 }
