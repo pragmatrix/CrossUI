@@ -1,4 +1,5 @@
 ﻿using System;
+using CrossUI.Drawing;
 using CrossUI.Toolbox;
 
 namespace CrossUI
@@ -22,6 +23,21 @@ namespace CrossUI
 		{
 			space.SaveTransform();
 			return new DisposeAction(space.RestoreTransform);
+		}
+
+		public static void Scale(this IDrawingTransform _, double sx, double sy, Point? center = null)
+		{
+			_.Scale(sx, sy, center != null ? center.Value.X : (double?)null, center != null ? center.Value.Y : (double?)null);
+		}
+
+		public static void Rotate(this IDrawingTransform _, double radians, Point? center = null)
+		{
+			_.Rotate(radians, center != null ? center.Value.X : (double?)null, center != null ? center.Value.Y : (double?)null);
+		}
+
+		public static void Translate(this IDrawingTransform _, Vector delta)
+		{
+			_.Translate(delta.X, delta.Y);
 		}
 	}
 }

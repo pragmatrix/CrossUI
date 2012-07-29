@@ -72,6 +72,14 @@ namespace CrossUI
 		void Geometry(IGeometry geometry);
 	}
 
+	public static class DrawingElementsExtensions
+	{
+		public static void Text(this IDrawingElements _, string text, Rectangle rectangle)
+		{
+			_.Text(text, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+		}
+	}
+
 	public interface ITextMeasurements
 	{
 		TextSize MeasureText(string text, double maxWidth = double.PositiveInfinity, double maxHeight = double.PositiveInfinity);

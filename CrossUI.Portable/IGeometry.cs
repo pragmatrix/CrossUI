@@ -63,5 +63,10 @@ namespace CrossUI
 			var combined = widened.Combine(CombineMode.Union, source);
 			return combined;
 		}
+
+		public static bool Contains(this IGeometry geometry, Point point)
+		{
+			return geometry.Contains(point.X, point.Y);
+		}
 	}
 }

@@ -77,5 +77,18 @@
 		{
 			return new Point(v);
 		}
+
+		public static double[] ToPairs(this Point[] points)
+		{
+			var pairs = new double[points.Length * 2];
+			for (int i = 0; i != points.Length; ++i)
+			{
+				var p = points[i];
+				pairs[i * 2] = p.X;
+				pairs[i * 2 + 1] = p.Y;
+			}
+
+			return pairs;
+		}
 	}
 }
