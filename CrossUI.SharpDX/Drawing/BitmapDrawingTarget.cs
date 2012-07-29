@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 using SharpDX.Direct3D10;
@@ -8,13 +7,13 @@ using CrossUI.Toolbox;
 using CrossUI.Drawing;
 using Device1 = SharpDX.Direct3D10.Device1;
 using Factory = SharpDX.Direct2D1.Factory;
-using FeatureLevel = SharpDX.Direct3D10.FeatureLevel;
 using MapFlags = SharpDX.Direct3D10.MapFlags;
 
 namespace CrossUI.SharpDX.Drawing
 {
 	sealed class BitmapDrawingTarget : IBitmapDrawingTarget
 	{
+		readonly DrawingBackend _backend;
 		readonly Factory _factory;
 		readonly Device1 _device;
 
@@ -23,14 +22,15 @@ namespace CrossUI.SharpDX.Drawing
 
 		readonly Texture2D _texture;
 
-		public BitmapDrawingTarget(Factory factory, Device1 device, int width, int height)
+		public BitmapDrawingTarget(DrawingBackend backend, int width, int height)
 		{
 			if (width < 0 || height < 0)
 				throw new Exception("Area of BitmapDrawingTarget's is neagative");
 
-			_factory = factory;
-			_device = device;
+			_factory = backend.Factory;
+			_device = backend.Device;
 
+			_backend = backend;
 			_width = width;
 			_height = height;
 
@@ -74,7 +74,16 @@ namespace CrossUI.SharpDX.Drawing
 
 			var drawingTargetImplementation = new DrawingTarget(state, transform, renderTarget, _width, _height);
 
-			target = new DrawingTargetSplitter(state, transform, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation, drawingTargetImplementation);
+			target = new DrawingTargetSplitter(
+				_backend, 
+				state, 
+				transform, 
+				drawingTargetImplementation, 
+				drawingTargetImplementation, 
+				drawingTargetImplementation, 
+				drawingTargetImplementation, 
+				drawingTargetImplementation);
+
 			renderTarget.BeginDraw();
 			// required for some graphic cards
 			renderTarget.Clear(null);

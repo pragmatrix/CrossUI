@@ -5,6 +5,7 @@ namespace CrossUI.Drawing
 {
 	public sealed class DrawingTargetSplitter : IDrawingTarget
 	{
+		readonly IDrawingBackend _backend;
 		readonly IDrawingState _state;
 		readonly IDrawingTransform _transform;
 		readonly IGeometryFigures _figures;
@@ -14,6 +15,7 @@ namespace CrossUI.Drawing
 		readonly IReportingTarget _reporting;
 
 		public DrawingTargetSplitter(
+			IDrawingBackend backend,
 			IDrawingState state,
 			IDrawingTransform transform,
 			IGeometryFigures figures,
@@ -22,6 +24,7 @@ namespace CrossUI.Drawing
 			IDrawingTargetBitmap bitmap,
 			IReportingTarget reporting)
 		{
+			_backend = backend;
 			_bitmap = bitmap;
 			_state = state;
 			_transform = transform;
@@ -144,5 +147,10 @@ namespace CrossUI.Drawing
 		}
 
 		public IEnumerable<string> Reports { get { return _reporting.Reports; } }
+
+		public IDrawingBackend Backend
+		{
+			get { return _backend; }
+		}
 	}
 }

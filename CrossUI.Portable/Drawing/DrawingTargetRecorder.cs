@@ -166,5 +166,10 @@ namespace CrossUI.Drawing
 		{
 			_records.Add(action);
 		}
+
+		public IDrawingBackend Backend
+		{
+			get { throw new NotImplementedException(); }
+		}
 	}
 }

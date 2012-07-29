@@ -18,10 +18,11 @@ namespace CrossUI.Drawing
 			get { return _tracker.Bounds; }
 		}
 
-		public static IDrawingTarget Create(BoundsTracker boundsTracker)
+		public static IDrawingTarget Create(IDrawingBackend backend, BoundsTracker boundsTracker)
 		{
 			var target = new BoundsTrackingDrawingTarget(boundsTracker);
 			return new DrawingTargetSplitter(
+				backend,
 				boundsTracker.State, 
 				boundsTracker.Transform, 
 				target, 

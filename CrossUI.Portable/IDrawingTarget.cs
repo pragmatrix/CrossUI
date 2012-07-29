@@ -12,6 +12,7 @@ namespace CrossUI
 		IDrawingTargetBitmap,
 		IReportingTarget
 	{
+		IDrawingBackend Backend { get; }
 	}
 
 	public interface IDrawingState

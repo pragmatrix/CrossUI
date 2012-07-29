@@ -8,34 +8,34 @@ namespace CrossUI.SharpDX
 {
 	public sealed class DrawingBackend : IDrawingBackend
 	{
-		readonly Factory _factory;
-		readonly Device1 _device;
+		internal readonly Factory Factory;
+		internal readonly Device1 Device;
 
 		public DrawingBackend()
 		{
-			_factory = new Factory(FactoryType.SingleThreaded, DebugLevel.None);
-			_device = new Device1(DriverType.Hardware, DeviceCreationFlags.BgraSupport, FeatureLevel.Level_10_0);
+			Factory = new Factory(FactoryType.SingleThreaded, DebugLevel.None);
+			Device = new Device1(DriverType.Hardware, DeviceCreationFlags.BgraSupport, FeatureLevel.Level_10_0);
 		}
 
 		public void Dispose()
 		{
-			_device.Dispose();
-			_factory.Dispose();
+			Device.Dispose();
+			Factory.Dispose();
 		}
 
 		public IBitmapDrawingTarget CreateBitmapDrawingTarget(int width, int height)
 		{
-			return new BitmapDrawingTarget(_factory, _device, width, height);
+			return new BitmapDrawingTarget(this, width, height);
 		}
 
 		public IGeometry Geometry(IRecorder<IGeometryTarget> records)
 		{
-			var path = new PathGeometry(_factory);
+			var path = new PathGeometry(Factory);
 			try
 			{
 				using (var sink = path.Open())
 				{
-					var target = new GeometryTarget(_factory, sink);
+					var target = new GeometryTarget(Factory, sink);
 					records.Replay(target);
 					target.endOpenFigure();
 					sink.Close();
