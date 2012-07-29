@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using CrossUI.Drawing;
 
 namespace CrossUI
 {
@@ -78,14 +79,15 @@ namespace CrossUI
 
 	public struct TextSize
 	{
+		public readonly Size Size;
+
 		public TextSize(double width, double height)
 		{
-			Width = width;
-			Height = height;
+			Size = new Size(width, height);
 		}
 
-		public readonly double Width;
-		public readonly double Height;
+		public double Width { get { return Size.Width; } }
+		public double Height { get { return Size.Height; } }
 
 		public override string ToString()
 		{

@@ -1,21 +1,28 @@
 using System.Globalization;
+using CrossUI.Drawing;
 using CrossUI.Toolbox;
 
 namespace CrossUI
 {
 	public struct Bounds
 	{
-		public readonly double Left;
-		public readonly double Top;
-		public readonly double Right;
-		public readonly double Bottom;
+		public readonly Point LeftTop;
+		public readonly Point RightBottom;
+
+		public double Left { get { return LeftTop.X; } }
+		public double Top { get { return LeftTop.Y; } }
+		public double Right { get { return RightBottom.X; } }
+		public double Bottom { get { return RightBottom.Y; } }
 
 		public Bounds(double left, double top, double right, double bottom)
+			: this(new Point(left, top), new Point(right, bottom))
 		{
-			Left = left;
-			Top = top;
-			Right = right;
-			Bottom = bottom;
+		}
+
+		public Bounds(Point leftTop, Point rightBottom)
+		{
+			LeftTop = leftTop;
+			RightBottom = rightBottom;
 		}
 
 		public override string ToString()

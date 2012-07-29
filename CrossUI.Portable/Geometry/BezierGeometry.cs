@@ -1,6 +1,5 @@
 ﻿using CrossUI.Drawing;
 using Math = System.Math;
-using Point = CrossUI.Drawing.Vector;
 
 namespace CrossUI.Geometry
 {
@@ -473,12 +472,12 @@ namespace CrossUI.Geometry
 
 		static double V2SquaredLength(Point v)
 		{
-			return v.SquaredLength();
+			return v.Vector.SquaredLength();
 		}
 
 		static Point V2Sub(Point a, Point b, ref Point c)
 		{
-			c = a - b;
+			c = (a.Vector - b.Vector).AsPoint();
 			return c;
 		}
 

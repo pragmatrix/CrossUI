@@ -44,8 +44,10 @@
     <Compile Include="Drawing\DrawingTargetSplitter.cs" />
     <Compile Include="Drawing\DrawingTransform.cs" />
     <Compile Include="Drawing\Matrix.cs" />
+    <Compile Include="Drawing\Point.cs" />
     <Compile Include="Drawing\Rectangle.cs" />
     <Compile Include="Drawing\DrawingTargetRecorder.cs" />
+    <Compile Include="Drawing\Size.cs" />
     <Compile Include="Drawing\Vector.cs" />
     <Compile Include="Geometry\BezierGeometry.cs" />
     <Compile Include="Geometry\GeometryTargetRecorder.cs" />

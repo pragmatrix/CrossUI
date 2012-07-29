@@ -2,12 +2,12 @@
 {
 	public struct CubicBezier
 	{
-		public readonly Vector Start;
-		public readonly Vector Span1;
-		public readonly Vector Span2;
-		public readonly Vector End;
+		public readonly Point Start;
+		public readonly Point Span1;
+		public readonly Point Span2;
+		public readonly Point End;
 
-		public CubicBezier(Vector start, Vector span1, Vector span2, Vector end)
+		public CubicBezier(Point start, Point span1, Point span2, Point end)
 		{
 			Start = start;
 			Span1 = span1;
