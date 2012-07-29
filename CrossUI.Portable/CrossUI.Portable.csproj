@@ -39,6 +39,7 @@
     <Compile Include="DrawingBackendAttribute.cs" />
     <Compile Include="Drawing\BoundsTracker.cs" />
     <Compile Include="Drawing\BoundsTrackingDrawingTarget.cs" />
+    <Compile Include="Drawing\CubicBezier.cs" />
     <Compile Include="Drawing\DrawingState.cs" />
     <Compile Include="Drawing\DrawingTargetSplitter.cs" />
     <Compile Include="Drawing\DrawingTransform.cs" />
@@ -46,7 +47,9 @@
     <Compile Include="Drawing\Rectangle.cs" />
     <Compile Include="Drawing\DrawingTargetRecorder.cs" />
     <Compile Include="Drawing\Vector.cs" />
+    <Compile Include="Geometry\BezierGeometry.cs" />
     <Compile Include="Geometry\GeometryTargetRecorder.cs" />
+    <Compile Include="Geometry\Intersect.cs" />
     <Compile Include="IBitmapDrawingTarget.cs" />
     <Compile Include="IDrawingTransform.cs" />
     <Compile Include="IDrawingBackend.cs" />
