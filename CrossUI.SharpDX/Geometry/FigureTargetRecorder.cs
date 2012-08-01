@@ -9,7 +9,8 @@ namespace CrossUI.SharpDX.Geometry
 
 		public void Replay(IFigureTarget target)
 		{
-			_records.ForEach(a => a(target));
+			foreach (var record in _records)
+				record(target);
 		}
 
 		public void LineTo(double x, double y)

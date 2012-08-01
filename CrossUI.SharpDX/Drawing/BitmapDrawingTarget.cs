@@ -2,12 +2,19 @@
 using System.Runtime.InteropServices;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
+#if NETFX_CORE
+using SharpDX.Direct3D11;
+using Device1 = SharpDX.Direct3D11.Device;
+using MapFlags = SharpDX.Direct3D11.MapFlags;
+using AlphaMode = SharpDX.Direct2D1.AlphaMode;
+#else
 using SharpDX.Direct3D10;
+using Device1 = SharpDX.Direct3D10.Device1;
+using MapFlags = SharpDX.Direct3D10.MapFlags;
+#endif
 using CrossUI.Toolbox;
 using CrossUI.Drawing;
-using Device1 = SharpDX.Direct3D10.Device1;
 using Factory = SharpDX.Direct2D1.Factory;
-using MapFlags = SharpDX.Direct3D10.MapFlags;
 
 namespace CrossUI.SharpDX.Drawing
 {
@@ -58,7 +65,7 @@ namespace CrossUI.SharpDX.Drawing
 
 		public IDisposable BeginDraw(out IDrawingTarget target)
 		{
-			var surface = _texture.AsSurface();
+			var surface = _texture.QueryInterface<Surface>();
 
 			var rtProperties = new RenderTargetProperties
 			{
@@ -118,11 +125,18 @@ namespace CrossUI.SharpDX.Drawing
 
 			using (var cpuTexture = new Texture2D(_device, textureDesc))
 			{
+#if NETFX_CORE
+				_device.ImmediateContext.CopyResource(_texture, cpuTexture);
+#else
 				_device.CopyResource(_texture, cpuTexture);
-
+#endif
 				var bytesPerLine = _width * 4;
 				var res = new byte[bytesPerLine * _height];
+#if NETFX_CORE
+				var data = _device.ImmediateContext.MapSubresource(cpuTexture, 0, MapMode.Read, MapFlags.None);
+#else
 				var data = cpuTexture.Map(0, MapMode.Read, MapFlags.None);
+#endif
 				try
 				{
 					IntPtr sourcePtr = data.DataPointer;
@@ -130,7 +144,11 @@ namespace CrossUI.SharpDX.Drawing
 					for (int i = 0; i != _height; ++i)
 					{
 						Marshal.Copy(sourcePtr, res, targetOffset, bytesPerLine);
+#if NETFX_CORE
+						sourcePtr += data.RowPitch;
+#else
 						sourcePtr += data.Pitch;
+#endif
 						targetOffset += bytesPerLine;
 					}
 
@@ -138,7 +156,11 @@ namespace CrossUI.SharpDX.Drawing
 				}
 				finally
 				{
+#if NETFX_CORE
+					_device.ImmediateContext.UnmapSubresource(cpuTexture, 0);
+#else
 					cpuTexture.Unmap(0);
+#endif
 				}
 			}
 		}
