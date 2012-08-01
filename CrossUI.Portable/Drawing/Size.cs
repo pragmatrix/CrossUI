@@ -50,4 +50,12 @@
 
 		#endregion
 	}
+
+	public static class SizeExtensions
+	{
+		public static Size ToSize(this Vector vector)
+		{
+			return new Size(vector.X, vector.Y);
+		}
+	}
 }
