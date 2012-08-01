@@ -22,7 +22,7 @@ namespace CrossUI.SharpDX.WinRT.Tests
 		{
 			using (var backend = new DrawingBackend())
 			{
-				using (var target = backend.CreateBitmapDrawingTarget(10, 10))
+				using (var target = backend.CreateBitmapDrawingSurface(10, 10))
 				{
 				}
 			}
@@ -33,10 +33,9 @@ namespace CrossUI.SharpDX.WinRT.Tests
 		{
 			using (var backend = new DrawingBackend())
 			{
-				using (var target = backend.CreateBitmapDrawingTarget(10, 10))
+				using (var target = backend.CreateBitmapDrawingSurface(10, 10))
 				{
-					IDrawingTarget dt;
-					using (var drawingSession = target.BeginDraw(out dt))
+					using (var drawingTarget = target.BeginDraw())
 					{
 					}
 				}
@@ -48,12 +47,11 @@ namespace CrossUI.SharpDX.WinRT.Tests
 		{
 			using (var backend = new DrawingBackend())
 			{
-				using (var target = backend.CreateBitmapDrawingTarget(10, 10))
+				using (var target = backend.CreateBitmapDrawingSurface(10, 10))
 				{
-					IDrawingTarget dt;
-					using (var drawingSession = target.BeginDraw(out dt))
+					using (var drawingTarget = target.BeginDraw())
 					{
-						dt.Line(0, 0, 10, 10);
+						drawingTarget.Line(0, 0, 10, 10);
 					}
 
 					var rawBitmap = target.ExtractRawBitmap();

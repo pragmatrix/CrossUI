@@ -51,7 +51,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drawing\BitmapDrawingTarget.cs" />
+    <Compile Include="Drawing\DrawingSurface.cs" />
     <Compile Include="Drawing\BrushCache.cs" />
     <Compile Include="Drawing\DrawingTarget.cs" />
     <Compile Include="DrawingBackend.cs" />

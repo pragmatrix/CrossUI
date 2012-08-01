@@ -29,7 +29,8 @@ namespace CrossUI.Drawing
 				target, 
 				target,
 				target, 
-				target);
+				target,
+				() => { });
 		}
 
 		BoundsTrackingDrawingTarget(BoundsTracker tracker)

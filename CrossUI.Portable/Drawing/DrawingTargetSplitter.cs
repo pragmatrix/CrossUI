@@ -13,6 +13,7 @@ namespace CrossUI.Drawing
 		readonly ITextMeasurements _measurements;
 		readonly IDrawingTargetBitmap _bitmap;
 		readonly IReportingTarget _reporting;
+		readonly Action _disposer;
 
 		public DrawingTargetSplitter(
 			IDrawingBackend backend,
@@ -22,7 +23,8 @@ namespace CrossUI.Drawing
 			IDrawingElements elements,
 			ITextMeasurements measurements,
 			IDrawingTargetBitmap bitmap,
-			IReportingTarget reporting)
+			IReportingTarget reporting,
+			Action disposer)
 		{
 			_backend = backend;
 			_bitmap = bitmap;
@@ -32,6 +34,12 @@ namespace CrossUI.Drawing
 			_elements = elements;
 			_measurements = measurements;
 			_reporting = reporting;
+			_disposer = disposer;
+		}
+
+		public void Dispose()
+		{
+			_disposer();
 		}
 
 		public int Width { get { return _bitmap.Width; } }

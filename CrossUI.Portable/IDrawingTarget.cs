@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using CrossUI.Drawing;
 
@@ -11,7 +12,8 @@ namespace CrossUI
 		IDrawingElements, 
 		ITextMeasurements,
 		IDrawingTargetBitmap,
-		IReportingTarget
+		IReportingTarget,
+		IDisposable
 	{
 		IDrawingBackend Backend { get; }
 	}

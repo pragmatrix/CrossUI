@@ -6,7 +6,7 @@ namespace CrossUI
 {
 	public interface IDrawingBackend : IDisposable
 	{
-		IBitmapDrawingTarget CreateBitmapDrawingTarget(int width, int height);
+		IDrawingSurface CreateBitmapDrawingSurface(int width, int height);
 
 		IGeometry Geometry(IRecorder<IGeometryTarget> records);
 	}

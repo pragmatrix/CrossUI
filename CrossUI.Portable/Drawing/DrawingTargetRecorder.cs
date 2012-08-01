@@ -171,5 +171,10 @@ namespace CrossUI.Drawing
 		{
 			get { throw new NotImplementedException(); }
 		}
+
+		public void Dispose()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

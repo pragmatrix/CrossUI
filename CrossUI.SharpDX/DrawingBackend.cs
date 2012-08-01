@@ -37,9 +37,9 @@ namespace CrossUI.SharpDX
 			Factory.Dispose();
 		}
 
-		public IBitmapDrawingTarget CreateBitmapDrawingTarget(int width, int height)
+		public IDrawingSurface CreateBitmapDrawingSurface(int width, int height)
 		{
-			return new BitmapDrawingTarget(this, width, height);
+			return new DrawingSurface(this, width, height);
 		}
 
 		public IGeometry Geometry(IRecorder<IGeometryTarget> records)

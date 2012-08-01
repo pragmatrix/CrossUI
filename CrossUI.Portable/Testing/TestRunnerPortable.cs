@@ -212,16 +212,16 @@ namespace CrossUI.Testing
 			var width = attribute.Width;
 			var height = attribute.Height;
 
-			using (var target = drawingBackend.CreateBitmapDrawingTarget(width, height))
+			using (var target = drawingBackend.CreateBitmapDrawingSurface(width, height))
 			{
-				IDrawingTarget drawingTarget;
-				using (target.BeginDraw(out drawingTarget))
+				ITestResultReport testReport;
+				using (var drawingTarget = target.BeginDraw())
 				{
 					action(drawingTarget);
+					testReport = resultFactory.Report(drawingTarget.Reports);
 				}
 
 				var bitmap = resultFactory.Bitmap(width, height, target.ExtractRawBitmap());
-				var testReport = resultFactory.Report(drawingTarget.Reports);
 
 				return resultFactory.Method(testMethod.Info.Name, bitmap, testReport);
 			}

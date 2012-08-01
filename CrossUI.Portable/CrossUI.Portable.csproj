@@ -52,7 +52,7 @@
     <Compile Include="Geometry\BezierGeometry.cs" />
     <Compile Include="Geometry\GeometryTargetRecorder.cs" />
     <Compile Include="Geometry\Intersect.cs" />
-    <Compile Include="IBitmapDrawingTarget.cs" />
+    <Compile Include="IDrawingSurface.cs" />
     <Compile Include="IDrawingTransform.cs" />
     <Compile Include="IDrawingBackend.cs" />
     <Compile Include="IDrawingTarget.cs" />

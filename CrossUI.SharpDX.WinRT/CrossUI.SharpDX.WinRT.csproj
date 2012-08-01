@@ -104,11 +104,11 @@
     <Compile Include="..\CrossUI.SharpDX\DrawingBackend.cs">
       <Link>DrawingBackend.cs</Link>
     </Compile>
-    <Compile Include="..\CrossUI.SharpDX\Drawing\BitmapDrawingTarget.cs">
-      <Link>Drawing\BitmapDrawingTarget.cs</Link>
-    </Compile>
     <Compile Include="..\CrossUI.SharpDX\Drawing\BrushCache.cs">
       <Link>Drawing\BrushCache.cs</Link>
+    </Compile>
+    <Compile Include="..\CrossUI.SharpDX\Drawing\DrawingSurface.cs">
+      <Link>Drawing\DrawingSurface.cs</Link>
     </Compile>
     <Compile Include="..\CrossUI.SharpDX\Drawing\DrawingTarget.cs">
       <Link>Drawing\DrawingTarget.cs</Link>

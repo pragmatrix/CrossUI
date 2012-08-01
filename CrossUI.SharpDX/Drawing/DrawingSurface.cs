@@ -12,13 +12,12 @@ using SharpDX.Direct3D10;
 using Device1 = SharpDX.Direct3D10.Device1;
 using MapFlags = SharpDX.Direct3D10.MapFlags;
 #endif
-using CrossUI.Toolbox;
 using CrossUI.Drawing;
 using Factory = SharpDX.Direct2D1.Factory;
 
 namespace CrossUI.SharpDX.Drawing
 {
-	sealed class BitmapDrawingTarget : IBitmapDrawingTarget
+	sealed class DrawingSurface : IDrawingSurface
 	{
 		readonly DrawingBackend _backend;
 		readonly Factory _factory;
@@ -29,10 +28,10 @@ namespace CrossUI.SharpDX.Drawing
 
 		readonly Texture2D _texture;
 
-		public BitmapDrawingTarget(DrawingBackend backend, int width, int height)
+		public DrawingSurface(DrawingBackend backend, int width, int height)
 		{
 			if (width < 0 || height < 0)
-				throw new Exception("Area of BitmapDrawingTarget's is neagative");
+				throw new Exception("Area of DrawingSurface's is neagative");
 
 			_factory = backend.Factory;
 			_device = backend.Device;
@@ -63,9 +62,13 @@ namespace CrossUI.SharpDX.Drawing
 			_texture.Dispose();
 		}
 
-		public IDisposable BeginDraw(out IDrawingTarget target)
+		public IDrawingTarget BeginDraw()
 		{
+#if NETFX_CORE
 			var surface = _texture.QueryInterface<Surface>();
+#else
+			var surface = _texture.AsSurface();
+#endif
 
 			var rtProperties = new RenderTargetProperties
 			{
@@ -76,12 +79,17 @@ namespace CrossUI.SharpDX.Drawing
 			};
 
 			var renderTarget = new RenderTarget(_factory, surface, rtProperties);
+
+			renderTarget.BeginDraw();
+			// required to clear the render target
+			// (not required on all machines, MacBook Air + Win7 seems to recycle old textures)
+			renderTarget.Clear(null);
+
 			var state = new DrawingState();
 			var transform = new DrawingTransform();
-
 			var drawingTargetImplementation = new DrawingTarget(state, transform, renderTarget, _width, _height);
 
-			target = new DrawingTargetSplitter(
+			var target = new DrawingTargetSplitter(
 				_backend, 
 				state, 
 				transform, 
@@ -89,20 +97,17 @@ namespace CrossUI.SharpDX.Drawing
 				drawingTargetImplementation, 
 				drawingTargetImplementation, 
 				drawingTargetImplementation, 
-				drawingTargetImplementation);
+				drawingTargetImplementation,
+				() =>
+					{
+						renderTarget.EndDraw();
 
-			renderTarget.BeginDraw();
-			// required for some graphic cards
-			renderTarget.Clear(null);
+						drawingTargetImplementation.Dispose();
+						renderTarget.Dispose();
+						surface.Dispose();
+					});
 
-			return new DisposeAction(() =>
-				{
-					renderTarget.EndDraw();
-
-					drawingTargetImplementation.Dispose();
-					renderTarget.Dispose();
-					surface.Dispose();
-				});
+			return target;
 		}
 
 		public byte[] ExtractRawBitmap()
