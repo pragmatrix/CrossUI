@@ -63,6 +63,10 @@
       <Project>{F46BFFCE-B059-4D62-8669-A24F6E8A543D}</Project>
       <Name>CrossUI.SharpDX</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CrossUI.TestRunner.Portable\CrossUI.TestRunner.Portable.csproj">
+      <Project>{339D1CF5-836F-4D77-B5C5-731036B5E1C6}</Project>
+      <Name>CrossUI.TestRunner.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

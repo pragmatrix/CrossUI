@@ -6,7 +6,7 @@ namespace CrossUI.Testing
 {
 	public sealed class TestRunner : MarshalByRefObject
 	{
-		const string TestRunnerAssembly = "CrossUI.Portable.dll";
+		const string TestRunnerAssembly = "CrossUI.TestRunner.Portable.dll";
 		const string TestRunnerType = "CrossUI.Testing.TestRunnerPortable";
 
 		public TestResultAssembly run(string testAssemblyPath)
