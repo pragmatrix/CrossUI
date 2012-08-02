@@ -86,6 +86,8 @@ change the code that produces the test results. If you got .NET Demon installed,
 * Reference CrossUI.Portable from your project.
 * Reference one of the Backends (for example CrossUI.SharpDX).
 
+... and somewhere in your code:
+
 	using (var backend = new DrawingBackend())
 	using (var surface = backend.CreateBitmapDrawingSurface(Width, Height))
 	{
