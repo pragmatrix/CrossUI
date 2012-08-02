@@ -1,4 +1,4 @@
-# CrossUI - A Portable Drawing API focused on Instant Test Feedback
+# CrossUI - A Portable .NET Drawing API focused on Instant Test Feedback
 
 Programming languages provide the ultimate flexibility for parameterizing user interfaces 
 and graphical output in general. But they lack the instant feedback that markup languages 
