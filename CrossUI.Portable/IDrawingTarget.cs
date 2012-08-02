@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using CrossUI.Drawing;
+using CrossUI.Toolbox;
 
 namespace CrossUI
 {
-	public interface IDrawingTarget : 
+	public interface IDrawingTarget :
 		IDrawingState,
 		IDrawingTransform,
 		IGeometryFigures,
-		IDrawingElements, 
+		IDrawingElements,
 		ITextMeasurements,
 		IDrawingTargetBitmap,
 		IReportingTarget,
@@ -37,9 +38,28 @@ namespace CrossUI
 			TextAlignment? alignment = null,
 			ParagraphAlignment? paragraphAlignment = null,
 			WordWrapping? wordWrapping = null);
+
+		void SaveState();
+		void RestoreState();
 	}
 
-	/// Stroke alignment applies to rectangular shapes only.
+	public static class DrawingStateExtensions
+	{
+		public static IDisposable PushPixelAlign(this IDrawingState state)
+		{
+			var pushed = state.PushState();
+			state.PixelAlign();
+			return pushed;
+		}
+		
+		public static IDisposable PushState(this IDrawingState state)
+		{
+			state.SaveState();
+			return new DisposeAction(state.RestoreState);
+		}
+	}
+
+/// Stroke alignment applies to rectangular shapes only.
 
 	public enum StrokeAlignment
 	{

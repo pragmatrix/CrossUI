@@ -1,9 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace CrossUI.Drawing
 {
 	public sealed class DrawingState : IDrawingState
 	{
+		DrawingState _previous_;
+
 		public bool FillEnabled { get; private set; }
 		public Color FillColor { get; private set; }
 
@@ -23,6 +26,29 @@ namespace CrossUI.Drawing
 		public WordWrapping WordWrapping { get; private set; }
 
 		public bool PixelAligned { get; private set; }
+
+		public static void Copy(DrawingState @from, DrawingState to)
+		{
+			to.FillEnabled = @from.FillEnabled;
+			to.FillColor = @from.FillColor;
+
+			to.StrokeEnabled = @from.StrokeEnabled;
+			to.StrokeWeight = @from.StrokeWeight;
+			to.StrokeAlignment = @from.StrokeAlignment;
+
+			to.FontName = @from.FontName;
+			to.FontWeight = @from.FontWeight;
+			to.FontStyle = @from.FontStyle;
+	
+			to.TextSize = @from.TextSize;
+			to.TextColor = @from.TextColor;
+			to.TextAlignment = @from.TextAlignment;
+			
+			to.ParagraphAlignment = @from.ParagraphAlignment;
+			to.WordWrapping = @from.WordWrapping;
+			
+			to.PixelAligned = @from.PixelAligned;
+		}
 
 		public DrawingState()
 		{
@@ -116,6 +142,27 @@ namespace CrossUI.Drawing
 
 			if (wordWrapping != null)
 				WordWrapping = wordWrapping.Value;
+		}
+
+		public void SaveState()
+		{
+			var clone = Clone();
+			_previous_ = clone;
+		}
+
+		public void RestoreState()
+		{
+			var p = _previous_;
+			if (p == null)
+				throw new Exception("No Previous State found");
+
+			Copy(p, this);
+			_previous_ = p._previous_;
+		}
+
+		public DrawingState Clone()
+		{
+			return (DrawingState)MemberwiseClone();
 		}
 	}
 
