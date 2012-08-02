@@ -12,6 +12,14 @@
 			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
 		}
 
+		[BitmapDrawingTest(Width = 160, Height = 60)]
+		public void DefaultLarger(IDrawingTarget ctx)
+		{
+			setup(ctx);
+			ctx.Text(size:12);
+			ctx.Text(Text, 0, 0, ctx.Width, ctx.Height);
+		}
+
 		public void NoWordWrap(IDrawingTarget ctx)
 		{
 			setup(ctx);
