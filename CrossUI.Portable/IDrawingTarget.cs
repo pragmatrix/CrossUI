@@ -26,6 +26,9 @@ namespace CrossUI
 		void Stroke(Color? color = null, double? weight = null, StrokeAlignment? alignment = null);
 		void NoStroke();
 
+		void PixelAlign();
+		void NoPixelAlign();
+
 		void Font(string name = null, FontWeight? weight = null, FontStyle? style = null);
 
 		void Text(

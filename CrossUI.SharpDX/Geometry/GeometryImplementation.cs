@@ -1,4 +1,5 @@
 ﻿using System;
+using CrossUI.Drawing;
 using CrossUI.Toolbox;
 using SharpDX;
 using SharpDX.Direct2D1;

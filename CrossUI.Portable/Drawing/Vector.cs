@@ -120,6 +120,11 @@ namespace CrossUI.Drawing
 			return _.transform(Math.Ceiling);
 		}
 
+		public static Vector Round(this Vector _)
+		{
+			return _.transform(Math.Round);
+		}
+
 		static Vector transform(this Vector _, Func<double, double> transform)
 		{
 			return new Vector(transform(_.X), transform(_.Y));

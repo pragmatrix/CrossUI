@@ -22,6 +22,8 @@ namespace CrossUI.Drawing
 		public ParagraphAlignment ParagraphAlignment { get; private set; }
 		public WordWrapping WordWrapping { get; private set; }
 
+		public bool PixelAligned { get; private set; }
+
 		public DrawingState()
 		{
 			// defaults
@@ -36,6 +38,7 @@ namespace CrossUI.Drawing
 			TextSize = 10;
 
 			TextColor = Colors.Black;
+			PixelAligned = false;
 		}
 
 		public void Fill(Color? color)
@@ -68,6 +71,16 @@ namespace CrossUI.Drawing
 		public void NoStroke()
 		{
 			StrokeEnabled = false;
+		}
+
+		public void PixelAlign()
+		{
+			PixelAligned = true;
+		}
+
+		public void NoPixelAlign()
+		{
+			PixelAligned = false;
 		}
 
 		public void Font(string name, FontWeight? weight, FontStyle? style)

@@ -87,27 +87,28 @@ namespace CrossUI.SharpDX.Drawing
 
 			var state = new DrawingState();
 			var transform = new DrawingTransform();
-			var drawingTargetImplementation = new DrawingTarget(state, transform, renderTarget, _width, _height);
+			var drawingTarget = new DrawingTarget(state, transform, renderTarget, _width, _height);
 
 			var target = new DrawingTargetSplitter(
 				_backend, 
 				state, 
 				transform, 
-				drawingTargetImplementation, 
-				drawingTargetImplementation, 
-				drawingTargetImplementation, 
-				drawingTargetImplementation, 
-				drawingTargetImplementation,
+				drawingTarget, 
+				drawingTarget, 
+				drawingTarget, 
+				drawingTarget, 
+				drawingTarget,
 				() =>
 					{
-						renderTarget.EndDraw();
+						drawingTarget.Dispose();
 
-						drawingTargetImplementation.Dispose();
+						renderTarget.EndDraw();
 						renderTarget.Dispose();
 						surface.Dispose();
 					});
 
-			return target;
+			var pixelAligner = PixelAligningDrawingTarget.Create(target, target.Dispose, state, transform);
+			return pixelAligner;
 		}
 
 		public byte[] ExtractRawBitmap()

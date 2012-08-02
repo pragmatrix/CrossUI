@@ -1,4 +1,5 @@
 ﻿using System;
+using CrossUI.Drawing;
 
 namespace CrossUI.Tests.DrawingContext
 {

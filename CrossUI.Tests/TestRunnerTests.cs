@@ -1,6 +1,5 @@
 ﻿using System;
 using CrossUI;
-using CrossUI.Testing;
 
 [assembly: DrawingBackend(typeof(CrossUI.SharpDX.DrawingBackend))]
 

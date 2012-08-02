@@ -64,6 +64,16 @@ namespace CrossUI.Drawing
 			_state.NoStroke();
 		}
 
+		public void PixelAlign()
+		{
+			_state.PixelAlign();
+		}
+
+		public void NoPixelAlign()
+		{
+			_state.NoPixelAlign();
+		}
+
 		public void Font(string name = null, FontWeight? weight = null, FontStyle? style = null)
 		{
 			_state.Font(name, weight, style);

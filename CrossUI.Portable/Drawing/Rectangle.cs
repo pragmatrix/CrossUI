@@ -21,6 +21,11 @@
 			Size = size;
 		}
 
+		public Point RightBottom
+		{
+			get { return (Location.Vector + Size.Vector).ToPoint(); }
+		}
+
 		#region Equality members
 
 		public bool Equals(Rectangle other)
@@ -54,5 +59,10 @@
 		}
 
 		#endregion
+
+		public Bounds ToBounds()
+		{
+			return new Bounds(X, Y, X + Width, Y + Height);
+		}
 	}
 }

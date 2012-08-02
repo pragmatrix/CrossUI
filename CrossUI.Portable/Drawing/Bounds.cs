@@ -1,8 +1,7 @@
 using System.Globalization;
-using CrossUI.Drawing;
 using CrossUI.Toolbox;
 
-namespace CrossUI
+namespace CrossUI.Drawing
 {
 	public struct Bounds
 	{
@@ -76,5 +75,10 @@ namespace CrossUI
 		}
 
 		#endregion
+
+		public Rectangle ToRectangle()
+		{
+			return new Rectangle(Left, Top, Right - Left, Bottom - Top);
+		}
 	}
 }

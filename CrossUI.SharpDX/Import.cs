@@ -1,3 +1,4 @@
+using CrossUI.Drawing;
 using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;

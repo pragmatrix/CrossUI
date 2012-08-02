@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bounds.cs" />
+    <Compile Include="Drawing\Bounds.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="DrawingBackendAttribute.cs" />
     <Compile Include="Drawing\BoundsTracker.cs" />
@@ -43,6 +43,7 @@
     <Compile Include="Drawing\DrawingTargetSplitter.cs" />
     <Compile Include="Drawing\DrawingTransform.cs" />
     <Compile Include="Drawing\Matrix.cs" />
+    <Compile Include="Drawing\PixelAligningDrawingTarget.cs" />
     <Compile Include="Drawing\Point.cs" />
     <Compile Include="Drawing\Rectangle.cs" />
     <Compile Include="Drawing\DrawingTargetRecorder.cs" />

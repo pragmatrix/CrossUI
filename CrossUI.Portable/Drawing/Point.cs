@@ -1,4 +1,6 @@
-﻿namespace CrossUI.Drawing
+﻿using System;
+
+namespace CrossUI.Drawing
 {
 	public struct Point
 	{
@@ -89,6 +91,21 @@
 			}
 
 			return pairs;
+		}
+
+		public static double[] Transform(this double[] points, Func<double, double, Point> t)
+		{
+			var r = new double[points.Length];
+			for (int i = 0; i != points.Length; i+=2)
+			{
+				var x = points[i];
+				var y = points[i + 1];
+				var p = t(x, y);
+				r[i] = p.X;
+				r[i + 1] = p.Y;
+			}
+
+			return r;
 		}
 	}
 }

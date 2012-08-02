@@ -50,6 +50,7 @@
     <Compile Include="GeometryQueryTests.cs" />
     <Compile Include="GeometryRelationTests.cs" />
     <Compile Include="GeometryTransformTests.cs" />
+    <Compile Include="PixelAlignmentTests.cs" />
     <Compile Include="StrokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextTests.cs" />
