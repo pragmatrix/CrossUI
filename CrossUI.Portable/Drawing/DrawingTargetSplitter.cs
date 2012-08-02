@@ -109,44 +109,44 @@ namespace CrossUI.Drawing
 			_transform.Translate(dx, dy);
 		}
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
-			_figures.Line(x1, y1, x2, y2);
+			_figures.Line(p1, p2);
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
-			_figures.Rectangle(x, y, width, height);
+			_figures.Rectangle(rectangle);
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
-			_figures.RoundedRectangle(x, y, width, height, cornerRadius);
+			_figures.RoundedRectangle(rectangle, cornerRadius);
 		}
 
-		public void Polygon(double[] coordinatePairs)
+		public void Polygon(Point[] points)
 		{
-			_figures.Polygon(coordinatePairs);
+			_figures.Polygon(points);
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
-			_figures.Ellipse(x, y, width, height);
+			_figures.Ellipse(rectangle);
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
-			_figures.Arc(x, y, width, height, start, stop);
+			_figures.Arc(rectangle, start, stop);
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
-			_figures.Bezier(x, y, s1x, s1y, s2x, s2y, ex, ey);
+			_figures.Bezier(bezier);
 		}
 
-		public void Text(string text, double x, double y, double width, double height)
+		public void Text(string text, Rectangle rectangle)
 		{
-			_elements.Text(text, x, y, width, height);
+			_elements.Text(text, rectangle);
 		}
 
 		public void Geometry(IGeometry geometry)

@@ -4,63 +4,58 @@ namespace CrossUI
 {
 	public interface IGeometryFigures
 	{
-		void Line(double x1, double y1, double x2, double y2);
+		void Line(Point p1, Point p2);
 
-		void Rectangle(double x, double y, double width, double height);
-		void RoundedRectangle(double x, double y, double width, double height, double cornerRadius);
-		void Polygon(params double[] coordinatePairs);
+		void Rectangle(Rectangle rectangle);
+		void RoundedRectangle(Rectangle rectangle, double cornerRadius);
+		void Polygon(params Point[] points);
 
-		void Ellipse(double x, double y, double width, double height);
-		void Arc(double x, double y, double width, double height, double start, double stop);
+		void Ellipse(Rectangle rectangle);
+		void Arc(Rectangle rectangle, double start, double stop);
 
-		// cubic
-		void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey);
+		void Bezier(CubicBezier bezier);
 	}
 
 	public static class GeometryFiguresExtensions
 	{
-		public static void Line(this IGeometryFigures _, Point from, Point to)
+		public static void Line(this IGeometryFigures _, double x1, double y1, double x2, double y2)
 		{
-			_.Line(from.X, from.Y, to.X, to.Y);
+			_.Line(new Point(x1, y1), new Point(x2, y2));
 		}
 
-		public static void Rectangle(this IGeometryFigures _, Rectangle rectangle)
+		public static void Rectangle(this IGeometryFigures _, double x, double y, double width, double height)
 		{
-			_.Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+			_.Rectangle(new Rectangle(x, y, width, height));
 		}
 
-		public static void RoundedRectangle(this IGeometryFigures _, Rectangle rectangle, double cordnerRadius)
+		public static void RoundedRectangle(this IGeometryFigures _, double x, double y, double width, double height, double cornerRadius)
 		{
-			_.RoundedRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, cordnerRadius);
+			_.RoundedRectangle(new Rectangle(x, y, width, height), cornerRadius);
 		}
 
-		public static void Polygon(this IGeometryFigures _, params Point[] points)
+		public static void Polygon(this IGeometryFigures _, params double[] pairs)
 		{
-			_.Polygon(points.ToPairs());
+			_.Polygon(pairs.ToPoints());
 		}
 
-		public static void Ellipse(this IGeometryFigures _, Rectangle rectangle)
+		public static void Ellipse(this IGeometryFigures _, double x, double y, double width, double height)
 		{
-			_.Ellipse(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+			_.Ellipse(new Rectangle(x, y, width, height));
 		}
 
-		public static void Arc(this IGeometryFigures _, Rectangle rectangle, double start, double stop)
+		public static void Arc(this IGeometryFigures _, double x, double y, double width, double height, double start, double stop)
 		{
-			_.Arc(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, start, stop);
+			_.Arc(new Rectangle(x, y, width, height), start, stop);
+		}
+
+		public static void Bezier(this IGeometryFigures _, double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		{
+			_.Bezier(new Point(x, y), new Point(s1x, s1y), new Point(s2x, s2y), new Point(ex, ey));
 		}
 
 		public static void Bezier(this IGeometryFigures _, Point start, Point span1, Point span2, Point end)
 		{
 			_.Bezier(new CubicBezier(start, span1, span2, end));
-		}
-
-		public static void Bezier(this IGeometryFigures _, CubicBezier bezier)
-		{
-			_.Bezier(
-				bezier.Start.X, bezier.Start.Y, 
-				bezier.Span1.X, bezier.Span1.Y, 
-				bezier.Span2.X, bezier.Span2.Y, 
-				bezier.End.X, bezier.End.Y);
 		}
 	}
 }

@@ -27,33 +27,31 @@ namespace CrossUI.Drawing
 		double _right;
 		double _bottom;
 
-		public void trackAlignedRect(double x, double y, double width, double height)
+		public void trackAlignedRect(Rectangle rectangle)
 		{
 			if (!State.StrokeEnabled)
 			{
-				trackRect(x, y, width, height);
+				trackRect(rectangle);
 				return;
 			}
 
-			var b = State.StrokeAlignedBounds(x, y, width, height);
-			trackPoints(b.Left, b.Top, b.Right, b.Top, b.Right, b.Bottom, b.Left, b.Bottom);
+			var b = State.StrokeAlignedBounds(rectangle);
+			trackPoints(b.LeftTop, b.RightTop, b.RightBottom, b.LeftBottom);
 		}
 
-		public void trackRect(double x, double y, double width, double height)
+		public void trackRect(Rectangle rectangle)
 		{
-			var right = x + width;
-			var bottom = y + height;
-			trackPoints(x, y, right, y, right, bottom, x, bottom);
+			var x = rectangle.X;
+			var y = rectangle.Y;
+			var right = rectangle.Right;
+			var bottom = rectangle.Bottom;
+			trackPoints(new Point(x, y), new Point(right, y), new Point(right, bottom), new Point(x, bottom));
 		}
 			
-		public void trackPoints(params double[] points)
+		public void trackPoints(params Point[] points)
 		{
-			for (int i = 0; i != points.Length; i += 2)
-			{
-				var x = points[i];
-				var y = points[i + 1];
-				trackPoint(x, y);
-			}
+			foreach (var p in points)
+				trackPoint(p.X, p.Y);
 		}
 
 		void trackPoint(double x, double y)

@@ -1,5 +1,6 @@
 ﻿using System;
 using SharpDX.Direct2D1;
+using CrossUI.Drawing;
 
 namespace CrossUI.SharpDX.Geometry
 {
@@ -20,26 +21,26 @@ namespace CrossUI.SharpDX.Geometry
 			_sink = sink;
 		}
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
 			endOpenFigure();
 
-			_sink.BeginFigure(Import.Point(x1, y1), FigureBegin.Hollow);
-			_sink.AddLine(Import.Point(x2, y2));
+			_sink.BeginFigure(Import.Point(p1), FigureBegin.Hollow);
+			_sink.AddLine(Import.Point(p2));
 			_sink.EndFigure(FigureEnd.Open);
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
 			endOpenFigure();
 
-			using (var geometry = new RectangleGeometry(_factory, Import.Rectangle(x, y, width, height)))
+			using (var geometry = new RectangleGeometry(_factory, Import.Rectangle(rectangle)))
 			{
 				geometry.Simplify(SimplificationOption, _sink);
 			}
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
 			endOpenFigure();
 
@@ -48,48 +49,45 @@ namespace CrossUI.SharpDX.Geometry
 				{
 					RadiusX = cornerRadius.import(),
 					RadiusY = cornerRadius.import(),
-					Rect = Import.Rectangle(x, y, width, height)
+					Rect = Import.Rectangle(rectangle)
 				}))
 			{
 				geometry.Simplify(SimplificationOption, _sink);
 			}
 		}
 
-		public void Polygon(double[] pairs)
+		public void Polygon(Point[] points)
 		{
 			endOpenFigure();
 
-			if ((pairs.Length & 1) == 1)
-				throw new Exception("Number of polygon pairs need to be even.");
-
-			if (pairs.Length < 4)
+			if (points.Length < 2)
 				return;
 
-			if (pairs.Length == 4)
+			if (points.Length == 2)
 			{
-				Line(pairs[0], pairs[1], pairs[2], pairs[3]);
+				Line(points[0], points[1]);
 				return;
 			}
 
-			_sink.BeginFigure(Import.Point(pairs[0], pairs[1]), FigureBegin.Filled);
+			_sink.BeginFigure(Import.Point(points[0]), FigureBegin.Filled);
 
-			for (int i = 2; i != pairs.Length; i += 2)
-				_sink.AddLine(Import.Point(pairs[i], pairs[i + 1]));
+			for (int i = 1; i != points.Length; ++i)
+				_sink.AddLine(Import.Point(points[i]));
 
 			_sink.EndFigure(FigureEnd.Closed);
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
 			endOpenFigure();
 
-			var rx = width/2;
-			var ry = height/2;
+			var rx = rectangle.Width/2;
+			var ry = rectangle.Height/2;
 
 			using (var geometry = new EllipseGeometry(_factory,
 				new Ellipse
 				{
-					Point = Import.Point(x + rx, y + ry),
+					Point = Import.Point(rectangle.X + rx, rectangle.Y + ry),
 					RadiusX = rx.import(),
 					RadiusY = ry.import()
 				}
@@ -99,27 +97,27 @@ namespace CrossUI.SharpDX.Geometry
 			}
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
 			endOpenFigure();
 
-			var r = Import.Rectangle(x, y, width, height);
+			var r = Import.Rectangle(rectangle);
 			_sink.BeginFigure(ArcGeometry.pointOn(r, start), FigureBegin.Hollow);
-			ArcGeometry.add(Import.Rectangle(x, y, width, height), start, stop, _sink);
+			ArcGeometry.add(r, start, stop, _sink);
 			_sink.EndFigure(FigureEnd.Open);
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
 			endOpenFigure();
 
-			_sink.BeginFigure(Import.Point(x, y), FigureBegin.Hollow);
+			_sink.BeginFigure(Import.Point(bezier.Start), FigureBegin.Hollow);
 
 			_sink.AddBezier(new BezierSegment
 			{
-				Point1 = Import.Point(s1x, s1y),
-				Point2 = Import.Point(s2x, s2y),
-				Point3 = Import.Point(ex, ey)
+				Point1 = Import.Point(bezier.Span1),
+				Point2 = Import.Point(bezier.Span2),
+				Point3 = Import.Point(bezier.End)
 			});
 
 			_sink.EndFigure(FigureEnd.Open);

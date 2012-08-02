@@ -1,5 +1,6 @@
 ﻿using DW = SharpDX.DirectWrite;
 using Factory = SharpDX.DirectWrite.Factory;
+using CrossUI.Drawing;
 
 namespace CrossUI.SharpDX.Drawing
 {
@@ -7,12 +8,12 @@ namespace CrossUI.SharpDX.Drawing
 	{
 		Factory _writeFactory_;
 
-		public void Text(string text, double x, double y, double width, double height)
+		public void Text(string text, Rectangle rectangle)
 		{
 			using (var format = createTextFormat())
-			using (var layout = createTextLayout(text, format, width, height))
+			using (var layout = createTextLayout(text, format, rectangle.Width, rectangle.Height))
 			{
-				_target.DrawTextLayout(Import.Point(x, y), layout, _textBrush.Brush);
+				_target.DrawTextLayout(Import.Point(rectangle.Location), layout, _textBrush.Brush);
 			}
 		}
 

@@ -24,6 +24,9 @@ namespace CrossUI.Drawing
 			RightBottom = rightBottom;
 		}
 
+		public Point LeftBottom { get { return new Point(Left, Bottom); } }
+		public Point RightTop { get { return new Point(Right, Top); } }
+
 		public override string ToString()
 		{
 			return "{0},{1},{2},{3}".format(

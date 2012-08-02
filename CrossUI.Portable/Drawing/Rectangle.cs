@@ -21,6 +21,9 @@
 			Size = size;
 		}
 
+		public double Right { get { return Location.X + Size.Width; } }
+		public double Bottom { get { return Location.Y + Size.Height; } }
+
 		public Point RightBottom
 		{
 			get { return (Location.Vector + Size.Vector).ToPoint(); }

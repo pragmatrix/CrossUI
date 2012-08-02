@@ -1,4 +1,5 @@
 ﻿using SharpDX.Direct2D1;
+using CrossUI.Drawing;
 
 namespace CrossUI.SharpDX.Geometry
 {
@@ -23,7 +24,7 @@ namespace CrossUI.SharpDX.Geometry
 			double stop,
 			ArcDirection direction = ArcDirection.Clockwise)
 		{
-			var r = Import.Rectangle(x, y, width, height);
+			var r = Import.Rectangle(new Rectangle(x, y, width, height));
 			var startPoint = ArcGeometry.pointOn(r, start);
 			_sink.AddLine(startPoint);
 			ArcGeometry.add(r, start, stop, _sink, direction.import());

@@ -73,15 +73,15 @@ namespace CrossUI
 
 	public interface IDrawingElements
 	{
-		void Text(string text, double x, double y, double width, double height);
+		void Text(string text, Rectangle rectangle);
 		void Geometry(IGeometry geometry);
 	}
 
 	public static class DrawingElementsExtensions
 	{
-		public static void Text(this IDrawingElements _, string text, Rectangle rectangle)
+		public static void Text(this IDrawingElements _, string text, double x, double y, double width, double height)
 		{
-			_.Text(text, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+			_.Text(text, new Rectangle(x, y, width, height));
 		}
 	}
 

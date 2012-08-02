@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CrossUI.Drawing
 {
@@ -71,60 +72,51 @@ namespace CrossUI.Drawing
 
 		#region Pixel Aligning Forwarders
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
-			var p1 = pixelAlign(x1, y1);
-			var p2 = pixelAlign(x2, y2);
-
-			_target.Line(p1, p2);
+			_target.Line(pixelAlign(p1), pixelAlign(p2));
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
-			var r = pixelAlign(x, y, width, height);
-
-			_target.Rectangle(r);
+			_target.Rectangle(pixelAlign(rectangle));
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
-			var r = pixelAlign(x, y, width, height);
-
-			_target.RoundedRectangle(r, cornerRadius);
+			_target.RoundedRectangle(pixelAlign(rectangle), cornerRadius);
 		}
 
-		public void Polygon(params double[] coordinatePairs)
+		public void Polygon(params Point[] points)
 		{
-			var aligned = coordinatePairs.Transform(pixelAlign);
+			var aligned = points.Select(pixelAlign).ToArray();
 			_target.Polygon(aligned);
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
-			var r = pixelAlign(x, y, width, height);
-			_target.Ellipse(r);
+			_target.Ellipse(pixelAlign(rectangle));
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
-			var r = pixelAlign(x, y, width, height);
-			_target.Arc(r, start, stop);
+			_target.Arc(pixelAlign(rectangle), start, stop);
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
-			var start = pixelAlign(x, y);
-			var span1 = pixelAlign(s1x, s1y);
-			var span2 = pixelAlign(s2x, s2y);
-			var end = pixelAlign(ex, ey);
+			var start = pixelAlign(bezier.Start);
+			var span1 = pixelAlign(bezier.Span1);
+			var span2 = pixelAlign(bezier.Span2);
+			var end = pixelAlign(bezier.End);
 
 			_target.Bezier(start, span1, span2, end);
 		}
 
-		public void Text(string text, double x, double y, double width, double height)
+		public void Text(string text, Rectangle rectangle)
 		{
 			// text is _not_ aligned right, because it would change width and so could affect word-breaks.
-			_target.Text(text, x, y, width, width);
+			_target.Text(text, rectangle);
 		}
 
 		public void Geometry(IGeometry geometry)

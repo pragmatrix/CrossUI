@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;
+using Rectangle = CrossUI.Drawing.Rectangle;
 
 namespace CrossUI.SharpDX.Drawing
 {
@@ -115,28 +116,28 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
 			if (Stroking)
-				_target.DrawLine(Import.Point(x1, y1), Import.Point(x2, y2), _strokeBrush.Brush, StrokeWeight);
+				_target.DrawLine(Import.Point(p1), Import.Point(p2), _strokeBrush.Brush, StrokeWeight);
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
 			if (Filling)
 			{
-				var r = fillRect(x, y, width, height);
+				var r = fillRect(rectangle);
 				_target.FillRectangle(r, _fillBrush.Brush);
 			}
 
 			if (Stroking)
 			{
-				var r = strokeAlignedRect(x, y, width, height);
+				var r = strokeAlignedRect(rectangle);
 				_target.DrawRectangle(r, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
 			if (Filling)
 			{
@@ -148,7 +149,7 @@ namespace CrossUI.SharpDX.Drawing
 
 				var roundedRect = new RoundedRect
 				{
-					Rect = fillRect(x, y, width, height),
+					Rect = fillRect(rectangle),
 					RadiusX = filledCornerRadius.import(),
 					RadiusY = filledCornerRadius.import()
 				};
@@ -160,7 +161,7 @@ namespace CrossUI.SharpDX.Drawing
 			{
 				var roundedRect = new RoundedRect
 				{
-					Rect = strokeAlignedRect(x, y, width, height),
+					Rect = strokeAlignedRect(rectangle),
 					RadiusX = cornerRadius.import(),
 					RadiusY = cornerRadius.import()
 				};
@@ -169,29 +170,26 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public void Polygon(double[] pairs)
+		public void Polygon(Point[] points)
 		{
-			if ((pairs.Length & 1) == 1)
-				throw new Exception("Number of polygon pairs need to be even.");
-
-			if (pairs.Length < 4)
+			if (points.Length < 2)
 				return;
 
-			if (pairs.Length == 4)
+			if (points.Length == 2)
 			{
-				Line(pairs[0], pairs[1], pairs[2], pairs[3]);
+				Line(points[0], points[1]);
 				return;
 			}
 
-			var startPoint = Import.Point(pairs[0], pairs[1]);
+			var startPoint = Import.Point(points[0]);
 
 			if (Filling)
 			{
 				fillPath(startPoint,
 					sink =>
 						{
-							for (int i = 2; i != pairs.Length; i += 2)
-								sink.AddLine(Import.Point(pairs[i], pairs[i + 1]));
+							for (int i = 1; i != points.Length; ++i)
+								sink.AddLine(Import.Point(points[i]));
 						});
 			}
 
@@ -200,51 +198,51 @@ namespace CrossUI.SharpDX.Drawing
 				drawClosedPath(startPoint,
 					sink =>
 						{
-							for (int i = 2; i != pairs.Length; i += 2)
-								sink.AddLine(Import.Point(pairs[i], pairs[i + 1]));
+							for (int i = 1; i != points.Length; ++i)
+								sink.AddLine(Import.Point(points[i]));
 						});
 			}
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
 			if (Filling)
 			{
-				var r = fillRect(x, y, width, height);
+				var r = fillRect(rectangle);
 				var ellipse = new Ellipse(Import.Point(r.Left + r.Width/2, r.Top + r.Height/2), r.Width/2, r.Height/2);
 				_target.FillEllipse(ellipse, _fillBrush.Brush);
 			}
 
 			if (Stroking)
 			{
-				var r = strokeAlignedRect(x, y, width, height);
+				var r = strokeAlignedRect(rectangle);
 				var ellipse = new Ellipse(Import.Point(r.Left + r.Width / 2, r.Top + r.Height / 2), r.Width / 2, r.Height / 2);
 				_target.DrawEllipse(ellipse, _strokeBrush.Brush, StrokeWeight);
 			}
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
 			if (Stroking)
 			{
-				var r = strokeAlignedRect(x, y, width, height);
+				var r = strokeAlignedRect(rectangle);
 				var currentPoint = ArcGeometry.pointOn(r, start);
 				drawOpenPath(currentPoint, sink => ArcGeometry.add(r, start, stop, sink));
 			}
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
 			if (Stroking)
 			{
-				drawOpenPath(Import.Point(x, y),
+				drawOpenPath(Import.Point(bezier.Start),
 					sink =>
 						{
 							var bezierSegment = new BezierSegment()
 							{
-								Point1 = Import.Point(s1x, s1y),
-								Point2 = Import.Point(s2x, s2y),
-								Point3 = Import.Point(ex, ey)
+								Point1 = Import.Point(bezier.Span1),
+								Point2 = Import.Point(bezier.Span2),
+								Point3 = Import.Point(bezier.End)
 							};
 
 							sink.AddBezier(bezierSegment);
@@ -281,20 +279,20 @@ namespace CrossUI.SharpDX.Drawing
 			return Path.Figure(_target.Factory, filled, begin, figureBuilder);
 		}
 
-		RectangleF fillRect(double x, double y, double width, double height)
+		RectangleF fillRect(Rectangle rectangle)
 		{
 			if (!Stroking)
 			{
-				return new RectangleF(x.import(), y.import(), (x + width).import(), (y + height).import());
+				return new RectangleF(rectangle.X.import(), rectangle.Y.import(), rectangle.Right.import(), rectangle.Bottom.import());
 			}
 
-			return _state.StrokeFillBounds(x, y, width, height).import();
+			return _state.StrokeFillBounds(rectangle).import();
 		}
 
 
-		RectangleF strokeAlignedRect(double x, double y, double width, double height)
+		RectangleF strokeAlignedRect(Rectangle rectangle)
 		{
-			return _state.StrokeAlignedBounds(x, y, width, height).import();
+			return _state.StrokeAlignedBounds(rectangle).import();
 		}
 	}
 }

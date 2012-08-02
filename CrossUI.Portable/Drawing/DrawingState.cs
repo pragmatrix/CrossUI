@@ -121,22 +121,22 @@ namespace CrossUI.Drawing
 
 	public static class DrawingStateExtensions
 	{
-		public static Bounds StrokeAlignedBounds(this DrawingState state, double x, double y, double width, double height)
+		public static Bounds StrokeAlignedBounds(this DrawingState state, Rectangle rectangle)
 		{
 			var strokeShift = StrokeAlignShift(state);
-			return new Bounds(x + strokeShift, y + strokeShift, x + width - strokeShift, y + height - strokeShift);
+			return new Bounds(rectangle.X + strokeShift, rectangle.Y + strokeShift, rectangle.Right - strokeShift, rectangle.Bottom - strokeShift);
 		}
 
 		// Fill bounds of a stroke aligned rect that gets drawed stroke + filled
 
-		public static Bounds StrokeFillBounds(this DrawingState state, double x, double y, double width, double height)
+		public static Bounds StrokeFillBounds(this DrawingState state, Rectangle r)
 		{
 			if (!state.StrokeEnabled)
-				return new Bounds(x, y, x + width, y + height);
+				return new Bounds(r.X, r.Y, r.Right, r.Bottom);
 
 			var fs = StrokeFillShift(state);
 
-			return new Bounds(x + fs, y + fs, x + width - fs, y + height - fs);
+			return new Bounds(r.X + fs, r.Y + fs, r.Right - fs, r.Bottom - fs);
 		}
 
 		public static double StrokeAlignShift(this DrawingState state)

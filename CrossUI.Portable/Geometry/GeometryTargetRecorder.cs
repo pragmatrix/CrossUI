@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CrossUI.Drawing;
 
 namespace CrossUI.Geometry
 {
@@ -14,40 +15,40 @@ namespace CrossUI.Geometry
 				record(target);
 		}
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
-			record(t => t.Line(x1, y1, x2, y2));
+			record(t => t.Line(p1, p2));
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
-			record(t => t.Rectangle(x, y, width, height));
+			record(t => t.Rectangle(rectangle));
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
-			record(t => t.RoundedRectangle(x, y, width, height, cornerRadius));
+			record(t => t.RoundedRectangle(rectangle, cornerRadius));
 		}
 
-		public void Polygon(double[] coordinatePairs)
+		public void Polygon(Point[] points)
 		{
-			var copy = coordinatePairs.ToArray();
+			var copy = points.ToArray();
 			record(t => t.Polygon(copy));
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
-			record(t => t.Ellipse(x, y, width, height));
+			record(t => t.Ellipse(rectangle));
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
-			record(t => t.Arc(x, y, width, height, start, stop));
+			record(t => t.Arc(rectangle, start, stop));
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
-			record(t => t.Bezier(x, y, s1x, s1y, s2x, s2y, ex, ey));
+			record(t => t.Bezier(bezier));
 		}
 
 		public void MoveTo(double x, double y)

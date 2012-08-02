@@ -93,19 +93,16 @@ namespace CrossUI.Drawing
 			return pairs;
 		}
 
-		public static double[] Transform(this double[] points, Func<double, double, Point> t)
+		public static Point[] ToPoints(this double[] pairs)
 		{
-			var r = new double[points.Length];
-			for (int i = 0; i != points.Length; i+=2)
+			var points = new Point[pairs.Length/2];
+			var pi = 0;
+			for (int i = 0; i != pairs.Length; i += 2)
 			{
-				var x = points[i];
-				var y = points[i + 1];
-				var p = t(x, y);
-				r[i] = p.X;
-				r[i + 1] = p.Y;
+				points[pi++] = new Point(pairs[i], pairs[i + 1]);
 			}
 
-			return r;
+			return points;
 		}
 	}
 }

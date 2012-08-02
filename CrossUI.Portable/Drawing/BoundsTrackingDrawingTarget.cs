@@ -38,45 +38,45 @@ namespace CrossUI.Drawing
 			_tracker = tracker;
 		}
 
-		public void Line(double x1, double y1, double x2, double y2)
+		public void Line(Point p1, Point p2)
 		{
-			_tracker.trackPoints(x1, y1, x2, y2);
+			_tracker.trackPoints(p1, p2);
 		}
 
-		public void Rectangle(double x, double y, double width, double height)
+		public void Rectangle(Rectangle rectangle)
 		{
-			_tracker.trackAlignedRect(x, y, width, height);
+			_tracker.trackAlignedRect(rectangle);
 		}
 
-		public void RoundedRectangle(double x, double y, double width, double height, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
 		{
-			_tracker.trackAlignedRect(x, y, width, height);
+			_tracker.trackAlignedRect(rectangle);
 		}
 
-		public void Polygon(double[] coordinatePairs)
+		public void Polygon(Point[] points)
 		{
-			_tracker.trackPoints(coordinatePairs);
+			_tracker.trackPoints(points);
 		}
 
-		public void Ellipse(double x, double y, double width, double height)
+		public void Ellipse(Rectangle rectangle)
 		{
-			_tracker.trackAlignedRect(x, y, width, height);
+			_tracker.trackAlignedRect(rectangle);
 		}
 
-		public void Arc(double x, double y, double width, double height, double start, double stop)
+		public void Arc(Rectangle rectangle, double start, double stop)
 		{
-			// todo: optimize using a geometry?
-			_tracker.trackAlignedRect(x, y, width, height);
+			// todo: optimize by using a geometry?
+			_tracker.trackAlignedRect(rectangle);
 		}
 
-		public void Bezier(double x, double y, double s1x, double s1y, double s2x, double s2y, double ex, double ey)
+		public void Bezier(CubicBezier bezier)
 		{
-			_tracker.trackPoints(x, y, s1x, s1y, s2x, s2y, ex, ey);
+			_tracker.trackPoints(bezier.Start, bezier.Span1, bezier.Span2, bezier.End);
 		}
 
-		public void Text(string text, double x, double y, double width, double height)
+		public void Text(string text, Rectangle rectangle)
 		{
-			_tracker.trackRect(x, y, width, height);
+			_tracker.trackRect(rectangle);
 		}
 
 		public void Geometry(IGeometry geometry)
