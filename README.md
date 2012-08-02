@@ -41,12 +41,22 @@ CrossUI's instant testing feedback could be basis for user interface APIs that a
 
 ## What
 
-Right now, CrossUI consists of 
+The most import Projects in the CrossUI solutions are:
 
-* CrussUI.Runner.WPF: A WPF based graphical test runner that automatically reruns tests and presents them when DLLs are changed. Here is a [screenshot of the test runner](http://twitpic.com/a5n3ad) in action.
-* CrossUI.Portable: a portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org).
-* CrossUI.Testing: the current testrunner implementation and test result classes.
-* CrossUI.SharpDX: a [SharpDX](http://sharpdx.org/) based Direct2D rendering implementation.
+### Libraries you need
+
+* CrossUI.Portable: The portable C# based drawing abstraction that is inspired by [processing.org](http://www.processing.org).
+* CrossUI.TestRunner.Portable: The (internal) test backend which need to be referenced by your test code.
+
+### Tools you run
+
+* CrossUI.Runner.WPF: A WPF based graphical test runner that automatically reruns tests and presents them when DLLs are changed. Here is a [screenshot of the test runner](http://twitpic.com/a5n3ad) in action.
+* CrossUI.Runner.WPF.x86: The WPF runner to test DLLs that require a 32 bit execution.
+
+### Backends you choose from
+
+* CrossUI.SharpDX.WinRT: CrossUI's [SharpDX](http://sharpdx.org/) based WinRT backend.
+* CrossUI.SharpDX: The [SharpDX](http://sharpdx.org/) desktop backend.
 
 ## Getting Started
 
@@ -68,20 +78,37 @@ Right now, CrossUI consists of
 
 The WPF Testrunner should now show some drawings. These drawings are test results of the tests in CrossUI.Tests.DrawingContext.dll.
 
-* For trying out the instant feedback, open a source file in the project CrossUI.Tests.DrawingContext and 
+* For trying the instant feedback, open a source file in the project CrossUI.Tests.DrawingContext and 
 change the code that produces the test results. If you got .NET Demon installed, changes should appear as you type.
+
+### ... and how to draw to Bitmaps in your Code
+
+* Reference CrossUI.Portable from your project.
+* Reference one of the Backends (for example CrossUI.SharpDX).
+
+	using (var backend = new DrawingBackend())
+	using (var surface = backend.CreateBitmapDrawingSurface(Width, Height))
+	{
+		using (var target = surface.BeginDraw())
+		{
+			// draw here against target
+		}
+
+		// Returns the alpha-premultiplied (ARGB) bitmap.
+		var bitmap = surface.ExtractRawBitmap();
+	}
 
 ## Roadmap
 
 * Complete the drawing API
-	* Implement paths and geometry combiners
+	* Add bitmap loading and drawing
 * Port the Drawing Backend to more platforms
 	* Android via MonoDroid
 	* iOS via MonoTouch
 	* Mac OS X via MonoMac
 	* ? GDI via System.Drawing
 	* ? [Cairo](http://cairographics.org/) via [Mono.Cairo](http://www.mono-project.com/Mono.Cairo)
-	* ? WPF, WinRT Shapes
+	* ? XAML
 	* ? SVG
 	* ? [CrossGraphics](https://github.com/praeclarum/CrossGraphics)
 * Implement visual diffs
