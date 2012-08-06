@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct2D1;
 #if NETFX_CORE
@@ -62,7 +63,7 @@ namespace CrossUI.SharpDX.Drawing
 			_texture.Dispose();
 		}
 
-		public IDrawingTarget BeginDraw()
+		public IDrawingTarget BeginDraw(Color? clearColor)
 		{
 #if NETFX_CORE
 			var surface = _texture.QueryInterface<Surface>();
@@ -83,7 +84,7 @@ namespace CrossUI.SharpDX.Drawing
 			renderTarget.BeginDraw();
 			// required to clear the render target
 			// (not required on all machines, MacBook Air + Win7 seems to recycle old textures)
-			renderTarget.Clear(null);
+			renderTarget.Clear(clearColor != null ? clearColor.Value.import() : (Color4?)null);
 
 			var state = new DrawingState();
 			var transform = new DrawingTransform();
