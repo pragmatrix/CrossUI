@@ -136,11 +136,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CrossUI.Portable\CrossUI.Portable.csproj">
       <Project>{059e9775-63f7-4a7a-a0e9-4e0c54514ee8}</Project>
       <Name>CrossUI.Portable</Name>
@@ -149,6 +144,12 @@
       <Project>{ee9cb3ee-dd84-4509-a9e2-55078c7107d1}</Project>
       <Name>CrossUI.SharpDX.WinRT</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

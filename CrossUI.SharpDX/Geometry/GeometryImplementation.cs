@@ -51,7 +51,7 @@ namespace CrossUI.SharpDX.Geometry
 
 			var combined = Path.Geometry(
 				Geometry.Factory, 
-				sink => checkResult(Geometry.Combine(otherImplementation, mode.import(), sink)));
+				sink => Geometry.Combine(otherImplementation, mode.import(), sink));
 		
 			return new GeometryImplementation(combined);
 		}
@@ -60,7 +60,7 @@ namespace CrossUI.SharpDX.Geometry
 		{
 			var widened = Path.Geometry(
 				Geometry.Factory,
-				sink => checkResult(Geometry.Widen(strokeWeight.import(), sink)));
+				sink => Geometry.Widen(strokeWeight.import(), sink));
 
 			return new GeometryImplementation(widened).Outline();
 		}
@@ -69,7 +69,7 @@ namespace CrossUI.SharpDX.Geometry
 		{
 			var widened = Path.Geometry(
 				Geometry.Factory,
-				sink => checkResult(Geometry.Outline(sink)));
+				sink => Geometry.Outline(sink));
 
 			return new GeometryImplementation(widened);
 		}
@@ -78,12 +78,12 @@ namespace CrossUI.SharpDX.Geometry
 		{
 			var transformed = Path.Geometry(
 				Geometry.Factory,
-				sink => checkResult(Geometry.Simplify(
+				sink => Geometry.Simplify(
 					GeometrySimplificationOption.CubicsAndLines,
 					matrix.import(),
 					// default flattening tolerance:
 					0.25f, 
-					sink)));
+					sink));
 
 			return new GeometryImplementation(transformed);
 		}
