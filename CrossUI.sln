@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Portable", "CrossUI.Portable\CrossUI.Portable.csproj", "{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Runner.WPF", "CrossUI.Runner.WPF\CrossUI.Runner.WPF.csproj", "{58CD161E-A409-4A96-80BD-435DF55E51CB}"
@@ -166,8 +166,8 @@ Global
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|ARM.ActiveCfg = Debug|ARM
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|ARM.Build.0 = Debug|ARM
-		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|x64.ActiveCfg = Debug|x64
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|x64.Build.0 = Debug|x64
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Debug|x86.ActiveCfg = Debug|x86
@@ -176,8 +176,8 @@ Global
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|ARM.ActiveCfg = Release|ARM
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|ARM.Build.0 = Release|ARM
-		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|x64.ActiveCfg = Release|x64
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|x64.Build.0 = Release|x64
 		{EE9CB3EE-DD84-4509-A9E2-55078C7107D1}.Release|x86.ActiveCfg = Release|x86
@@ -188,9 +188,9 @@ Global
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|ARM.ActiveCfg = Debug|ARM
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|ARM.Build.0 = Debug|ARM
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|ARM.Deploy.0 = Debug|ARM
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|x64.ActiveCfg = Debug|x64
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|x64.Build.0 = Debug|x64
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Debug|x64.Deploy.0 = Debug|x64
@@ -203,9 +203,9 @@ Global
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|ARM.ActiveCfg = Release|ARM
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|ARM.Build.0 = Release|ARM
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|ARM.Deploy.0 = Release|ARM
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.Build.0 = Release|x86
-		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|x64.ActiveCfg = Release|x64
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|x64.Build.0 = Release|x64
 		{AC56CA0C-DA8E-4C65-BCAE-7A85D2682E23}.Release|x64.Deploy.0 = Release|x64
