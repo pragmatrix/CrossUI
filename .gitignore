@@ -4,3 +4,4 @@ _ReSharper.*
 obj/
 bin/
 /packages/
+/.nuget/NuGet.exe
