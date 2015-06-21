@@ -7,15 +7,15 @@ namespace CrossUI.SharpDX.WinRT.Tests
 	*/
 	
 	[TestFixture]
-    public class DeviceTests
-    {
-        [Test]
-        public void TestDeviceCreation()
-        {
+	public class DeviceTests
+	{
+		[Test]
+		public void TestDeviceCreation()
+		{
 			using (var backend = new DrawingBackend())
 			{
 			}
-        }
+		}
 
 		[Test]
 		public void TestCreateBitmapDrawingTarget()
