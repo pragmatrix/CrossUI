@@ -1,12 +1,13 @@
 ﻿using System;
 using SharpDX;
 using SharpDX.Direct2D1;
+using RectangleF = SharpDX.RectangleF;
 
 namespace CrossUI.SharpDX.Geometry
 {
 	static class ArcGeometry
 	{
-		public static DrawingPointF pointOn(RectangleF r, double angle)
+		public static Vector2 pointOn(RectangleF r, double angle)
 		{
 			var rx = r.Width/2;
 			var ry = r.Height/2;
@@ -16,7 +17,7 @@ namespace CrossUI.SharpDX.Geometry
 			var dx = Math.Cos(angle)*rx;
 			var dy = Math.Sin(angle)*ry;
 
-			return new DrawingPointF((cx + dx).import(), (cy + dy).import());
+			return new Vector2((cx + dx).import(), (cy + dy).import());
 		}
 
 		public static void add(RectangleF r, double start, double stop, GeometrySink sink, SweepDirection direction = SweepDirection.Clockwise)
@@ -48,7 +49,7 @@ namespace CrossUI.SharpDX.Geometry
 				sink.AddArc(new ArcSegment
 				{
 					ArcSize = ArcSize.Small,
-					Size = new DrawingSizeF(rx, ry),
+					Size = new Size2F(rx, ry),
 					Point = nextPoint,
 					RotationAngle = angleNow.import(),
 					SweepDirection = SweepDirection.Clockwise
@@ -79,7 +80,7 @@ namespace CrossUI.SharpDX.Geometry
 				sink.AddArc(new ArcSegment
 				{
 					ArcSize = ArcSize.Small,
-					Size = new DrawingSizeF(rx, ry),
+					Size = new Size2F(rx, ry),
 					Point = nextPoint,
 					RotationAngle = angleNow.import(),
 					SweepDirection = SweepDirection.CounterClockwise

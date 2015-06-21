@@ -83,7 +83,7 @@ namespace CrossUI.SharpDX.Drawing
 
 			renderTarget.BeginDraw();
 			// required to clear the render target
-			// (not required on all machines, MacBook Air + Win7 seems to recycle old textures)
+			// not required on all machines, seems to be a driver decision.
 			renderTarget.Clear(clearColor != null ? clearColor.Value.import() : (Color4?)null);
 
 			var state = new DrawingState();

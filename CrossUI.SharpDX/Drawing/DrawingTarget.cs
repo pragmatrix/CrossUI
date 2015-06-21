@@ -5,6 +5,7 @@ using CrossUI.SharpDX.Geometry;
 using SharpDX;
 using SharpDX.Direct2D1;
 using Rectangle = CrossUI.Drawing.Rectangle;
+using Point = CrossUI.Drawing.Point;
 
 namespace CrossUI.SharpDX.Drawing
 {
@@ -147,7 +148,7 @@ namespace CrossUI.SharpDX.Drawing
 					? Math.Max(0, cornerRadius - _state.StrokeWeight/2)
 					: cornerRadius;
 
-				var roundedRect = new RoundedRect
+				var roundedRect = new RoundedRectangle
 				{
 					Rect = fillRect(rectangle),
 					RadiusX = filledCornerRadius.import(),
@@ -159,7 +160,7 @@ namespace CrossUI.SharpDX.Drawing
 
 			if (Stroking)
 			{
-				var roundedRect = new RoundedRect
+				var roundedRect = new RoundedRectangle
 				{
 					Rect = strokeAlignedRect(rectangle),
 					RadiusX = cornerRadius.import(),
@@ -250,7 +251,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		void drawOpenPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		void drawOpenPath(Vector2 begin, Action<GeometrySink> figureBuilder)
 		{
 			using (var geometry = createPath(false, begin, figureBuilder))
 			{
@@ -258,7 +259,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		void drawClosedPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		void drawClosedPath(Vector2 begin, Action<GeometrySink> figureBuilder)
 		{
 			using (var geometry = createPath(true, begin, figureBuilder))
 			{
@@ -266,7 +267,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		void fillPath(DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		void fillPath(Vector2 begin, Action<GeometrySink> figureBuilder)
 		{
 			using (var geometry = createPath(true, begin, figureBuilder))
 			{
@@ -274,7 +275,7 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		PathGeometry createPath(bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		PathGeometry createPath(bool filled, Vector2 begin, Action<GeometrySink> figureBuilder)
 		{
 			return Path.Figure(_target.Factory, filled, begin, figureBuilder);
 		}
@@ -283,12 +284,11 @@ namespace CrossUI.SharpDX.Drawing
 		{
 			if (!Stroking)
 			{
-				return new RectangleF(rectangle.X.import(), rectangle.Y.import(), rectangle.Right.import(), rectangle.Bottom.import());
+				return new RectangleF(rectangle.X.import(), rectangle.Y.import(), rectangle.Width.import(), rectangle.Height.import());
 			}
 
 			return _state.StrokeFillBounds(rectangle).import();
 		}
-
 
 		RectangleF strokeAlignedRect(Rectangle rectangle)
 		{

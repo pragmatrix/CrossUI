@@ -6,29 +6,37 @@ using DW = SharpDX.DirectWrite;
 using D2 = SharpDX.Direct2D1;
 using Matrix = CrossUI.Drawing.Matrix;
 using Rectangle = CrossUI.Drawing.Rectangle;
+using Point = CrossUI.Drawing.Point;
 
 namespace CrossUI.SharpDX
 {
 	static class Import
 	{
-		public static DrawingPointF Point(Point p)
+		public static Vector2 Point(Point p)
 		{
 			return Point(p.X, p.Y);
 		}
 
-		public static DrawingPointF Point(double x, double y)
+		public static Vector2 Point(double x, double y)
 		{
-			return new DrawingPointF(x.import(), y.import());
+			return new Vector2(x.import(), y.import());
 		}
 
 		public static RectangleF Rectangle(Rectangle r)
 		{
-			return new RectangleF(r.X.import(), r.Y.import(), r.Right.import(), r.Bottom.import());
+			return new RectangleF(r.X.import(), r.Y.import(), r.Width.import(), r.Height.import());
 		}
 
 		public static RectangleF import(this Bounds bounds)
 		{
-			return new RectangleF(bounds.Left.import(), bounds.Top.import(), bounds.Right.import(), bounds.Bottom.import());
+			var left = bounds.Left.import();
+			var top = bounds.Top.import();
+			var right = bounds.Right.import();
+			var bottom = bounds.Bottom.import();
+			var width = right - left;
+			var height = bottom - top;
+
+			return new RectangleF(left, top, width, height);
 		}
 
 		public static Bounds export(this RectangleF rect)

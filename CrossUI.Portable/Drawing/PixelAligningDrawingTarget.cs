@@ -115,7 +115,7 @@ namespace CrossUI.Drawing
 
 		public void Text(string text, Rectangle rectangle)
 		{
-			// text is _not_ aligned right, because it would change width and so could affect word-breaks.
+			// text is _not_ aligned, because it would change the width and so could affect word-breaks.
 			_target.Text(text, rectangle);
 		}
 

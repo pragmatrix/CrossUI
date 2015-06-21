@@ -2,9 +2,11 @@
 using CrossUI.SharpDX.Geometry;
 using SharpDX.Direct2D1;
 #if NETFX_CORE
-using SharpDX.Direct3D11;
+using SharpDX;
 using DriverType = SharpDX.Direct3D.DriverType;
 using Device = SharpDX.Direct3D11.Device;
+using Device1 = SharpDX.Direct3D11.Device1;
+using DeviceCreationFlags = SharpDX.Direct3D11.DeviceCreationFlags;
 #else
 using SharpDX.Direct3D10;
 using FeatureLevel = SharpDX.Direct3D10.FeatureLevel;

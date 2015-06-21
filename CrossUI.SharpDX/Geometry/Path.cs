@@ -6,7 +6,7 @@ namespace CrossUI.SharpDX.Geometry
 {
 	static class Path
 	{
-		public static PathGeometry Figure(Factory factory, bool filled, DrawingPointF begin, Action<GeometrySink> figureBuilder)
+		public static PathGeometry Figure(Factory factory, bool filled, Vector2 begin, Action<GeometrySink> figureBuilder)
 		{
 			return Geometry(factory,
 				sink =>
