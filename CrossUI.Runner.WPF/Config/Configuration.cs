@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using CrossUI.Runner.WPF.Config;
-using ServiceStack.Text;
+using NServiceKit.Text;
 
 namespace CrossUI.Runner.Config
 {
