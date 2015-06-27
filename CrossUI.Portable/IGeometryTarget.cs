@@ -28,7 +28,7 @@ namespace CrossUI
 
 	public static class GeometryTargetExtensions
 	{
-		public static void MoveTo(IGeometryTarget _, Point p)
+		public static void MoveTo(this IGeometryTarget _, Point p)
 		{
 			_.MoveTo(p.X, p.Y);
 		}
