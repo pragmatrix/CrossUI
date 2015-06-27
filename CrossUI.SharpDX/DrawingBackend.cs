@@ -1,5 +1,8 @@
-﻿using CrossUI.SharpDX.Drawing;
+﻿using System;
+using CrossUI.Drawing;
+using CrossUI.SharpDX.Drawing;
 using CrossUI.SharpDX.Geometry;
+using SharpDX;
 using SharpDX.Direct2D1;
 #if NETFX_CORE
 using SharpDX;
@@ -64,6 +67,33 @@ namespace CrossUI.SharpDX
 				path.Dispose();
 				throw;
 			}
+		}
+
+		public static IDrawingTarget CreateDrawingTarget(RenderTarget renderTarget)
+		{
+			var width = renderTarget.Size.Width;
+			var height = renderTarget.Size.Height;
+
+			var state = new DrawingState();
+			var transform = new DrawingTransform();
+			var drawingTarget = new DrawingTarget(state, transform, renderTarget, (int)Math.Floor(width), (int)Math.Floor(height));
+
+			var target = new DrawingTargetSplitter(
+				null /* no backend */,
+				state,
+				transform,
+				drawingTarget,
+				drawingTarget,
+				drawingTarget,
+				drawingTarget,
+				drawingTarget,
+				() =>
+				{
+					drawingTarget.Dispose();
+				});
+
+			var pixelAligner = PixelAligningDrawingTarget.Create(target, target.Dispose, state, transform);
+			return pixelAligner;
 		}
 	}
 }
