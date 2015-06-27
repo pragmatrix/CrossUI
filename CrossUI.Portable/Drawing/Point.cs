@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CrossUI.Drawing
+﻿namespace CrossUI.Drawing
 {
 	public struct Point
 	{
