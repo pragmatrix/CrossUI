@@ -59,7 +59,7 @@ namespace CrossUI
 		}
 	}
 
-/// Stroke alignment applies to rectangular shapes only.
+	/// Stroke alignment applies to rectangular shapes only.
 
 	public enum StrokeAlignment
 	{
