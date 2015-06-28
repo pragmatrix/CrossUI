@@ -25,7 +25,7 @@ namespace CrossUI.Geometry
 			record(t => t.Rectangle(rectangle));
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			record(t => t.RoundedRectangle(rectangle, cornerRadius));
 		}

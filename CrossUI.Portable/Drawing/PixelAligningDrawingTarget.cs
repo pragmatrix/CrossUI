@@ -82,7 +82,7 @@ namespace CrossUI.Drawing
 			_target.Rectangle(pixelAlign(rectangle));
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			_target.RoundedRectangle(pixelAlign(rectangle), cornerRadius);
 		}

@@ -138,21 +138,25 @@ namespace CrossUI.SharpDX.Drawing
 			}
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			if (Filling)
 			{
 				// adjust corner radius if we do stroke afterwards.
 
-				var filledCornerRadius = Stroking
-					? Math.Max(0, cornerRadius - _state.StrokeWeight/2)
-					: cornerRadius;
+				var filledCornerRadiusX = Stroking
+					? Math.Max(0, cornerRadius.Width - _state.StrokeWeight/2)
+					: cornerRadius.Width;
+
+				var filledCornerRadiusY = Stroking
+					? Math.Max(0, cornerRadius.Height - _state.StrokeWeight / 2)
+					: cornerRadius.Height;
 
 				var roundedRect = new RoundedRectangle
 				{
 					Rect = fillRect(rectangle),
-					RadiusX = filledCornerRadius.import(),
-					RadiusY = filledCornerRadius.import()
+					RadiusX = filledCornerRadiusX.import(),
+					RadiusY = filledCornerRadiusY.import()
 				};
 
 				_target.FillRoundedRectangle(roundedRect, _fillBrush.Brush);
@@ -163,8 +167,8 @@ namespace CrossUI.SharpDX.Drawing
 				var roundedRect = new RoundedRectangle
 				{
 					Rect = strokeAlignedRect(rectangle),
-					RadiusX = cornerRadius.import(),
-					RadiusY = cornerRadius.import()
+					RadiusX = cornerRadius.Width.import(),
+					RadiusY = cornerRadius.Height.import()
 				};
 
 				_target.DrawRoundedRectangle(roundedRect, _strokeBrush.Brush, StrokeWeight);

@@ -31,6 +31,11 @@ namespace CrossUI.Tests
 			target.RoundedRectangle(0, 0, target.Width, target.Height, 8);
 		}
 
+		public void DifferentRadii(IDrawingTarget target)
+		{
+			target.RoundedRectangle(0, 0, target.Width, target.Height, 8, 16);
+		}
+
 		public void ShouldBeIgnored()
 		{
 		}

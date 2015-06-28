@@ -40,15 +40,15 @@ namespace CrossUI.SharpDX.Geometry
 			}
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			endOpenFigure();
 
 			using (var geometry = new RoundedRectangleGeometry(_factory,
 				new RoundedRectangle
 				{
-					RadiusX = cornerRadius.import(),
-					RadiusY = cornerRadius.import(),
+					RadiusX = cornerRadius.Width.import(),
+					RadiusY = cornerRadius.Height.import(),
 					Rect = Import.Rectangle(rectangle)
 				}))
 			{

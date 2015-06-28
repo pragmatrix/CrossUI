@@ -15,10 +15,10 @@ it is possible to visualize code-generated drawings in realtime as you type.
 	{
 		public class RoundedRectangleTest
 		{
-			[BitmapDrawingTest(Width=80, Height=40)]
-			public void RoundedRect(IDrawingContext context)
+			[BitmapDrawingTest(Width = 80, Height = 40)]
+			public void RoundedRect(IDrawingTarget target)
 			{
-				context.RoundedRect(0, 0, 80, 40, 8);
+				target.RoundedRectangle(0, 0, 80, 40, 8);
 			}
 		}
 	}

@@ -129,7 +129,7 @@ namespace CrossUI.Drawing
 			_figures.Rectangle(rectangle);
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			_figures.RoundedRectangle(rectangle, cornerRadius);
 		}

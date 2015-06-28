@@ -7,7 +7,7 @@ namespace CrossUI
 		void Line(Point p1, Point p2);
 
 		void Rectangle(Rectangle rectangle);
-		void RoundedRectangle(Rectangle rectangle, double cornerRadius);
+		void RoundedRectangle(Rectangle rectangle, Size cornerRadius);
 		void Polygon(params Point[] points);
 
 		void Ellipse(Rectangle rectangle);
@@ -28,9 +28,19 @@ namespace CrossUI
 			_.Rectangle(new Rectangle(x, y, width, height));
 		}
 
+		public static void RoundedRectangle(this IGeometryFigures _, double x, double y, double width, double height, double cornerRadiusX, double cornerRadiusY)
+		{
+			_.RoundedRectangle(new Rectangle(x, y, width, height), new Size(cornerRadiusX, cornerRadiusY));
+		}
+
 		public static void RoundedRectangle(this IGeometryFigures _, double x, double y, double width, double height, double cornerRadius)
 		{
-			_.RoundedRectangle(new Rectangle(x, y, width, height), cornerRadius);
+			_.RoundedRectangle(new Rectangle(x, y, width, height), new Size(cornerRadius));
+		}
+
+		public static void RoundedRectangle(this IGeometryFigures _, Rectangle rectangle, double cornerRadius)
+		{
+			_.RoundedRectangle(rectangle, new Size(cornerRadius));
 		}
 
 		public static void Polygon(this IGeometryFigures _, params double[] pairs)

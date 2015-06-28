@@ -4,6 +4,11 @@
 	{
 		public readonly Vector Vector;
 
+		public Size(double widthAndHeight)
+			: this(widthAndHeight, widthAndHeight)
+		{
+		}
+
 		public Size(double width, double height)
 		{
 			Vector = new Vector(width, height);

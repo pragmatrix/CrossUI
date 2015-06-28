@@ -48,7 +48,7 @@ namespace CrossUI.Drawing
 			_tracker.trackAlignedRect(rectangle);
 		}
 
-		public void RoundedRectangle(Rectangle rectangle, double cornerRadius)
+		public void RoundedRectangle(Rectangle rectangle, Size cornerRadius)
 		{
 			_tracker.trackAlignedRect(rectangle);
 		}
