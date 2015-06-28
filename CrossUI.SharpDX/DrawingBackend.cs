@@ -88,7 +88,14 @@ namespace CrossUI.SharpDX
 			}
 		}
 
-		public static IDrawingTarget CreateDrawingTarget(RenderTarget renderTarget)
+		/**
+			Create a drawing target from an already existing RenderTarget.
+
+			Note that the RenderTarget must use the the same Factory the
+			drawing backend does.
+		**/
+
+		public IDrawingTarget CreateDrawingTarget(RenderTarget renderTarget)
 		{
 			var width = renderTarget.Size.Width;
 			var height = renderTarget.Size.Height;
@@ -98,7 +105,7 @@ namespace CrossUI.SharpDX
 			var drawingTarget = new DrawingTarget(state, transform, renderTarget, (int)Math.Floor(width), (int)Math.Floor(height));
 
 			var target = new DrawingTargetSplitter(
-				null /* no backend */,
+				this,
 				state,
 				transform,
 				drawingTarget,
@@ -115,7 +122,7 @@ namespace CrossUI.SharpDX
 			return pixelAligner;
 		}
 
-		public static IDrawingBackend FromFactoryAndDevice(Factory factory, Device1 device)
+		public static DrawingBackend FromFactoryAndDevice(Factory factory, Device1 device)
 		{
 			return new DrawingBackend(factory, device, false);
 		}
