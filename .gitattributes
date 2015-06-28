@@ -1,4 +1,4 @@
-* text=auto
+// * text=auto
 
 *.cs text
 *.fs text
