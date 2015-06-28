@@ -1,0 +1,15 @@
+* text=auto
+
+*.cs text
+*.fs text
+*.md text
+*.gitattributes text
+*.gitignore text
+
+*.sln text eol=crlf
+*.csproj text eol=crlf
+*.fsproj text eol=crlf
+
+*.png binary
+*.jpg binary
+
