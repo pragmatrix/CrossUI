@@ -22,22 +22,41 @@ namespace CrossUI.SharpDX
 	{
 		internal readonly Factory Factory;
 		internal readonly Device1 Device;
+		readonly bool _owningFactoryAndDevice;
 
-		public DrawingBackend()
+		static Factory CreateFactory()
 		{
-			Factory = new Factory(FactoryType.SingleThreaded, DebugLevel.None);
+			return new Factory(FactoryType.SingleThreaded, DebugLevel.None);
+		}
+
+		static Device1 CreateDevice()
+		{
 #if NETFX_CORE
 			using (var device = new Device(DriverType.Hardware, DeviceCreationFlags.BgraSupport))
 			{
-				Device = device.QueryInterface<Device1>();
+				return device.QueryInterface<Device1>();
 			}
 #else
-			Device = new Device1(DriverType.Hardware, DeviceCreationFlags.BgraSupport, FeatureLevel.Level_10_0);
+			return new Device1(DriverType.Hardware, DeviceCreationFlags.BgraSupport, FeatureLevel.Level_10_0);
 #endif
+		}
+
+		public DrawingBackend()
+			: this(CreateFactory(), CreateDevice(), true)
+		{
+		}
+
+		DrawingBackend(Factory factory, Device1 device, bool ownsIt)
+		{
+			Factory = factory;
+			Device = device;
+			_owningFactoryAndDevice = ownsIt;
 		}
 
 		public void Dispose()
 		{
+			if (!_owningFactoryAndDevice)
+				return;
 			Device.Dispose();
 			Factory.Dispose();
 		}
@@ -94,6 +113,11 @@ namespace CrossUI.SharpDX
 
 			var pixelAligner = PixelAligningDrawingTarget.Create(target, target.Dispose, state, transform);
 			return pixelAligner;
+		}
+
+		public static IDrawingBackend FromFactoryAndDevice(Factory factory, Device1 device)
+		{
+			return new DrawingBackend(factory, device, false);
 		}
 	}
 }
