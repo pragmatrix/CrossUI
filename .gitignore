@@ -6,3 +6,5 @@ bin/
 /packages/
 /.nuget/NuGet.exe
 *.ncrunchproject
+*.ncrunchsolution
+/_NCrunch_*/
