@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Portable", "CrossUI.Portable\CrossUI.Portable.csproj", "{059E9775-63F7-4A7A-A0E9-4E0C54514EE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Runner.WPF", "CrossUI.Runner.WPF\CrossUI.Runner.WPF.csproj", "{58CD161E-A409-4A96-80BD-435DF55E51CB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.SharpDX", "CrossUI.SharpDX\CrossUI.SharpDX.csproj", "{F46BFFCE-B059-4D62-8669-A24F6E8A543D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossUI.Tests", "CrossUI.Tests\CrossUI.Tests.csproj", "{DE3D29D0-F5D3-4953-A872-B86BBE44D93C}"
