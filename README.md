@@ -60,13 +60,6 @@ The most import Projects in the CrossUI solutions are:
 
 ## Getting Started
 
-### Prerequisites
-
-* Visual Studio 2010 Service Pack 1 or Visual Studio 2012 RC
-* [Nuget Version 2](http://www.nuget.org)
-* [Portable Library Tools 2 Beta from Microsoft](http://visualstudiogallery.msdn.microsoft.com/b0e0b5e9-e138-410b-ad10-00cb3caf4981/)
-* recommended: [.NET Demon](http://www.red-gate.com/products/dotnet-development/dotnet-demon/). A Visual Studio extension that continuously rebuilds your projects while you type.
-
 ### Step By Step
 
 * Download and extract the ZIP file or clone the repository.
