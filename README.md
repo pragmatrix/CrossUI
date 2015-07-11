@@ -1,5 +1,7 @@
 # CrossUI - A Portable .NET Drawing API focused on Instant Test Feedback
 
+[![Build status](https://ci.appveyor.com/api/projects/status/jdx42q18l7ypi8a2?svg=true)](https://ci.appveyor.com/project/pragmatrix/crossui)
+
 Programming languages provide the ultimate flexibility for parameterizing user interfaces 
 and graphical output in general. But they lack the instant feedback that markup languages 
 and visual editors provide. This drawback is not set in stone. With some effort and tool support,
