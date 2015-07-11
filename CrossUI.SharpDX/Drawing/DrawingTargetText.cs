@@ -40,10 +40,12 @@ namespace CrossUI.SharpDX.Drawing
 
 		DW.TextLayout createTextLayout(string text, DW.TextFormat format, double width, double height)
 		{
-			var layout = new DW.TextLayout(requireWriteFactory(), text, format, width.import(), height.import());
-			layout.TextAlignment = _state.TextAlignment.import();
-			layout.ParagraphAlignment = _state.ParagraphAlignment.import();
-			layout.WordWrapping = _state.WordWrapping.import();
+			var layout = new DW.TextLayout(requireWriteFactory(), text, format, width.import(), height.import())
+			{
+				TextAlignment = _state.TextAlignment.import(),
+				ParagraphAlignment = _state.ParagraphAlignment.import(),
+				WordWrapping = _state.WordWrapping.import()
+			};
 
 			return layout;
 		}
